@@ -8,7 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { Tab2PageModule } from './folder2/tab2.module';
+import { Tab2PageModule } from './first-page/tab2.module';
 
 @NgModule({
   declarations: [AppComponent],
