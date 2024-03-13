@@ -1,7 +1,0 @@
-{
-  "name": "TabTab",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
