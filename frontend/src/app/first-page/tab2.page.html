@@ -1,14 +1,27 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Good Page2</ion-title>
-  </ion-toolbar>
+  <!-- <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar> -->
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
     <ng-container *ngIf="tab2">
-
       <h2>{{tab2.tab2}}</h2>
     </ng-container>
   </ion-list>
+
+  <div class="main">
+    <div class="box-logo">
+      <img class="tabtab-logo" src="assets/img/tabtab-logo.png" />
+    </div>
+
+    <button class="button-log-in">
+      <p class="button-log-in-text">Log in</p>
+        <ng-container *ngIf="tab2">
+          <h2>{{tab2.tab2}}</h2>
+        </ng-container>
+    </button>
+  </div>
+
 </ion-content>

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 public class controller {
 
-    @RequestMapping
+    @RequestMapping("/hi")
     @CrossOrigin(origins = { "http://localhost:8100", "http://localhost:8080" })
     public String helloWorld() {
         return "{ \"tab2\": \"Hello Hell\" }";
