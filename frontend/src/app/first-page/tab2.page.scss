@@ -1,38 +1,13 @@
-.main {
-    background-color: #FFF6EB;
-    height: 100%;
+ion-content{
+    --background: #FFF6EB;
 }
 
-.button-log-in{
-    background-color: #000000;
-    width: 328px;
-    height: 56px;
-    border-radius: 25px;
-    left: 31px;
-    bottom: 200px;
-    
-    //margin: 400px auto;
-    display: flex;
-    justify-content: center;
-    position: absolute;
 
+ion-button[color="dark"]{
+    text-transform: initial;
+    margin:15% ;
 }
 
-.button-log-in-text {
-    
-    color: #FFF6EB;
-    display: flex;
-    font-size: 200%;
-    line-height: 5px;
-}
-            
-.box-logo{
-    width: 150px;
-    height: 150px;
-    left: 120px;
-    top: 50px;
-    
-    display: grid;
-    place-items: center;
-    position: absolute;
+ion-text{
+    font-size: small;
 }

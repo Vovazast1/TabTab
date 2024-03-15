@@ -11,17 +11,35 @@
     </ng-container>
   </ion-list>
 
-  <div class="main">
-    <div class="box-logo">
-      <img class="tabtab-logo" src="assets/img/tabtab-logo.png" />
-    </div>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <img src="assets/img/tabtab-logo.png" 
+        width="40%"/>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <ion-text class="ion-text-center" color="dark" >
+     <h1>TAKE A BREAKE. TAKE A BREATHE</h1>
+  </ion-text>
 
-    <button class="button-log-in">
-      <p class="button-log-in-text">Log in</p>
-        <ng-container *ngIf="tab2">
-          <h2>{{tab2.tab2}}</h2>
-        </ng-container>
-    </button>
-  </div>
+  
+
+  <ion-card color="#FFF6EB">
+
+    <ion-card-content>
+      <ion-item color="#FFF6EB">
+        <ion-input label="Enter email address" label-placement="floating" fill="solid" placeholder="Email address"></ion-input>
+      </ion-item>
+      
+      <ion-item color="#FFF6EB">
+        <ion-input label="Enter password" type="password"  label-placement="floating" fill="solid" placeholder="Password"></ion-input>
+      </ion-item>
+    
+    </ion-card-content>
+  </ion-card>
+    <ion-button color="dark" size="full" shape="round">Log in</ion-button>
 
 </ion-content>
