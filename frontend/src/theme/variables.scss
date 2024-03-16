@@ -3,6 +3,15 @@
 
 /** Ionic CSS Variables **/
 :root {
+
+   /** Newblack **/
+   --ion-color-newblack: #020302;
+   --ion-color-newblack-rgb: 2,3,2;
+   --ion-color-newblack-contrast: #ffffff;
+   --ion-color-newblack-contrast-rgb: 255,255,255;
+   --ion-color-newblack-shade: #020302;
+   --ion-color-newblack-tint: #1b1c1b;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -76,13 +85,29 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
+.ion-color-newblack {
+	--ion-color-base: var(--ion-color-newblack);
+	--ion-color-base-rgb: var(--ion-color-newblack-rgb);
+	--ion-color-contrast: var(--ion-color-newblack-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-newblack-contrast-rgb);
+	--ion-color-shade: var(--ion-color-newblack-shade);
+	--ion-color-tint: var(--ion-color-newblack-tint);
+}
+
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors
    * -------------------------------------------
    */
-
-  body {
+   
+   body {
+    --ion-color-newblack: #020302;
+	--ion-color-newblack-rgb: 2,3,2;
+	--ion-color-newblack-contrast: #ffffff;
+	--ion-color-newblack-contrast-rgb: 255,255,255;
+	--ion-color-newblack-shade: #020302;
+	--ion-color-newblack-tint: #1b1c1b;
+    
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
@@ -145,6 +170,10 @@
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
+    
+  
+  
   }
 
   /*
