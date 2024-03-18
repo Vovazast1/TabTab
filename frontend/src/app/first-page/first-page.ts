@@ -1,15 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-folder',
-  templateUrl: './folder.page.html',
-  styleUrls: ['./folder.page.scss'],
+  templateUrl: './first-page.html',
+  styleUrls: ['./first-page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent],
+  imports: [IonicModule],
 })
-export class FolderPage implements OnInit {
+export class FirstPage implements OnInit {
   public folder!: string;
   private activatedRoute = inject(ActivatedRoute);
   constructor() {}
