@@ -1,5 +1,5 @@
 {
-  "name": "TabTab",
+  "name": "frontend",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -39,7 +39,7 @@
     "@angular-eslint/eslint-plugin-template": "^17.0.0",
     "@angular-eslint/schematics": "^17.0.0",
     "@angular-eslint/template-parser": "^17.0.0",
-    "@angular/cli": "^17.0.0",
+    "@angular/cli": "17.2.2",
     "@angular/compiler-cli": "^17.0.2",
     "@angular/language-service": "^17.0.2",
     "@capacitor/cli": "5.7.0",
@@ -58,6 +58,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.2.5",
     "typescript": "~5.2.2"
   },
   "description": "An Ionic project"
