@@ -3,13 +3,13 @@ import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-folder',
-  templateUrl: './first-page.html',
-  styleUrls: ['./first-page.scss'],
+  selector: 'app-login',
+  templateUrl: './login-page.html',
+  styleUrls: ['./login-page.scss'],
   standalone: true,
   imports: [IonicModule],
 })
-export class FirstPage implements OnInit {
+export class LoginPage implements OnInit {
   public folder!: string;
   private activatedRoute = inject(ActivatedRoute);
   constructor() {}
@@ -17,4 +17,6 @@ export class FirstPage implements OnInit {
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
   }
+
+  
 }

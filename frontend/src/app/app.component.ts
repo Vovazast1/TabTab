@@ -13,7 +13,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class AppComponent {
   public appPages = [
     { title: 'Loader', url: '/loader/loader'},
-    { title: 'FirstPage', url: '/first-page/first-page'},
+    { title: 'LoginPage', url: '/login-page/login-page'},
+    { title: 'RegisterPage', url: '/register-page/register-page'},
   ];
   constructor() {}
 }

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Pages } from './pages/pages';
 
+
 export const routes: Routes = [
   {
     path: 'pages',
@@ -11,8 +12,12 @@ export const routes: Routes = [
         loadComponent: () => import('./loader/loader').then(m => m.Loader)
       },
       {
-        path: 'first-page',
-        loadComponent: () => import('./first-page/first-page').then(m => m.FirstPage)
+        path: 'login-page',
+        loadComponent: () => import('./login-page/login-page').then(m => m.LoginPage)
+      },
+      {
+        path: 'register-page',
+        loadComponent: () => import('./register-page/register-page').then(m => m.RegisterPage)
       },
       {
         path: '',
