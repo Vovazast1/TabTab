@@ -18,5 +18,7 @@ export class LoginPage implements OnInit {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
   }
 
-  
+  public login() {
+      console.log("Hello Hell");
+  }
 }
