@@ -2,41 +2,40 @@ package com.example.User;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Favorite.Favorite;
-
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("getUsers")
+    @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();
     }
 
-    @PostMapping("addUser")
+    @PostMapping("/addUser")
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
-    @GetMapping("getUser")
+    @GetMapping("/getUserByName")
     public User getUser(String name) {
         return userService.getUser(name);
     }
 
-    @GetMapping("getFavorites")
-    public Set<Favorite> getUserFavorites(Long id) {
-        return userService.getUserFavorites(id);
-    }
+    // @GetMapping("/getFavorites")
+    // public Set<Favorite> getUserFavorites(Long id) {
+    // return userService.getUserFavorites(id);
+    // }
 }
 
 // @RequestMapping("/goodbye")

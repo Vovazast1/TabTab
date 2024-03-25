@@ -1,12 +1,11 @@
 package com.example.User;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Favorite.Favorite;
+//import com.example.Favorite.Favorite;
 
 @Service
 public class UserService {
@@ -29,8 +28,8 @@ public class UserService {
         return userRepos.findByUserName(name);
     }
 
-    public Set<Favorite> getUserFavorites(Long id) {
-        return userRepos.findByUserId(id).getFavorites();
-    }
+    // public Set<Favorite> getUserFavorites(Long id) {
+    // return userRepos.findByUserId(id).getFavorites();
+    // }
 
 }
