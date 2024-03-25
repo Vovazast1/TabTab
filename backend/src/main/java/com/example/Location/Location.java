@@ -3,6 +3,7 @@ package com.example.Location;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,17 +18,21 @@ import lombok.Setter;
 public class Location {
 
     @Id
-    @jakarta.persistence.Column(name = "LocationID")
+    @Column(name = "LocationID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long locationId;
 
-    @jakarta.persistence.Column(name = "Address")
+    // @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch =
+    // FetchType.EAGER)
+    // private Set<Favorite> favorites;
+
+    @Column(name = "Address")
     private String locationName;
 
-    @jakarta.persistence.Column(name = "Activity")
+    @Column(name = "Activity")
     private String activity;
 
-    @jakarta.persistence.Column(name = "Type")
+    @Column(name = "Type")
     private String type;
 
 }
