@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoginPageForm } from './login-page.form';
+import { LoginPageForm } from './login.form';
 
 const loginPage = {
   getForm: () => new LoginPageForm(new FormBuilder()).createForm(),
