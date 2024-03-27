@@ -1,4 +1,5 @@
 ion-content {
+ feature/register-page
   --background: #78CB80;
 }
 
@@ -36,3 +37,39 @@ ion-button[color="newblack"] {
   margin: 20%;
   margin-top: 15%;
 }
+=======
+    --background: #78CB80;
+  }
+  
+  ion-button[color="serengeti"]{
+    margin-top: 5%;
+  }
+  
+  ion-item[color="serengeti"] {
+    display: flex;
+    margin-top: 10%;
+  }
+  
+  ion-text[color="newblack"] {//create account
+    margin-top: 5%;
+    font-size: xx-large;
+    margin-left: 10%;
+  
+  }
+  
+  ion-card {
+    border-radius: 30px !important;
+    height: 7%;
+    margin-top: 3%;
+  }
+  
+  
+  ion-button[color="aero-blue"]{
+    width: 25%;
+    margin-left: 10%;
+    margin-bottom: -3%;
+    display: flex;
+    justify-content: center;
+  }
+  
+main
