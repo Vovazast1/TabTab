@@ -1,4 +1,4 @@
-//package com.example.Favorite;
+//package com.springboot.Favorite;
 
 //import java.io.Serializable;
 
