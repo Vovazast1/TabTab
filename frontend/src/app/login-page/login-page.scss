@@ -10,6 +10,9 @@ ion-content{
   
 }
 
+ion-input{
+    --background: transparent !important;
+}
 
 ion-card-content{
     margin-top: -7%;
