@@ -15,24 +15,28 @@ ion-card-content{
     margin-top: -7%;
 }
 
-ion-button[color="dark"]{
+ion-button[color="success"]{  //Forgot your password?
     text-transform: initial;
-    margin:15% ;
-    margin-top: -5%;
+    margin:10% ;
+    margin-top: -20%;
     font-size: large;
 }
 
-ion-text [color="dark"]{
-    margin-top: -10%;
-}
-
-ion-button[color="success"]{
-    margin-top: -17%;
-    
-}
-
-ion-button[color="newblack"]{
+ion-button[color="newblack"]{ //log in
     text-transform: initial;
     margin:20% ;
-    margin-top:10%;
+    margin-top: -7%;
+}
+
+ion-text[color="dark"]{ //don't have account
+    display: flex;
+    justify-content: center;
+    margin-top: 30%;
+
+}
+
+ion-button[color="dark"] { //create account
+    text-transform: initial;
+    margin: 20%;
+    margin-top: 1%;
 }
