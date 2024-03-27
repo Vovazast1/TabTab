@@ -1,4 +1,43 @@
 ion-content {
+ feature/register-page
+  --background: #78CB80;
+}
+
+ion-button[color="serengeti"]{
+  margin-top: 5%;
+}
+
+ion-item[color="serengeti"] {
+  display: flex;
+  margin-top: 10%;
+}
+
+ion-text[color="newblack"] {//create account
+  display: flex;
+  font-size: xx-large;
+  margin: -11% 0 5% 22%; 
+}
+
+ion-card {
+  border-radius: 20px !important;
+  margin: 9%;
+  height: 6%;
+  margin-top: -7%;
+}
+
+
+ion-button[color="aero-blue"]{
+  width: 30%;
+  margin-left: 10%;
+  margin-bottom: -6%;
+}
+
+ion-button[color="newblack"] {
+  text-transform: initial;
+  margin: 20%;
+  margin-top: 15%;
+}
+=======
     --background: #78CB80;
   }
   
@@ -33,3 +72,4 @@ ion-content {
     justify-content: center;
   }
   
+main
