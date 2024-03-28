@@ -5,10 +5,11 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
-@Setter
-@Getter
-@Entity
 @Table(name = "roles")
+@Entity
+@Getter
+@Setter
+
 public class Role {
 
     @Id

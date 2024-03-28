@@ -1,29 +1,46 @@
 package com.springboot.entity;
 
-import lombok.Data;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Set;
 
-@Data
-@Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"username"}),
-        @UniqueConstraint(columnNames = {"email"})
+@Table(name = "User", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"Nickname"}),
+        @UniqueConstraint(columnNames = {"Email"})
 })
+@Entity
+@Getter
+@Setter
+
 public class User {
 
     @Id
+    @Column(name = "UserID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
-    private String username;
+    private long userId;
+
+    @Column(name = "Email")
     private String email;
+
+    @Column(name = "Username")
+    private String username;
+
+    @Column(name = "Birthday")
+    private String birthday;
+
+    @Column(name = "Password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 }
+
+
+// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =
+// FetchType.EAGER)
+// private Set<Favorite> favorites;
