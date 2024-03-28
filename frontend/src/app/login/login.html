@@ -31,7 +31,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button color="newblack" size="full" shape="round">Log in</ion-button>
+  <ion-button color="newblack" size="full" shape="round" (click)="login()">Log in</ion-button>
 
   <ion-button color="success" fill="clear" size="full">
     <ion-text color="newblack">Forgot your password?</ion-text>
@@ -41,7 +41,7 @@
     <h6>Don't have account?</h6>
   </ion-text>
 
-  <ion-button color="dark" size="full" shape="round" href="pages/register-page">
+  <ion-button color="dark" size="full" shape="round" (click)="register()">
     <ion-text>
       <h5>Create account</h5>
     </ion-text>
