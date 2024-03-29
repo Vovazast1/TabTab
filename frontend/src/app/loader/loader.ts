@@ -1,20 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-folder2',
+  selector: 'app-loader',
   templateUrl: './loader.html',
   styleUrls: ['./loader.scss'],
-  standalone: true,
-  imports: [IonicModule],
 })
 export class Loader implements OnInit {
-  public folder!: string;
-  private activatedRoute = inject(ActivatedRoute);
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
+    setTimeout(() => {
+      this.router.navigate(['login']);
+    }, 1000);
   }
 }

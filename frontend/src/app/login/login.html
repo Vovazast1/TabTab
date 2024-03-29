@@ -1,0 +1,49 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-img src="assets/img/tabtab-logo.png"></ion-img>
+    </ion-row>
+  </ion-grid>
+
+  <ion-text class="ion-text-center" color="newblack">
+    <h5>TAKE A BREAK. TAKE A BREATH</h5>
+  </ion-text>
+
+  <ion-card color="success" style="box-shadow: none !important">
+    <ion-card-content>
+      <ion-item color="success">
+        <ion-input
+          label="Enter email address"
+          label-placement="floating"
+          fill="solid"
+          placeholder="Email address"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item color="success">       
+        <ion-input
+          label="Enter password"
+          type="password"
+          label-placement="floating"
+          placeholder="Password"
+        ></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button color="newblack" size="full" shape="round" (click)="login()">Log in</ion-button>
+
+  <ion-button color="success" fill="clear" size="full">
+    <ion-text color="newblack">Forgot your password?</ion-text>
+  </ion-button>
+
+  <ion-text class="ion-text-center" color="dark">
+    <h6>Don't have account?</h6>
+  </ion-text>
+
+  <ion-button color="dark" size="full" shape="round" (click)="register()">
+    <ion-text>
+      <h5>Create account</h5>
+    </ion-text>
+  </ion-button>
+</ion-content>

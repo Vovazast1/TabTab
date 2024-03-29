@@ -5,7 +5,7 @@
 :root {
 
   /** aero-blue **/
-  --ion-color-aero-blue: # bae4c8;
+  --ion-color-aero-blue: #bae4c8;
     --ion-color-aero-blue-rgb: 186, 228, 200;
     --ion-color-aero-blue-contrast: #000000;
     --ion-color-aero-blue-contrast-rgb: 0, 0, 0;
@@ -229,11 +229,12 @@
 
   .ios body {
     --ion-background-color: #000000;
+    --ion-background-color-rgb: 0,0,0;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255,255,255;
     --ion-background-color-rgb: 0, 0, 0;
-
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
-
     --ion-color-step-50: #0d0d0d;
     --ion-color-step-100: #1a1a1a;
     --ion-color-step-150: #262626;

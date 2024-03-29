@@ -1,0 +1,13 @@
+{
+    "apps":
+    [
+        {
+            "appId": "a1111a1a",
+            "iosPath": "iMyApp"
+        },
+        {
+            "appId": "b2222b2b",
+            "androidPath": "MyAppDroid"
+        }
+    ]
+}
