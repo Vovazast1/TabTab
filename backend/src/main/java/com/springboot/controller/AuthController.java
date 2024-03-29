@@ -3,7 +3,7 @@ package com.springboot.controller;
 import com.springboot.entity.Role;
 import com.springboot.entity.User;
 import com.springboot.payload.LoginDto;
-import com.springboot.payload.SignUpDto;
+import com.springboot.payload.RegisterDto;
 import com.springboot.repository.RoleRepository;
 import com.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +47,24 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
+    public ResponseEntity<?> registerUser(@RequestBody RegisterDto registerDto){
 
         // add check for username exists in a DB
-        if(userRepository.existsByUsername(signUpDto.getUsername())){
+        if(userRepository.existsByUsername(registerDto.getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         // add check for email exists in DB
-        if(userRepository.existsByEmail(signUpDto.getEmail())){
+        if(userRepository.existsByEmail(registerDto.getEmail())){
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         // create user object
         User user = new User();
-        user.setName(signUpDto.getName());
-        user.setUsername(signUpDto.getUsername());
-        user.setEmail(signUpDto.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setName(registerDto.getName());
+        user.setUsername(registerDto.getUsername());
+        user.setEmail(registerDto.getEmail());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         Role roles = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singleton(roles));
