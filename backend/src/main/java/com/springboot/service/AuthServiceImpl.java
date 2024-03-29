@@ -2,13 +2,12 @@ package com.springboot.service;
 
 import com.springboot.entity.Role;
 import com.springboot.entity.User;
-import com.springboot.exception.BlogAPIException;
+import com.springboot.exception.APIException;
 import com.springboot.payload.LoginDto;
 import com.springboot.payload.RegisterDto;
 import com.springboot.repository.RoleRepository;
 import com.springboot.repository.UserRepository;
 import com.springboot.security.JwtTokenProvider;
-import com.springboot.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,19 +59,19 @@ public class AuthServiceImpl implements AuthService {
 
         // add check for username exists in database
         if(userRepository.existsByUsername(registerDto.getUsername())){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+            throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
         }
 
         // add check for email exists in database
         if(userRepository.existsByEmail(registerDto.getEmail())){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+            throw new APIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
         }
 
         User user = new User();
-        user.setName(registerDto.getName());
         user.setUsername(registerDto.getUsername());
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setBirthday(registerDto.getBirthday());
 
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName("ROLE_USER").get();

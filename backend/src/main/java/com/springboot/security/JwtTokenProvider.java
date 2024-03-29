@@ -1,6 +1,6 @@
 package com.springboot.security;
 
-import com.springboot.exception.BlogAPIException;
+import com.springboot.exception.APIException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -68,13 +68,13 @@ public class JwtTokenProvider {
                     .parse(token);
             return true;
         }catch (MalformedJwtException malformedJwtException){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT Token");
+            throw new APIException(HttpStatus.BAD_REQUEST, "Invalid JWT Token");
         }catch (ExpiredJwtException expiredJwtException){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
+            throw new APIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
         }catch (UnsupportedJwtException unsupportedJwtException){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
+            throw new APIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
         }catch (IllegalArgumentException illegalArgumentException){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Jwt claims string is null or empty");
+            throw new APIException(HttpStatus.BAD_REQUEST, "Jwt claims string is null or empty");
         }
     }
 }
