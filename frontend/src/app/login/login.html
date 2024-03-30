@@ -8,30 +8,38 @@
   <ion-text class="ion-text-center" color="newblack">
     <h5>TAKE A BREAK. TAKE A BREATH</h5>
   </ion-text>
+  <form [formGroup]="form">
+    <ion-card color="success" style="box-shadow: none !important">
+      <ion-card-content>
+        <ion-item color="success">
+          <ion-input formControlName="email" label="Enter email address" label-placement="floating" fill="solid"
+            placeholder="Email address"></ion-input>
+        </ion-item>
+        
+          <ion-label color="danger" *ngIf="form.get('email').touched
+       && form.get('email').errors?.['email']">
+            Email is invalid</ion-label>
+        
+        
+          <ion-label color="danger" *ngIf="form.get('email').touched
+       && form.get('email').errors?.['required']">
+            Email is mandatory</ion-label>
+        
 
-  <ion-card color="success" style="box-shadow: none !important">
-    <ion-card-content>
-      <ion-item color="success">
-        <ion-input
-          label="Enter email address"
-          label-placement="floating"
-          fill="solid"
-          placeholder="Email address"
-        ></ion-input>
-      </ion-item>
+        <ion-item color="success">
+          <ion-input formControlName="password" label="Enter password" type="password" label-placement="floating"
+            placeholder="Password"></ion-input></ion-item>
 
-      <ion-item color="success">       
-        <ion-input
-          label="Enter password"
-          type="password"
-          label-placement="floating"
-          placeholder="Password"
-        ></ion-input>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+            <ion-label color="danger" *ngIf="form.get('password').touched
+            && form.get('password').errors?.['required']">
+                  Password is mandatory</ion-label>
+        
+      </ion-card-content>
+    </ion-card>
+  </form>
 
-  <ion-button color="newblack" size="full" shape="round" (click)="login()">Log in</ion-button>
+  
+  <ion-button color="newblack" size="full" shape="round" [disabled]="!form.valid" (click)="login()">Log in</ion-button>
 
   <ion-button color="success" fill="clear" size="full">
     <ion-text color="newblack">Forgot your password?</ion-text>

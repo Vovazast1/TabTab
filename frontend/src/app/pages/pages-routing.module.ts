@@ -9,28 +9,40 @@ const routes: Routes = [
     children: [
       {
         path: 'loader',
-        loadChildren: () => import('../loader/loader.module').then(m => m.LoaderModule)
+        loadChildren: () =>
+          import('../loader/loader.module').then((m) => m.LoaderModule),
       },
       {
-        path: 'login-page',
-        loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
+        path: 'login',
+        loadChildren: () =>
+          import('../login/login.module').then((m) => m.LoginPageModule),
       },
       {
-        path: 'register-page',
-        loadChildren: () => import('../register/register.module').then(m => m.RegisterPageModule)
+        path: 'register',
+        loadChildren: () =>
+          import('../register/register.module').then(
+            (m) => m.RegisterPageModule,
+          ),
+      },
+      {
+        path: 'activity',
+        loadChildren: () =>
+          import('../activity/activity.module').then(
+            (m) => m.ActivityPageModule,
+          ),
       },
       {
         path: '',
         redirectTo: '/pages/loader',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/pages/loader',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

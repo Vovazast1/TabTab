@@ -1,3 +1,4 @@
+import { AppRoutingModule } from '../app-routing.module';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,8 +11,8 @@ export class Loader implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.router.navigate(['login']);
+    setTimeout(async () => {
+      this.router.navigate(['/pages/login']);
     }, 1000);
   }
 }

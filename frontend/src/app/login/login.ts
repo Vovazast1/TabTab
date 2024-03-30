@@ -9,7 +9,7 @@ import { LoginPageForm } from './login.form';
   styleUrls: ['login.scss'],
 })
 export class LoginPage implements OnInit {
-  form: FormGroup | undefined;
+  form?: FormGroup;
 
   constructor(
     private router: Router,

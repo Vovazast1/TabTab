@@ -7,12 +7,7 @@ import { Loader } from './loader';
 import { LoaderRoutingModule } from './loader-routing.module';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    LoaderRoutingModule
-  ],
-  declarations: [Loader]
+  imports: [IonicModule, CommonModule, FormsModule, LoaderRoutingModule],
+  declarations: [Loader],
 })
 export class LoaderModule {}
