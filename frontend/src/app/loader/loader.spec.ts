@@ -10,7 +10,7 @@ import { IonicModule } from '@ionic/angular';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { Loader } from './loader';
 
-describe('LoaderPage', () => {
+describe('Loader', () => {
   let component: Loader;
   let fixture: ComponentFixture<Loader>;
   let router: Router;
@@ -32,7 +32,7 @@ describe('LoaderPage', () => {
 
     component.ngOnInit();
 
-    tick(1500);
+    tick(1000);
 
     expect(router.navigate).toHaveBeenCalledWith(['login']);
   }));
