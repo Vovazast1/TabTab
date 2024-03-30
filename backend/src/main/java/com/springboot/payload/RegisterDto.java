@@ -3,7 +3,7 @@ package com.springboot.payload;
 import lombok.Data;
 
 @Data
-public class SignUpDto {
+public class RegisterDto {
     private String username;
     private String email;
     private String password;

@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Set;
 
 @Table(name = "User", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"Nickname"}),
+        @UniqueConstraint(columnNames = {"Username"}),
         @UniqueConstraint(columnNames = {"Email"})
 })
 @Entity
@@ -36,11 +36,6 @@ public class User {
     @Column(name = "Password")
     private String password;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Role> roles;
 }
-
-
-// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =
-// FetchType.EAGER)
-// private Set<Favorite> favorites;
