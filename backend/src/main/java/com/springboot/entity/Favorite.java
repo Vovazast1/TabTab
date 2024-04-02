@@ -36,10 +36,6 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LocationID", referencedColumnName = "LocationID")
     private Location location;
-
-    public long getFavoriteId() {
-        return favoriteId;
-    }
 }
 
 

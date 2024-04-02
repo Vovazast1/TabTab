@@ -1,14 +1,11 @@
 package com.springboot.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Data
 public class JWTAuthResponse {
     private String accessToken;
     private String tokenType = "Bearer";

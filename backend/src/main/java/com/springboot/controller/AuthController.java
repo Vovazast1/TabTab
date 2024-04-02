@@ -2,10 +2,13 @@ package com.springboot.controller;
 
 import com.springboot.entity.Role;
 import com.springboot.entity.User;
+import com.springboot.payload.JWTAuthResponse;
 import com.springboot.payload.LoginDto;
 import com.springboot.payload.RegisterDto;
 import com.springboot.repository.RoleRepository;
 import com.springboot.repository.UserRepository;
+import com.springboot.security.JwtTokenProvider;
+import com.springboot.service.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -42,20 +45,15 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         try {
-
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginDto.getUsernameOrEmail(), loginDto.getPassword()));
-
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
 
-
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(401));
         }
-
-
     }
 
     @PostMapping("/signup")
@@ -83,4 +81,20 @@ public class AuthController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
     }
+
+    @PostMapping("/api/v1/login")
+    public JWTAuthResponse AuthenticateAndGetToken(@RequestBody LoginDto LoginDto){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        LoginDto.getUsernameOrEmail(),
+                        LoginDto.getPassword()));
+        if(authentication.isAuthenticated()){
+                return JWTAuthResponse.builder()
+                        .accessToken(JwtTokenProvider.GenerateToken(LoginDto.getUsernameOrEmail())).build();
+        } else {
+            throw new UsernameNotFoundException("invalid user request..!!");
+        }
+
+    }
 }
+
