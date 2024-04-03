@@ -42,6 +42,9 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
+
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         try {
@@ -82,7 +85,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("/api/v1/login")
+    @PostMapping("/v1/login")
     public JWTAuthResponse AuthenticateAndGetToken(@RequestBody LoginDto LoginDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -90,7 +93,7 @@ public class AuthController {
                         LoginDto.getPassword()));
         if(authentication.isAuthenticated()){
                 return JWTAuthResponse.builder()
-                        .accessToken(JwtTokenProvider.GenerateToken(LoginDto.getUsernameOrEmail())).build();
+                        .accessToken(jwtTokenProvider.GenerateToken(LoginDto.getUsernameOrEmail())).build();
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
         }
