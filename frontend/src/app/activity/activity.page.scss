@@ -1,0 +1,25 @@
+ion-content {
+  --background: #78CB80;
+}
+
+ion-item[color="gray85"]{
+  margin-top: 3rem;
+}
+ion-text[color="dark"]{
+  font-size: xx-large;
+  margin-left: 5rem;
+}
+
+ion-text[color="newblack"] {
+  display: flex;
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+
+ion-button[color="serengeti"]{
+  display: flex;
+  justify-content: center;
+}
