@@ -3,7 +3,13 @@
 
 /** Ionic CSS Variables **/
 :root {
-
+    /** gray85 **/
+    --ion-color-gray85: #d9d9d9;
+      --ion-color-gray85-rgb: 217, 217, 217;
+      --ion-color-gray85-contrast: #000000;
+      --ion-color-gray85-contrast-rgb: 0, 0, 0;
+      --ion-color-gray85-shade: #bfbfbf;
+      --ion-color-gray85-tint: #dddddd;
   /** aero-blue **/
   --ion-color-aero-blue: #bae4c8;
     --ion-color-aero-blue-rgb: 186, 228, 200;
@@ -99,7 +105,14 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
-
+.ion-color-gray85 {
+  --ion-color-base: var(--ion-color-gray85);
+  --ion-color-base-rgb: var(--ion-color-gray85-rgb);
+  --ion-color-contrast: var(--ion-color-gray85-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-gray85-contrast-rgb);
+  --ion-color-shade: var(--ion-color-gray85-shade);
+  --ion-color-tint: var(--ion-color-gray85-tint);
+}
 .ion-color-newblack {
   --ion-color-base: var(--ion-color-newblack);
   --ion-color-base-rgb: var(--ion-color-newblack-rgb);
@@ -126,6 +139,7 @@
   --ion-color-shade: var(--ion-color-aero-blue-shade);
   --ion-color-tint: var(--ion-color-aero-blue-tint);
 }
+
 @media (prefers-color-scheme: dark) {
   /*
   * Dark Colors
@@ -133,6 +147,13 @@
   */
 
   body {
+  --ion-color-gray85: #d9d9d9;
+    --ion-color-gray85-rgb: 217, 217, 217;
+    --ion-color-gray85-contrast: #000000;
+    --ion-color-gray85-contrast-rgb: 0, 0, 0;
+    --ion-color-gray85-shade: #bfbfbf;
+    --ion-color-gray85-tint: #dddddd;
+      
   --ion-color-aero-blue: #bae4c8;
     --ion-color-aero-blue-rgb: 186, 228, 200;
     --ion-color-aero-blue-contrast: #000000;
