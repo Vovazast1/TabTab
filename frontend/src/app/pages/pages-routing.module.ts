@@ -20,16 +20,12 @@ const routes: Routes = [
       {
         path: 'register',
         loadChildren: () =>
-          import('../register/register.module').then(
-            (m) => m.RegisterPageModule,
-          ),
+          import('../register/register.module').then((m) => m.RegisterPageModule),
       },
       {
         path: 'activity',
         loadChildren: () =>
-          import('../activity/activity.module').then(
-            (m) => m.ActivityPageModule,
-          ),
+          import('../activity/activity.module').then((m) => m.ActivityPageModule),
       },
       
       {
