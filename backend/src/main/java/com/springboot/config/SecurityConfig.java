@@ -20,59 +20,48 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-@SecurityScheme(
-        name = "Bear Authentication",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        scheme = "bearer"
-)
+@SecurityScheme(name = "Bear Authentication", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 public class SecurityConfig {
 
-    private UserDetailsService userDetailsService;
+        private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+        private JwtAuthenticationFilter authenticationFilter;
 
-    private JwtAuthenticationFilter authenticationFilter;
+        public SecurityConfig(UserDetailsService userDetailsService,
+                        JwtAuthenticationEntryPoint authenticationEntryPoint,
+                        JwtAuthenticationFilter authenticationFilter) {
+                this.authenticationEntryPoint = authenticationEntryPoint;
+                this.authenticationFilter = authenticationFilter;
+        }
 
-    public SecurityConfig(UserDetailsService userDetailsService,
-                          JwtAuthenticationEntryPoint authenticationEntryPoint,
-                          JwtAuthenticationFilter authenticationFilter){
-        this.userDetailsService = userDetailsService;
-        this.authenticationEntryPoint = authenticationEntryPoint;
-        this.authenticationFilter = authenticationFilter;
-    }
+        @Bean
+        public static PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public static PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+                return configuration.getAuthenticationManager();
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+        @Bean
+        SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http.csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests((authorize) -> authorize
+                                                .requestMatchers(HttpMethod.GET, "/login").permitAll()
+                                                .requestMatchers("/api/auth/**").permitAll()
+                                                .requestMatchers("/swagger-ui/**").permitAll()
+                                                .requestMatchers("/v3/api-docs/**").permitAll()
+                                                .anyRequest().authenticated()
 
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authorize) ->
-                        //authorize.anyRequest().authenticated()
-                        authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                                //.requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated()
+                                ).exceptionHandling(exception -> exception
+                                                .authenticationEntryPoint(authenticationEntryPoint))
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                ).exceptionHandling( exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint)
-                ).sessionManagement( session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
+                return http.build();
+        }
 }

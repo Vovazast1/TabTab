@@ -1,13 +1,14 @@
-// package com.example;
+package com.springboot;
 
-// import org.junit.Test;
-// import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-// @SpringBootTest
-// class DemoApplicationTests {
+@SpringBootTest
+class DemoApplicationTests {
 
-// @Test
-// void contextLoads() {
-// }
+    @Test
+    void contextLoads() {
 
-// }
+    }
+
+}
