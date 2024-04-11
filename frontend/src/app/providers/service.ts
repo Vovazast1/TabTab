@@ -5,16 +5,16 @@ import { LoginPageModule } from '../login/login.module';
 
 @Injectable()
 export class ApiService {
-  public API = 'http://localhost:8080';
+  public authAPI = 'http://localhost:8080/api/v1/auth';
 
   constructor(private http: HttpClient) {
   }
 
-  login(): Observable<any> {
-    return this.http.post<any>(this.API + "/login", "");
+  login(usernameOrEmail: string, password: string): Observable<any> {
+    return this.http.post<any>(this.authAPI + "/login", {usernameOrEmail, password});
   }
 
-  register(): Observable<any> {
-    return this.http.get(this.API + '/api/auth/singup');
+  register(usernameOrEmail: string, password: string): Observable<any> {
+    return this.http.post<any>(this.authAPI + "/login", {usernameOrEmail, password});
   }
 }
