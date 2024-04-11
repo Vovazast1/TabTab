@@ -32,8 +32,3 @@ public class Location {
     private String type;
 
 }
-
-
-// @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch =
-// FetchType.EAGER)
-// private Set<Favorite> favorites;

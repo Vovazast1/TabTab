@@ -3,10 +3,6 @@ package com.springboot.entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import com.springboot.entity.Location;
-
-import com.springboot.entity.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,24 +33,3 @@ public class Favorite {
     @JoinColumn(name = "LocationID", referencedColumnName = "LocationID")
     private Location location;
 }
-
-
-
-
-
-
-//package com.springboot.Favorite;
-//
-//import java.io.Serializable;
-//
-//import jakarta.persistence.Embeddable;
-//import lombok.Getter;
-//import lombok.Setter;
-//
-//@Embeddable
-//@Getter
-//@Setter
-//public class FavoriteId implements Serializable{
-//   private long userId;
-//   private long locationId;
-//}
