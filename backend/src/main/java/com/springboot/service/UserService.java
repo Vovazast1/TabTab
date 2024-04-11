@@ -9,8 +9,6 @@ import com.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import com.example.Favorite.Favorite;
-
 @Service
 public class UserService {
 
@@ -31,9 +29,5 @@ public class UserService {
     public Optional<User> getUser(String name) {
         return userRepos.findByUsername(name);
     }
-
-    // public Set<Favorite> getUserFavorites(Long id) {
-    // return userRepos.findByUserId(id).getFavorites();
-    // }
 
 }
