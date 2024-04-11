@@ -10,7 +10,7 @@ import { ApiService } from '../providers/service';
   styleUrls: ['login.scss'],
 })
 export class LoginPage implements OnInit {
-  public property: any;
+  public next: any;
   form?: FormGroup;
 
   constructor(
@@ -20,16 +20,20 @@ export class LoginPage implements OnInit {
   ) {}
 
   login() {
-    this.apiService.login().subscribe(
-      property => { this.property = property; },
-      error => { console.error('Failed to load page: ' + error) }
+    this.apiService.login(this.form?.get('email')?.value, this.form?.get('password')?.value).subscribe(
+      {
+        next:() => console.log("Success!"),
+        error:() => console.error("Incorrect login or password.")
+      }
     )
   }
 
   register() {
-    this.apiService.register().subscribe(
-      property => { this.property = property; },
-      error => { console.error('Failed to load page: ' + error) }
+    this.apiService.register(this.form?.get('email')?.value, this.form?.get('password')?.value).subscribe(
+      {
+        next:() => console.log("Success!"),
+        error:() => console.error("Failed to load page.")
+      }
     )
   }
 

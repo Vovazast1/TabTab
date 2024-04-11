@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
-@Table(name = "roles")
+@Table(name = "role")
 @Entity
 @Getter
 @Setter

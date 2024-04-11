@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JwtTokenProvider    {
+public class JwtTokenProvider {
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;
@@ -24,7 +24,7 @@ public class JwtTokenProvider    {
     @Value("${app-jwt-expiration-milliseconds}")
     private long jwtExpirationDate;
 
-    private Key key(){
+    private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
@@ -54,7 +54,7 @@ public class JwtTokenProvider    {
         return extractExpiration(token).before(new Date());
     }
 
-    public String GenerateToken(String username){
+    public String GenerateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
     }
@@ -65,25 +65,24 @@ public class JwtTokenProvider    {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*1))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1))
                 .signWith(key(), SignatureAlgorithm.HS256).compact();
     }
 
-    // validate JWT token
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parser()
                     .verifyWith((SecretKey) key())
                     .build()
                     .parse(token);
             return true;
-        }catch (MalformedJwtException malformedJwtException){
+        } catch (MalformedJwtException malformedJwtException) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Invalid JWT Token");
-        }catch (ExpiredJwtException expiredJwtException){
+        } catch (ExpiredJwtException expiredJwtException) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
-        }catch (UnsupportedJwtException unsupportedJwtException){
+        } catch (UnsupportedJwtException unsupportedJwtException) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
-        }catch (IllegalArgumentException illegalArgumentException){
+        } catch (IllegalArgumentException illegalArgumentException) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Jwt claims string is null or empty");
         }
     }
