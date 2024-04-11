@@ -39,9 +39,4 @@ public class LocationController {
         return locationService.getLocationById(id);
     }
 
-    // @GetMapping("/avoriteByLocation")
-    // public String getMethodName(@RequestParam String param) {
-    // return new String();
-    // }
-
 }

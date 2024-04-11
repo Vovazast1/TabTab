@@ -34,9 +34,4 @@ public class UserController {
     public Optional<User> getUser(String name) {
         return userService.getUser(name);
     }
-
-//     @GetMapping("/getFavorites")
-//     public Set<Favorite> getUserFavorites(Long id) {
-//     return userService.getUserFavorites(id);
-//     }
 }

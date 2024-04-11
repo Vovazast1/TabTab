@@ -16,9 +16,4 @@ public class FavoriteService {
         return favoriteRepository.findAll();
     }
 
-//     public void addFavorite(Long userId, Long locationId) {
-//     FavoriteId id = new FavoriteId(userId, locationId);
-//     Favorite favorite = new Favorite(id);
-//     favoriteRepository.save(favorite);
-//     }
 }
