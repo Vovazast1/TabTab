@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activity.page.scss'],
 })
 export class ActivityPage implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  goToLocations() {
+    this.router.navigate(['pages/locations'])
+  }
 
   ngOnInit() {}
 }

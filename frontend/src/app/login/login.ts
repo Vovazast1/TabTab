@@ -16,25 +16,20 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private apiService : ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {}
 
   login() {
     this.apiService.login(this.form?.get('email')?.value, this.form?.get('password')?.value).subscribe(
       {
-        next:() => console.log("Success!"),
+        next:() => this.router.navigate(['pages/activity']),
         error:() => console.error("Incorrect login or password.")
       }
     )
   }
 
-  register() {
-    this.apiService.register(this.form?.get('email')?.value, this.form?.get('password')?.value).subscribe(
-      {
-        next:() => console.log("Success!"),
-        error:() => console.error("Failed to load page.")
-      }
-    )
+  goToRegister() {
+    this.router.navigate(['pages/register'])
   }
 
   ngOnInit() {

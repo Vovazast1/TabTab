@@ -1,6 +1,6 @@
 <ion-content>
 
-  <ion-button href="pages/login-page" color="serengeti">
+  <ion-button color="serengeti" (click)="goToLogin()">
     <ion-img src="assets/icon/move-back.png"></ion-img>
   </ion-button>
 
@@ -87,7 +87,7 @@
       ></ion-input>
     </ion-card-content>
   </ion-card>
-  <ion-button color="newblack" size="full" shape="round">
+  <ion-button color="newblack" size="full" shape="round" (click)="register()">
     Create account
   </ion-button>
 </ion-content>
