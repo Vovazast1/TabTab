@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../providers/service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,11 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.scss'],
 })
 export class RegisterPage implements OnInit {
-  constructor(private router: Router) {}
+  form?: FormGroup;
 
-  ngOnInit() {}
+  constructor(
+    private router: Router,
+    //private apiService : ApiService
+  ) {}
 
   register() {
-    this.router.navigate(['activity']);
+    // this.apiService.register(this.form?.get('email')?.value, this.form?.get('password')?.value).subscribe(
+    //   {
+    //     next:() => this.router.navigate(['pages/activity']),
+    //     error:() => console.error("Failed to load page.")
+    //   }
+    // )
   }
+
+  goToLogin() {
+    this.router.navigate(['pages/login'])
+  }
+
+  ngOnInit() {}
 }

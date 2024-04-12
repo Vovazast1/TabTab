@@ -27,26 +27,23 @@ const routes: Routes = [
         loadChildren: () =>
           import('../activity/activity.module').then((m) => m.ActivityPageModule),
       },
-      
       {
         path: 'locations',
         loadChildren: () =>
-          import('../locations/locations.module').then(
-            (m) => m.LocationsPageModule,
-          ),
+          import('../locations/locations.module').then((m) => m.LocationsPageModule),
       },
       {
         path: '',
         redirectTo: '/pages/loader',
         pathMatch: 'full',
-      },
-    ],
+      }
+    ]
   },
   {
     path: '',
     redirectTo: '/pages/loader',
     pathMatch: 'full',
-  },
+  }
 ];
 
 @NgModule({
