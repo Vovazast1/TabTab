@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login';
 import { LoginPageRoutingModule } from './login-routing.module';
-import { ApiService } from '../providers/service';
-import { HttpClientModule } from "@angular/common/http";
+import { ApiService } from '../providers/ApiService';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { HttpClientModule } from "@angular/common/http";
     FormsModule,
     LoginPageRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [ApiService],
   declarations: [LoginPage],
