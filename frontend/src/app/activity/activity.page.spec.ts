@@ -5,8 +5,6 @@ describe('ActivityPage', () => {
   let component: ActivityPage;
   let fixture: ComponentFixture<ActivityPage>;
 
-  //async after      beforeEach(async   no async!!!!!!!!!!!!!!!!!!!!!!!!!!
-
   beforeEach(() => {
     fixture = TestBed.createComponent(ActivityPage);
     component = fixture.componentInstance;
