@@ -34,6 +34,6 @@ describe('Loader', () => {
 
     tick(1000);
 
-    expect(router.navigate).toHaveBeenCalledWith(['login']);
+    expect(router.navigate).toHaveBeenCalledWith(['/pages/login']);
   }));
 });

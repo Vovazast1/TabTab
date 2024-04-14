@@ -4,7 +4,8 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "start": "ionic serve"
+    "start": "ionic serve",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {

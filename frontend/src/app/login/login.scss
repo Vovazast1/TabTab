@@ -1,45 +1,45 @@
-ion-img{
+ion-img {
     width: 40%;
-    margin-top: 20%;
-    margin-left: 30%;
-    margin-bottom: 3%;
-}
-
-ion-content{
+    height: auto;
+    margin: 3rem auto;
+  }
+  
+  ion-content {
     --background: #FFF6EB;
   
-}
-
-ion-input{
+  }
+  
+  ion-input {
     --background: transparent !important;
-}
-
-ion-card-content{
-    margin-top: -7%;
-}
-
-ion-button[color="success"]{  //Forgot your password?
+  }
+  
+  ion-card-content {
+    margin-top: -1rem;
+  }
+  
+  ion-button[color="success"] { //Forgot your password?
     text-transform: initial;
-    margin:10% ;
-    margin-top: -20%;
     font-size: large;
-}
-
-ion-button[color="newblack"]{ //log in
+  }
+  
+  ion-button[color="newblack"] { //log in
     text-transform: initial;
-    margin:20% ;
-    margin-top: -7%;
-}
-
-ion-text[color="dark"]{ //don't have account
-    display: flex;
-    justify-content: center;
-    margin-top: 30%;
-
-}
-
-ion-button[color="dark"] { //create account
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2rem;
+    width: 14rem;
+    height: 3rem;
+  }
+  
+  ion-text[color="dark"] { //don't have account
+    h6 {
+      margin-top: 3rem;
+    }
+  }
+  
+  ion-button[color="dark"] { //create account
     text-transform: initial;
-    margin: 20%;
-    margin-top: 1%;
-}
+    width: 14rem;
+    height: 3rem;
+    margin: auto;
+  }
