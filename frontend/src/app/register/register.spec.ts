@@ -5,6 +5,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RegisterPage } from './register';
 import { ApiService } from '../providers/ApiService';
 import { Observable } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterPageModule } from './register.module';
 
 let mockApiService = jasmine.createSpyObj('ApiService', {
   login: new Observable(observer => {
@@ -26,7 +28,7 @@ describe('RegisterPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RegisterPage],
-      imports: [IonicModule.forRoot(), AppRoutingModule],
+      imports: [IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, RegisterPageModule],
       providers: [{ provide: ApiService, useValue: mockApiService }]
     }).compileComponents();
 
@@ -41,6 +43,12 @@ describe('RegisterPage', () => {
     //mockApiService.register().and.returnValue(null);
     component.register();
 
-    expect(router.navigate).toHaveBeenCalledWith(['activity']);
+    expect(router.navigate).toHaveBeenCalledWith(['/pages/activity']);
+  });
+
+  it('should create register form on page init', () => {
+    fixture.detectChanges();
+
+    expect(component.registerForm).not.toBeUndefined();
   });
 });

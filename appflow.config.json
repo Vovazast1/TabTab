@@ -3,11 +3,11 @@
     [
         {
             "appId": "a1111a1a",
-            "iosPath": "iMyApp"
+            "iosPath": "frontend/ios"
         },
         {
             "appId": "b2222b2b",
-            "androidPath": "MyAppDroid"
+            "androidPath": "frontend/android"
         }
     ]
 }

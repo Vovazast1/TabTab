@@ -1,7 +1,7 @@
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterPage } from './register';
 
 import { RegisterPageRoutingModule } from './register-routing.module';
@@ -11,8 +11,9 @@ import { RegisterPageRoutingModule } from './register-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    RegisterPageRoutingModule
+    RegisterPageRoutingModule,
+    ReactiveFormsModule,
   ],
-  declarations: [RegisterPage]
+  declarations: [RegisterPage],
 })
 export class RegisterPageModule {}

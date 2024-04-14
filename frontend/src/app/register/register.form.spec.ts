@@ -8,7 +8,7 @@ describe('RegisterPageForm', () => {
 
   beforeEach(() => {
     registerPageForm = new RegisterPageForm(new FormBuilder());
-    form = registerPageForm.createForm();
+    form = registerPageForm.getForm();
   });
 
   it('should empty nickname be invalid', () => {
@@ -43,9 +43,7 @@ describe('RegisterPageForm', () => {
     form.get('password')?.setValue('password123');
     form.get('confirmPassword')?.setValue('password123');
 
-    expect(form.get('password')?.value).toEqual(
-      form.get('confirmPassword')?.value,
-    );
+    expect(form.get('password')?.value).toEqual(form.get('confirmPassword')?.value);
     expect(form.get('confirmPassword')?.valid).toBeTruthy();
   });
 
@@ -53,9 +51,7 @@ describe('RegisterPageForm', () => {
     form.get('password')?.setValue('password123');
     form.get('confirmPassword')?.setValue('password456');
 
-    expect(form.get('password')?.value).not.toEqual(
-      form.get('confirmPassword')?.value,
-    );
+    expect(form.get('password')?.value).not.toEqual(form.get('confirmPassword')?.value);
     expect(form.get('confirmPassword')?.valid).toBeFalsy();
   });
 });
