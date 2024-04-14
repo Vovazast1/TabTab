@@ -7,21 +7,21 @@ import * as L from 'leaflet';
   styleUrls: ['./locations.page.scss'],
 })
 export class LocationsPage implements OnInit {
-  map: L.Map | undefined;
+  map!: L.Map;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.map = new L.Map("map").setView([49.8431, 24.0361], 10);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: 'Map Test'
+    this.map = new L.Map('map').setView([49.8431, 24.0361], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map Test',
     }).addTo(this.map);
 
     this.map.whenReady(() => {
       setTimeout(() => {
         if (this.map) {
-        this.map.invalidateSize();
-      }
+          this.map.invalidateSize();
+        }
       }, 1000);
     });
   }
