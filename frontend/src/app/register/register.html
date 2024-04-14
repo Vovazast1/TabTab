@@ -1,93 +1,105 @@
 <ion-content>
-
   <ion-button color="serengeti" (click)="goToLogin()">
     <ion-img src="assets/icon/move-back.png"></ion-img>
   </ion-button>
 
-  <ion-text color="newblack"> Create Account </ion-text>
+  <ion-text color="newblack">Create Account</ion-text>
 
-  <ion-button color="aero-blue" size="full" shape="round">
-    <ion-text color="dark" style="font-size: small; margin-top: -35%">
-      Nickname
-    </ion-text>
-  </ion-button>
+  <form [formGroup]="form">
 
-  <ion-card color="success" style="box-shadow: none !important">
-    <ion-card-content>
-      <ion-input
-        fill="solid"
-        text-align="center"
-        placeholder="Your Nickname"
-        style="margin-top: -6%"
-      ></ion-input>
-    </ion-card-content>
-  </ion-card>
+    <ion-chip>Nickname</ion-chip>
 
-  <ion-button color="aero-blue" size="full" shape="round">
-    <ion-text color="dark" style="font-size: small; margin-top: -35%">
-      Birthday
-    </ion-text>
-  </ion-button>
+    <ion-card color="success" style="box-shadow: none !important">
+      <ion-card-content>
+        <ion-input 
+          formControlName="nickname" 
+          fill="solid"
+          text-align="center"
+          placeholder="Your nickname"
+          label="Your nickname" 
+          label-placement="floating"
+          id="nicknameInput"
+        ></ion-input>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card color="success" style="box-shadow: none !important">
-    <ion-card-content>
-      <ion-input
-        fill="solid"
-        placeholder="Your Nickname"
-        style="margin-top: -6%"
-      ></ion-input>
-    </ion-card-content>
-  </ion-card>
+    <ion-chip>Birthday</ion-chip>
 
-  <ion-button color="aero-blue" size="full" shape="round">
-    <ion-text color="dark" style="font-size: small; margin-top: -35%">
-      Email Address
-    </ion-text>
-  </ion-button>
+    <div align="center" class="ion-margin-top" class="stylebg">
+      <ion-datetime presentation="date" [preferWheel]="true"
+        [value]="currentDate"
+        min="1924-01-1"
+        max="2008-12-31"
+        size="fixed"
+        id="dateInput">
+      </ion-datetime>
+    </div>
 
-  <ion-card color="success" style="box-shadow: none !important">
-    <ion-card-content>
-      <ion-input
-        fill="solid"
-        type="email"
-        placeholder="Email Address"
-        style="margin-top: -6%"
-      ></ion-input>
-    </ion-card-content>
-  </ion-card>
+    <ion-chip>Email address</ion-chip>
 
-  <ion-button color="aero-blue" size="full" shape="round">
-    <ion-text color="dark" style="font-size: small; margin-top: -35%">
-      Password
-    </ion-text>
-  </ion-button>
+    <ion-card color="success" style="box-shadow: none !important">
+      <ion-card-content>
+        <ion-item color="success">
+          <ion-input
+            formControlName="email" 
+            fill="solid"
+            placeholder="Email address"
+            label="Enter email address" 
+            label-placement="floating"
+            id="emailInput">
+          </ion-input>
+        </ion-item>
 
-  <ion-card color="success" style="box-shadow: none !important">
-    <ion-card-content>
-      <ion-input
-        fill="solid"
-        placeholder="Create a password"
-        style="margin-top: -6%"
-      ></ion-input>
-    </ion-card-content>
-  </ion-card>
+        <ion-label color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.['email']">
+          Email is invalid
+        </ion-label>
 
-  <ion-button color="aero-blue" size="full" shape="round">
-    <ion-text color="dark" style="font-size: small; margin-top: -35%">
-      Confirmation
-    </ion-text>
-  </ion-button>
+        <ion-label color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.['required']">
+          Email is mandatory
+        </ion-label>
 
-  <ion-card color="success" style="box-shadow: none !important">
-    <ion-card-content>
-      <ion-input
-        fill="solid"
-        placeholder="Confirm a password"
-        style="margin-top: -6%"
-      ></ion-input>
-    </ion-card-content>
-  </ion-card>
-  <ion-button color="newblack" size="full" shape="round" (click)="register()">
-    Create account
-  </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-chip>Password</ion-chip>
+
+    <ion-card color="success" style="box-shadow: none !important">
+      <ion-card-content>
+        <ion-input
+          formControlName="password" 
+          fill="solid"
+          placeholder="Create password"
+          id="passwordInput">
+        </ion-input>
+
+        <ion-label color="danger" *ngIf="form.get('password').touched && form.get('password').errors?.['required']">
+          Password is mandatory
+        </ion-label>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-chip>Confirm</ion-chip>
+
+    <ion-card color="success" style="box-shadow: none !important">
+      <ion-card-content>
+        <ion-input
+          formControlName="confirmPassword" 
+          fill="solid"
+          placeholder="Confirm password"
+          id="confirmPasswordInput">
+        </ion-input>
+
+        <ion-label color="danger" *ngIf="form.get('confirmPassword').touched && form.get('confirmPassword').errors?.['required']">
+          Confirm password is mandatory
+        </ion-label>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button color="newblack" size="full" shape="round" (click)="register()">
+      Create account
+    </ion-button>
+
+  </form>
 </ion-content>

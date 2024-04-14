@@ -26,6 +26,6 @@ describe('RegisterPage', () => {
 
     component.register();
 
-    expect(router.navigate).toHaveBeenCalledWith(['activity']);
+    expect(router.navigate).toHaveBeenCalledWith(['/pages/activity']);
   });
 });

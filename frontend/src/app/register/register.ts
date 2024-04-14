@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../providers/service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +9,12 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./register.scss'],
 })
 export class RegisterPage implements OnInit {
-  form?: FormGroup;
+  form!: FormGroup;
+  currentDate!: string;
 
   constructor(
     private router: Router,
-    //private apiService : ApiService
+    //private apiService: ApiService,
   ) {}
 
   register() {
@@ -26,7 +27,7 @@ export class RegisterPage implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigate(['pages/login'])
+    this.router.navigate(['pages/login']);
   }
 
   ngOnInit() {}
