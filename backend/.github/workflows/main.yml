@@ -1,0 +1,28 @@
+name: Build & Deploy Spring app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    name: Build & Deploy Spring app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4.1.1
+        with:
+          distribution: 'corretto'
+          java-version: 17
+
+      - name: Unit Tests
+        run: mvn -B test --file pom.xml
+
+      - name: Build the application
+        run: |
+          mvn clean
+          mvn -B package --file pom.xml
