@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 public class AuthControllerTest {
 
     @InjectMocks
@@ -46,11 +45,11 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Test should pass when user enter into account with valid username or email and password")
     void testAuthenticateAndGetToken_WithValidCredentials() {
-        String usernameOrEmail = "testUser";
-        String password = "testPassword";
         String token = "testToken";
-
-        LoginDto loginDto = new LoginDto(usernameOrEmail, password);
+        LoginDto loginDto = new LoginDto(
+                "testUser",
+                "testPassword"
+        );
         Authentication authentication = mock(Authentication.class);
 
         when(authentication.isAuthenticated())
@@ -59,7 +58,7 @@ public class AuthControllerTest {
                 .authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
         when(jwtTokenProvider
-                .GenerateToken(usernameOrEmail))
+                .GenerateToken(loginDto.getUsernameOrEmail()))
                 .thenReturn(token);
 
         JWTAuthResponse response = authController.AuthenticateAndGetToken(loginDto);
@@ -67,17 +66,17 @@ public class AuthControllerTest {
         verify(authenticationManager)
                 .authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtTokenProvider)
-                .GenerateToken(usernameOrEmail);
+                .GenerateToken(loginDto.getUsernameOrEmail());
         assertNotNull(response);
         assertEquals(token, response.getAccessToken());
     }
     @Test
     @DisplayName("Test should pass when user enter into account with invalid username or email and password")
     void testAuthenticateAndGetToken_WithInvalidCredentials() {
-        String usernameOrEmail = "testUser";
-        String password = "testPassword";
-
-        LoginDto loginDto = new LoginDto(usernameOrEmail, password);
+        LoginDto loginDto = new LoginDto(
+                "testUser",
+                "testPassword"
+        );
         Authentication authentication = mock(Authentication.class);
 
         when(authentication.isAuthenticated())
@@ -91,8 +90,13 @@ public class AuthControllerTest {
 
     @Test
     @DisplayName("Test should pass when user register with correct credentials")
-    void testRegisterUser_Success(){
-        RegisterDto registerDto = new RegisterDto("username", "email@example.com", "password", "1990-01-01");
+    void testRegisterUser_Success() {
+        RegisterDto registerDto = new RegisterDto(
+                "username",
+                "email@example.com",
+                "password",
+                "1990-01-01"
+        );
         when(userRepository
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(false);
@@ -113,7 +117,12 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Test should pass when user login with wrong username")
     void testRegisterUser_WithWrongUsername(){
-        RegisterDto registerDto = new RegisterDto("existingUsername", "email@example.com", "password", "1990-01-01");
+        RegisterDto registerDto = new RegisterDto(
+                "existingUsername",
+                "email@example.com",
+                "password",
+                "1990-01-01"
+        );
         when(userRepository
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(true);
@@ -121,7 +130,10 @@ public class AuthControllerTest {
         ResponseEntity<?> response = authController.registerUser(registerDto);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Username is already taken!", response.getBody());
+        assertEquals(
+                "Username is already taken!",
+                response.getBody()
+        );
         verify(userRepository, never())
                 .save(any(User.class));
     }
@@ -129,7 +141,12 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Test should pass when user login with wrong email")
     void testRegisterUser_WithWrongEmail(){
-        RegisterDto registerDto = new RegisterDto("username", "existingEmail@example.com", "password", "1990-01-01");
+        RegisterDto registerDto = new RegisterDto(
+                "username",
+                "existingEmail@example.com",
+                "password",
+                "1990-01-01"
+        );
         when(userRepository
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(false);
@@ -140,7 +157,11 @@ public class AuthControllerTest {
         ResponseEntity<?> response = authController.registerUser(registerDto);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Email is already taken!", response.getBody());
-        verify(userRepository, never()).save(any(User.class));
+        assertEquals(
+                "Email is already taken!",
+                response.getBody()
+        );
+        verify(userRepository, never())
+                .save(any(User.class));
     }
 }
