@@ -87,7 +87,6 @@ public class AuthControllerTest {
 
         assertThrows(UsernameNotFoundException.class, () -> authController.AuthenticateAndGetToken(loginDto));
     }
-
     @Test
     @DisplayName("Test should pass when user register with correct credentials")
     void testRegisterUser_Success() {
@@ -113,7 +112,6 @@ public class AuthControllerTest {
         assertEquals("User registered successfully", response.getBody());
         verify(userRepository, times(1)).save(any(User.class));
     }
-
     @Test
     @DisplayName("Test should pass when user login with wrong username")
     void testRegisterUser_WithWrongUsername(){
@@ -137,7 +135,6 @@ public class AuthControllerTest {
         verify(userRepository, never())
                 .save(any(User.class));
     }
-
     @Test
     @DisplayName("Test should pass when user login with wrong email")
     void testRegisterUser_WithWrongEmail(){
