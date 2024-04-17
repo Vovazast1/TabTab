@@ -1,0 +1,40 @@
+name: Build & Deploy Spring app
+
+on:
+  pull_request:
+    branches:
+      - [ "main" ]
+
+  push:
+    branches:
+      - [ "main" ]
+
+jobs:
+  build-deploy:
+    name: Build & Deploy Spring app
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/
+
+    strategy:
+      matrix:
+        java-version: ['17']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: '<distribution>'
+          java-version: ${{ matrix.java }}
+
+      - name: Unit Tests
+        run: mvn -B test --file pom.xml
+
+      - name: Build the application
+        run: |
+          mvn clean
+          mvn -B package --file pom.xml
