@@ -43,9 +43,13 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - feature/**
+      - fix/**
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
