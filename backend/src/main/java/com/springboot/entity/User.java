@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Table(name = "User", uniqueConstraints = {
@@ -32,7 +32,7 @@ public class User {
     private String username;
 
     @Column(name = "Birthday")
-    private LocalDate birthday;
+    private Date birthday;
 
     @Column(name = "Password")
     private String password;
