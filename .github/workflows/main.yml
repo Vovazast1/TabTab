@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-          cache-dependency-path: TabTab/frontend/package.json
+          cache-dependency-path: TabTab/frontend/package-lock.json
 
       - name: Install Dependencies
         run: npm install
