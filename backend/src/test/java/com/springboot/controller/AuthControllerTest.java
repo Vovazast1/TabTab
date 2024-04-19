@@ -21,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -92,7 +94,7 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Test should pass when user register with correct credentials")
     void testRegisterUser_Success(){
-        RegisterDto registerDto = new RegisterDto("username", "email@example.com", "password", "1990-01-01");
+        RegisterDto registerDto = new RegisterDto("username", "email@example.com", "password", LocalDate.now());
         when(userRepository
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(false);
@@ -113,7 +115,7 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Test should pass when user login with wrong username")
     void testRegisterUser_WithWrongUsername(){
-        RegisterDto registerDto = new RegisterDto("existingUsername", "email@example.com", "password", "1990-01-01");
+        RegisterDto registerDto = new RegisterDto("existingUsername", "email@example.com", "password", LocalDate.now());
         when(userRepository
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(true);
@@ -129,7 +131,7 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Test should pass when user login with wrong email")
     void testRegisterUser_WithWrongEmail(){
-        RegisterDto registerDto = new RegisterDto("username", "existingEmail@example.com", "password", "1990-01-01");
+        RegisterDto registerDto = new RegisterDto("username", "existingEmail@example.com", "password", LocalDate.now());
         when(userRepository
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(false);

@@ -72,6 +72,5 @@ public class AuthController {
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
         }
-
     }
 }

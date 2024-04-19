@@ -7,11 +7,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Table(name = "User", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"Username"}),
-        @UniqueConstraint(columnNames = {"Email"})
+        @UniqueConstraint(columnNames = { "Username" }),
+        @UniqueConstraint(columnNames = { "Email" })
 })
 @Entity
 @Getter
@@ -31,7 +32,7 @@ public class User {
     private String username;
 
     @Column(name = "Birthday")
-    private String birthday;
+    private LocalDate birthday;
 
     @Column(name = "Password")
     private String password;
