@@ -31,4 +31,12 @@ public class LocationService {
     public Location getLocationById(Long id) {
         return locationRepositories.findByLocationId(id);
     }
+
+    public List<Location> getLocationByActivity(String activity){
+        return locationRepositories.findByActivity(activity);
+    }
+
+    public List<Location> getLocationByType(String type) {
+        return locationRepositories.findByType(type);
+    }
 }
