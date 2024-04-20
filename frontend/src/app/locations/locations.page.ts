@@ -9,13 +9,24 @@ import * as L from 'leaflet';
 export class LocationsPage implements OnInit {
   map!: L.Map;
 
-  constructor() {}
+  constructor() { }
+  
+  BasketballIcon = L.icon({ iconUrl: 'basketball-icon.png' });
+
 
   ngOnInit() {
-    this.map = new L.Map('map').setView([49.8431, 24.0361], 11);
+    this.map = new L.Map('map').setView([49.8431, 24.0361], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map Test',
     }).addTo(this.map);
+
+
+    const BasketballIcon = L.icon({ iconUrl: 'assets/icon/basketball-icon.png' });
+    L.marker([49.7990987168452, 24.052929394779834], { icon: BasketballIcon }).addTo(this.map).bindPopup("I am a basketball marker.");
+
+
+
+
 
     this.map.whenReady(() => {
       setTimeout(() => {
@@ -25,4 +36,6 @@ export class LocationsPage implements OnInit {
       }, 1000);
     });
   }
-}
+  
+
+  }
