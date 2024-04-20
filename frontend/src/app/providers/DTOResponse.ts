@@ -1,4 +1,4 @@
-export interface LoginResponse {
+export interface DTOResponse {
   accessToken: string;
   tokenType: string | null;
 }
