@@ -5,15 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterPage } from './register';
 
 import { RegisterPageRoutingModule } from './register-routing.module';
+import { SharedModule } from '../components/shared.module';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    RegisterPageRoutingModule,
-    ReactiveFormsModule,
-  ],
-  declarations: [RegisterPage],
+  imports: [IonicModule, CommonModule, SharedModule, FormsModule, RegisterPageRoutingModule, ReactiveFormsModule],
+  declarations: [RegisterPage]
 })
 export class RegisterPageModule {}
