@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/api/location")
+@RequestMapping("/api/v1/locations")
 public class LocationController {
 
     @Autowired
     LocationService locationService;
 
-    @GetMapping("/locations")
+    @GetMapping
     public List<Location> getLocations() {
         return locationService.getLocations();
     }
@@ -29,14 +29,23 @@ public class LocationController {
         return locationService.saveLocation(location);
     }
 
-    @GetMapping("/getLocationByName")
+    @GetMapping("/locationByName")
     public Location getLocationByName(String name) {
         return locationService.getLocationByName(name);
     }
 
-    @GetMapping("/getLocationById")
+    @GetMapping("/locationById")
     public Location getLocationById(Long id) {
         return locationService.getLocationById(id);
     }
 
+    @GetMapping("/locationByActivity")
+    public List<Location> getLocationByActivity(String activity){
+        return locationService.getLocationByActivity(activity);
+    }
+
+    @GetMapping("/locationByType")
+    public List<Location> getLocationByType(String type){
+        return locationService.getLocationByType(type);
+    }
 }
