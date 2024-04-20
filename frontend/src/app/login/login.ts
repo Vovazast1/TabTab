@@ -10,7 +10,6 @@ import { ApiService } from '../providers/ApiService';
   styleUrls: ['login.scss']
 })
 export class LoginPage implements OnInit {
-  public next: any;
   form?: FormGroup;
 
   constructor(

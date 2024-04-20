@@ -4,7 +4,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -14,7 +15,14 @@ describe('LoginPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+      imports: [
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginPage);

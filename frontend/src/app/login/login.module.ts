@@ -6,6 +6,8 @@ import { LoginPage } from './login';
 import { LoginPageRoutingModule } from './login-routing.module';
 import { ApiService } from '../providers/ApiService';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../components/shared.module';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   imports: [
@@ -15,8 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
     LoginPageRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule
   ],
   providers: [ApiService],
-  declarations: [LoginPage],
+  declarations: [LoginPage]
 })
 export class LoginPageModule {}
