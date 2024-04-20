@@ -28,12 +28,11 @@ public class AuthServiceImpl implements AuthService {
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
 
-
     public AuthServiceImpl(AuthenticationManager authenticationManager,
-                           UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder,
-                           JwtTokenProvider jwtTokenProvider) {
+            UserRepository userRepository,
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder,
+            JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -57,11 +56,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String register(RegisterDto registerDto) {
 
-        if(userRepository.existsByUsername(registerDto.getUsername())){
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
         }
 
-        if(userRepository.existsByEmail(registerDto.getEmail())){
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
         }
 
@@ -70,11 +69,6 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setBirthday(registerDto.getBirthday());
-
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
-        roles.add(userRole);
-        user.setRoles(roles);
 
         userRepository.save(user);
 
