@@ -1,67 +1,64 @@
 ion-input {
   --background: transparent !important;
-  margin-top: -1.1rem;
 }
 
-.stylebg{
-  ion-datetime{
-    --background:#FFF6EB;
-    --background-rgb:255,246,235;
-    --wheel-highlight--background:(255,246,235);
-    --wheel-fade-background-rgb:255,246,235;
-    
-
-  }
-  ion-datetime::part(wheel-item){
-    color:black;
-  }
-  
-  ion-datetime::part(wheel-item active){
-    color:rgb(223, 201, 160);
-  }
+ion-datetime {
+  --background:#ffffff;
+  --background-rgb: 255, 255, 225;
+  --wheel-highlight-background: rgb(255, 255, 255);
+  --wheel-fade-background-rgb: 255, 255, 255;
 }
 
-ion-chip{
---background:#bae4c8 !important;
-  margin-left: 3rem;
-  margin-bottom: 1.2rem;
-  
+ion-grid {
+  width: 12rem;
+  height: auto;
+  margin: auto;
 }
 
 ion-content {
-
-  --background: #78CB80;
+  --background: #FFF6EB;
 }
 
-ion-button[color="serengeti"]{
+ion-button[color="success"]{
   margin-top: 1rem;
   margin-left: 1rem;
   --background: transparent !important;
   --box-shadow:0;
 }
 
-
-
-ion-text[color="newblack"] {//create account
-  display: flex;
-  font-size: xx-large;
-  margin: -10% 0 5% 22%; 
-
+ion-text[color="newblack"] {
   
+  font-size: xx-large;
+  text-align: center
 }
 
-ion-card {
-  border-radius: 2.5rem;
-  margin: 1.7rem;
-  height: 3rem;
-  margin-top: -1.7rem;
+ion-card-content {
+  margin-top: -1rem;
 }
 
-ion-button[color="newblack"] {
+ion-segment-button::part(indicator-background) {
+  background: #000000;
+}
+
+ion-segment-button.md::part(native) {
+  color: #000;
+}
+
+.segment-button-checked.md::part(native) {
+  color: #000000;
+}
+
+ion-segment-button.md::part(indicator-background) {
+  height: 1px;
+}
+
+ion-segment-button{
+  width: 9rem;
+}
+
+ion-button[color="dark"] { 
   text-transform: initial;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 2rem;
   width: 14rem;
   height: 3rem;
-} 
+  margin: auto;
+}

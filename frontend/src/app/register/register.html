@@ -1,103 +1,111 @@
 <ion-content>
-  <ion-button color="serengeti" (click)="goToLogin()">
+  <ion-button color="success" (click)="goToLogin()">
     <ion-img src="assets/icon/move-back.png"></ion-img>
   </ion-button>
 
-  <ion-text color="newblack">Create Account</ion-text>
+  <ion-grid>
+    <ion-row>
+      <ion-img src="assets/img/tabtab-logo.png"></ion-img>
+    </ion-row>
+  </ion-grid>
 
-  <form [formGroup]="registerForm.get(form)">
-
-    <ion-chip>Nickname</ion-chip>
+  <ion-text class="ion-text-center" color="newblack">
+    <h1>Create Account</h1>
+  </ion-text>
+ 
+  <form [formGroup]="registerForm.getForm()">
 
     <ion-card color="success" style="box-shadow: none !important">
       <ion-card-content>
+        <ion-item color="success" lines="none">
         <ion-input 
-          formControlName="nickname" 
+          formControlName="username" 
           fill="solid"
           text-align="center"
-          placeholder="Your nickname"
-          label="Your nickname" 
+          placeholder="Your username"
+          label="Your username" 
           label-placement="floating"
           id="nicknameInput"
+          type="text"
         ></ion-input>
-      </ion-card-content>
-    </ion-card>
+      </ion-item>
 
-    <ion-chip>Birthday</ion-chip>
+        <app-error-message [field]="registerForm.getForm().get('username')" error="required" message="Username is mandatory"/>
+        <app-error-message [field]="registerForm.getForm().get('username')" error="maxlength" message="20 characters max"/>
 
-    <div align="center" class="ion-margin-top" class="stylebg">
-      <ion-datetime presentation="date" [preferWheel]="true"
-        [value]="currentDate"
-        min="1924-01-1"
-        max="2008-12-31"
-        size="fixed"
-        id="dateInput">
-      </ion-datetime>
-    </div>
-
-    <ion-chip>Email address</ion-chip>
-
-    <ion-card color="success" style="box-shadow: none !important">
-      <ion-card-content>
-        <ion-item color="success">
+        <ion-item color="success" lines="none">
           <ion-input
             formControlName="email" 
             fill="solid"
             placeholder="Email address"
             label="Enter email address" 
             label-placement="floating"
+            type="email"
             id="emailInput">
           </ion-input>
         </ion-item>
 
-        <ion-label color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.['email']">
-          Email is invalid
-        </ion-label>
+        <app-error-message [field]="registerForm.getForm().get('email')" error="required" message="Email is mandatory"/> 
+         <app-error-message [field]="registerForm.getForm().get('email')" error="email" message="Email is invalid"/>
+       
 
-        <ion-label color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.['required']">
-          Email is mandatory
-        </ion-label>
-
-      </ion-card-content>
-    </ion-card>
-
-    <ion-chip>Password</ion-chip>
-
-    <ion-card color="success" style="box-shadow: none !important">
-      <ion-card-content>
+   
+        <ion-item color="success" lines="none">
         <ion-input
           formControlName="password" 
           fill="solid"
           placeholder="Create password"
-          id="passwordInput">
-        </ion-input>
+          label="Create password" 
+          label-placement="floating"
+          type="password">
+           </ion-input>
+          </ion-item>
 
-        <ion-label color="danger" *ngIf="form.get('password').touched && form.get('password').errors?.['required']">
-          Password is mandatory
-        </ion-label>
+        <app-error-message [field]="registerForm.getForm().get('password')" error="required" message="Password is mandatory"/>
+        <app-error-message [field]="registerForm.getForm().get('password')" error="minlength" message="Minimum of 8 characters"/>
 
-      </ion-card-content>
-    </ion-card>
-
-    <ion-chip>Confirm</ion-chip>
-
-    <ion-card color="success" style="box-shadow: none !important">
-      <ion-card-content>
-        <ion-input
+   
+        <ion-item color="success" lines="none">
+          <ion-input
           formControlName="confirmPassword" 
           fill="solid"
           placeholder="Confirm password"
-          id="confirmPasswordInput">
+          label="Confirm password" 
+          label-placement="floating"
+          type="password">
         </ion-input>
+      </ion-item>
 
-        <ion-label color="danger" *ngIf="form.get('confirmPassword').touched && form.get('confirmPassword').errors?.['required']">
-          Confirm password is mandatory
-        </ion-label>
+      <app-error-message [field]="registerForm.getForm().get('confirmPassword')" error="isntMatching" message="Not matching with password"/>
+      <app-error-message [field]="registerForm.getForm().get('password')" error="isntMatching" message="Not matching with password"/>
 
+      <ion-item color="success" lines="none" (click)="showPicker =!showPicker">
+        <ion-text color="dark" slot="end">{{formattedString}}</ion-text>
+        <ion-segment [(ngModel)]="selectedMode" [ngModelOptions]="{standalone: true}">
+          <ion-segment-button class="seg" [value]="mode" *ngFor="let mode of modes">
+            <ion-label>Birthday</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+        
+        <ion-datetime *ngIf="showPicker" [value]="dateValue" size="cover"
+        #datetime
+        formControlName="birthday"
+        (ionChange)="dateChange(datetime.value)"
+        
+        (ionCancel)="showPicker=false"
+        presentation="date"
+        >    
+        <ion-buttons slot="buttons" >
+          <ion-button color="danger" (click)="datetime.cancel(true)">Close</ion-button>
+          <ion-button color="primary"  (click)="datetime.confirm(true) && datetime.cancel(true)">Done</ion-button>
+        </ion-buttons>
+
+      </ion-datetime>
       </ion-card-content>
     </ion-card>
 
-    <ion-button color="newblack" size="full" shape="round" (click)="register()">
+    <ion-button color="dark" size="full" shape="round"  [disabled]="!registerForm.getForm().valid" (click)="register()">
       Create account
     </ion-button>
 
