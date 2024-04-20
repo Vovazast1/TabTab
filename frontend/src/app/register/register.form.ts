@@ -11,14 +11,14 @@ export class RegisterPageForm {
 
   private createForm(): FormGroup {
     let form = this.formBuilder.group({
-      nickname: ['', [Validators.required]],
-      date: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.maxLength(20)]],
+      birthday: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['']
     });
-
-    form.get('confirmPassword')?.setValidators(matchPasswordAndConfirmPassword(form));
+    form.get('password')?.addValidators(matchPasswordAndConfirmPassword(form, 'confirmPassword'));
+    form.get('confirmPassword')?.addValidators(matchPasswordAndConfirmPassword(form, 'password'));
 
     return form;
   }
@@ -28,10 +28,11 @@ export class RegisterPageForm {
   }
 }
 
-function matchPasswordAndConfirmPassword(form: FormGroup): ValidatorFn {
+function matchPasswordAndConfirmPassword(form: FormGroup, field: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const password = form.get('password')?.value;
+    const password = form.get(field)?.value;
     const confirmPassword = control.value;
+    if (!password) return null;
     return password === confirmPassword ? null : { isntMatching: true };
   };
 }
