@@ -24,6 +24,7 @@ describe('RegisterPage', () => {
   let component: RegisterPage;
   let fixture: ComponentFixture<RegisterPage>;
   let router: Router;
+  let page: any;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -36,11 +37,23 @@ describe('RegisterPage', () => {
     router = TestBed.get(Router);
 
     component = fixture.componentInstance;
+    page = fixture.debugElement.nativeElement;
   }));
 
   it('should go to activity page on register', () => {
-    spyOn(router, 'navigate');
+    fixture.detectChanges();
+
+    const spy = spyOn(router, 'navigate');
+    spy.calls.reset();
     //mockApiService.register().and.returnValue(null);
+
+    // component.registerForm?.getForm().get('username')?.setValue('anyUsername');
+    // component.registerForm?.getForm().get('email')?.setValue('any@email.com');
+    // component.registerForm?.getForm().get('password')?.setValue('anyPassword');
+    // component.registerForm?.getForm().get('confirmPassword')?.setValue('anyPassword');
+    // component.registerForm?.getForm().get('birthday')?.setValue('date');
+    // page.querySelector('ion-button').click('register()');
+
     component.register();
 
     expect(router.navigate).toHaveBeenCalledWith(['/pages/activity']);
@@ -51,4 +64,12 @@ describe('RegisterPage', () => {
 
     expect(component.registerForm).not.toBeUndefined();
   });
+
+  // it('should not be allowed to register with form invalid', () => {
+  //   fixture.detectChanges();
+  //   const spy = spyOn(router, 'navigate');
+  //   spy.calls.reset();
+  //   page.querySelector('ion-button').click();
+  //   expect(spy).toHaveBeenCalledTimes(0);
+  // });
 });
