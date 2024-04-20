@@ -1,12 +1,12 @@
-ion-img {
-    width: 40%;
-    height: auto;
-    margin: 3rem auto;
-  }
+ion-grid {
+  width: 12rem;
+  height: auto;
+  margin: auto;
+  margin-top: 3.5rem;
+}
   
   ion-content {
     --background: #FFF6EB;
-  
   }
   
   ion-input {
@@ -17,12 +17,12 @@ ion-img {
     margin-top: -1rem;
   }
   
-  ion-button[color="success"] { //Forgot your password?
+  ion-button[color="success"] { 
     text-transform: initial;
     font-size: large;
   }
-  
-  ion-button[color="newblack"] { //log in
+
+  ion-button[color="newblack"] { 
     text-transform: initial;
     margin-right: auto;
     margin-left: auto;
@@ -31,13 +31,14 @@ ion-img {
     height: 3rem;
   }
   
-  ion-text[color="dark"] { //don't have account
+  ion-text[color="dark"] { 
     h6 {
       margin-top: 3rem;
     }
   }
   
-  ion-button[color="dark"] { //create account
+  
+  ion-button[color="dark"] { 
     text-transform: initial;
     width: 14rem;
     height: 3rem;
