@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DTOResponse } from './DTOResponse';
+import { ActivityType, Location } from '../data';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   public authAPI = 'http://localhost:8080/api/v1/auth';
+  public locationAPI = 'http://localhost:8080/api/v1/locations';
 
   constructor(private http: HttpClient) {}
 
@@ -27,5 +29,9 @@ export class ApiService {
       },
       { headers: new HttpHeaders().set('Content-Type', 'application/json'), responseType: 'text' }
     );
+  }
+
+  getLocationsByActivity(activity: ActivityType): Observable<Location[]> {
+    return this.http.get<Location[]>(this.locationAPI + `?activity=${activity}`);
   }
 }

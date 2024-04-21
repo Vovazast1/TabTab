@@ -31,4 +31,10 @@ public class Location {
     @Column(name = "Type")
     private String type;
 
+    @Column(name = "Latitude")
+    private double latitude;
+
+    @Column(name = "Longitude")
+    private double longitude;
+
 }
