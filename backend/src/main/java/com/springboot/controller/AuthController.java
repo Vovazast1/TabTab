@@ -15,11 +15,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -37,14 +37,15 @@ public class AuthController {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
+    @CrossOrigin(origins = "http://localhost:8100")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterDto registerDto) {
 
-        if(userRepository.existsByUsername(registerDto.getUsername())){
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.existsByEmail(registerDto.getEmail())){
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
@@ -60,8 +61,9 @@ public class AuthController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:8100")
     @PostMapping("/login")
-    public JWTAuthResponse AuthenticateAndGetToken(@RequestBody LoginDto LoginDto){
+    public JWTAuthResponse AuthenticateAndGetToken(@RequestBody LoginDto LoginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         LoginDto.getUsernameOrEmail(),
