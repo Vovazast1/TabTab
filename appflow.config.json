@@ -2,11 +2,11 @@
     "apps":
     [
         {
-            "appId": "a1111a1a",
+            "appId": "TabTab",
             "iosPath": "frontend/ios"
         },
         {
-            "appId": "b2222b2b",
+            "appId": "TabTab",
             "androidPath": "frontend/android"
         }
     ]
