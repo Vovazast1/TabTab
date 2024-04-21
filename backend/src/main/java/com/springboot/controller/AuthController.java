@@ -4,7 +4,6 @@ import com.springboot.entity.User;
 import com.springboot.payload.JWTAuthResponse;
 import com.springboot.payload.LoginDto;
 import com.springboot.payload.RegisterDto;
-import com.springboot.repository.RoleRepository;
 import com.springboot.repository.UserRepository;
 import com.springboot.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +35,6 @@ public class AuthController {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
-    @CrossOrigin(origins = "http://localhost:8100")
     @PostMapping("/register")
     public ResponseEntity registerUser(@RequestBody RegisterDto registerDto) {
 
@@ -61,7 +58,6 @@ public class AuthController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:8100")
     @PostMapping("/login")
     public JWTAuthResponse AuthenticateAndGetToken(@RequestBody LoginDto LoginDto) {
         Authentication authentication = authenticationManager.authenticate(
