@@ -2,11 +2,11 @@
     "apps":
     [
         {
-            "appId": "04ab9ac0",
-            "iosPath": "TabTab/frontend/ios/App/App.xcworkspace/contents.xcworkspacedata"
+            "appId": "com.example.app",
+            "iosPath": "/frontend/ios/App"
         },
         {
-            "appId": "TabTab",
+            "appId": "com.example.app",
             "androidPath": "frontend/android"
         }
     ]
