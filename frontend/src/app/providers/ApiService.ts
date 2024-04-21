@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DTOResponse } from './DTOResponse';
 
 @Injectable({ providedIn: 'root' })
@@ -16,12 +16,16 @@ export class ApiService {
     });
   }
 
-  register(email: string, username: string, birthday: Date, password: string): Observable<DTOResponse> {
-    return this.http.post<DTOResponse>(this.authAPI + '/register', {
-      email,
-      username,
-      birthday,
-      password
-    });
+  register(email: string, username: string, birthday: Date, password: string): Observable<string> {
+    return this.http.post(
+      this.authAPI + '/register',
+      {
+        email,
+        username,
+        birthday,
+        password
+      },
+      { headers: new HttpHeaders().set('Content-Type', 'application/json'), responseType: 'text' }
+    );
   }
 }

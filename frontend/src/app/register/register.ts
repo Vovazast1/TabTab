@@ -43,7 +43,13 @@ export class RegisterPage implements OnInit {
     const password = this.form?.get('password')?.value;
     this.apiService.register(email, username, birthday, password).subscribe({
       next: () => {
-        this.router.navigate(['/pages/activity']);
+        this.apiService.login(email, password).subscribe({
+          next: R => {
+            console.log(R);
+            this.router.navigate(['/pages/activity']);
+          },
+          error: () => console.error('asdasdasd.')
+        });
       },
       error: () => console.error('Failed to load page.')
     });
