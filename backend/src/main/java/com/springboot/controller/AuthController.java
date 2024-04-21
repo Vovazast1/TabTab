@@ -39,14 +39,14 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:8100")
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity registerUser(@RequestBody RegisterDto registerDto) {
 
         if (userRepository.existsByUsername(registerDto.getUsername())) {
-            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken!");
         }
 
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken!");
         }
 
         User user = new User();
@@ -57,7 +57,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
 
     }
 
