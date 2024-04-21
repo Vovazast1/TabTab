@@ -5,7 +5,8 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "start": "ionic serve",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --browsers=ChromeHeadless --progress=false --watch=false --code-coverage --source-map=false" 
   },
   "private": true,
   "dependencies": {
