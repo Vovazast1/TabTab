@@ -1,0 +1,5 @@
+lane :beta do
+    gym(
+      export_method: 'ad-hoc'
+    )
+  end
