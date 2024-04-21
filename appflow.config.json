@@ -3,7 +3,7 @@
     [
         {
             "appId": "04ab9ac0",
-            "iosPath": "TabTab/frontend/ios/App"
+            "iosPath": "TabTab/frontend/ios/App/App.xcworkspace"
         },
         {
             "appId": "TabTab",
