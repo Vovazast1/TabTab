@@ -9,44 +9,39 @@ const routes: Routes = [
     children: [
       {
         path: 'loader',
-        loadChildren: () =>
-          import('../loader/loader.module').then((m) => m.LoaderModule),
+        loadChildren: () => import('../loader/loader.module').then(m => m.LoaderModule)
       },
       {
         path: 'login',
-        loadChildren: () =>
-          import('../login/login.module').then((m) => m.LoginPageModule),
+        loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
       },
       {
         path: 'register',
-        loadChildren: () =>
-          import('../register/register.module').then((m) => m.RegisterPageModule),
+        loadChildren: () => import('../register/register.module').then(m => m.RegisterPageModule)
       },
       {
         path: 'activity',
-        loadChildren: () =>
-          import('../activity/activity.module').then((m) => m.ActivityPageModule),
+        loadChildren: () => import('../activity/activity.module').then(m => m.ActivityPageModule)
       },
       {
-        path: 'locations',
-        loadChildren: () =>
-          import('../locations/locations.module').then((m) => m.LocationsPageModule),
+        path: 'locations/:activity',
+        loadChildren: () => import('../locations/locations.module').then(m => m.LocationsPageModule)
       },
       {
         path: '',
         redirectTo: '/pages/loader',
-        pathMatch: 'full',
+        pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
     redirectTo: '/pages/loader',
-    pathMatch: 'full',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)]
 })
 export class PagesRoutingModule {}
