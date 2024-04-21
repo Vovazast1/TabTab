@@ -3,7 +3,7 @@
     [
         {
             "appId": "04ab9ac0",
-            "iosPath": "frontend/ios/App"
+            "iosPath": "TabTab/frontend/ios/App"
         },
         {
             "appId": "TabTab",
