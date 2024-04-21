@@ -2,7 +2,7 @@
     "apps":
     [
         {
-            "appId": "com.mycompany.tabtab",
+            "appId": "04ab9ac0",
             "iosPath": "/frontend/ios/App"
         },
         {
