@@ -1,6 +1,6 @@
 const enum ActivityType {
-  Intelligence = 'Інтелектуальна',
-  Sport = 'Спортивна'
+  Intelligence = 'Intelligence',
+  Sport = 'Sport'
 }
 
 export default ActivityType;

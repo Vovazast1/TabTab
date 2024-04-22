@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DTOResponse } from './DTOResponse';
+import { DTOResponse } from '../data/DTOResponse';
 import { ActivityType, Location } from '../data';
 
 @Injectable({ providedIn: 'root' })
@@ -27,7 +27,10 @@ export class ApiService {
         birthday,
         password
       },
-      { headers: new HttpHeaders().set('Content-Type', 'application/json'), responseType: 'text' }
+      {
+        headers: new HttpHeaders().set('Content-Type', 'application/json'),
+        responseType: 'text'
+      }
     );
   }
 
