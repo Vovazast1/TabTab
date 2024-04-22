@@ -14,5 +14,9 @@ export class ActivityPage implements OnInit {
     this.router.navigate(['pages/locations', ActivityType.Intelligence]);
   }
 
+  sport() {
+    this.router.navigate(['pages/locations', ActivityType.Sport]);
+  }
+
   ngOnInit() {}
 }

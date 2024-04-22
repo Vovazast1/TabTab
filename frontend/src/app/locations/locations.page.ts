@@ -27,9 +27,11 @@ export class LocationsPage implements OnInit {
 
     this.route.params.subscribe(params => {
       const activity = params['activity'];
+
       this.apiService.getLocationsByActivity(activity).subscribe({
         next: locations => {
           this.locations = locations;
+
           locations.forEach(location => {
             const BasketballIcon = L.icon({ iconUrl: 'assets/icon/basketball-icon.png' });
             L.marker([location.latitude, location.longitude], { icon: BasketballIcon })
