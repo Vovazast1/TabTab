@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ionic serve",
     "test": "ng test",
-    "test:ci": "ng test --browsers=ChromeHeadless --progress=false --watch=false --code-coverage --source-map=false" 
+    "test:ci": "ng test --browsers=ChromeHeadless --progress=false --watch=false --code-coverage --source-map=false"
   },
   "private": true,
   "dependencies": {
@@ -14,7 +14,7 @@
     "@angular/cdk": "^17.3.5",
     "@angular/common": "^17.0.2",
     "@angular/compiler": "^17.0.2",
-    "@angular/core": "^17.0.2",
+    "@angular/core": "^17.3.5",
     "@angular/forms": "^17.0.2",
     "@angular/material": "^17.3.5",
     "@angular/platform-browser": "^17.0.2",

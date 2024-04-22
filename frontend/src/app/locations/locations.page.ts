@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType } from '../data';
 
 @Component({
   selector: 'app-locations',

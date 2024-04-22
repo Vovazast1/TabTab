@@ -1,10 +1,4 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -18,7 +12,7 @@ describe('Loader', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [Loader],
-      imports: [IonicModule.forRoot(), AppRoutingModule],
+      imports: [IonicModule.forRoot(), AppRoutingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(Loader);

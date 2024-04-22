@@ -8,12 +8,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { Pages } from './pages';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    PagesRoutingModule
-  ],
+  imports: [IonicModule, CommonModule, FormsModule, PagesRoutingModule],
   declarations: [Pages]
 })
 export class PagesModule {}
