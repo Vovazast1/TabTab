@@ -3,11 +3,13 @@ ion-content {
 }
 
 ion-item[color="gray85"]{
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 ion-text[color="dark"]{
+  display: flex;
+  margin: auto;
   font-size: xx-large;
-  margin-left: 5rem;
+ 
 }
 
 ion-text[color="newblack"] {
