@@ -1,67 +1,73 @@
 package com.springboot.service;
 
-import com.springboot.entity.Role;
+import com.springboot.entity.ConfirmationToken;
 import com.springboot.entity.User;
-import com.springboot.exception.APIException;
+import com.springboot.payload.JWTAuthResponse;
 import com.springboot.payload.LoginDto;
 import com.springboot.payload.RegisterDto;
-import com.springboot.repository.RoleRepository;
+import com.springboot.repository.ConfirmationTokenRepository;
 import com.springboot.repository.UserRepository;
 import com.springboot.security.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
     private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    ConfirmationTokenRepository confirmationTokenRepository;
+    @Autowired
+    EmailService emailService;
+
 
     public AuthServiceImpl(AuthenticationManager authenticationManager,
             UserRepository userRepository,
-            RoleRepository roleRepository,
             PasswordEncoder passwordEncoder,
             JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public JWTAuthResponse login(@RequestBody LoginDto loginDto) {
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginDto.getUsernameOrEmail(), loginDto.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token = jwtTokenProvider.GenerateToken(loginDto.getUsernameOrEmail());
-
-        return token;
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDto.getUsernameOrEmail(),
+                        loginDto.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return JWTAuthResponse.builder()
+                    .accessToken(jwtTokenProvider.GenerateToken(loginDto.getUsernameOrEmail())).build();
+        } else {
+            throw new UsernameNotFoundException("invalid user request..!!");
+        }
     }
 
     @Override
-    public String register(RegisterDto registerDto) {
+    public ResponseEntity register(@RequestBody RegisterDto registerDto) {
 
         if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new APIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken!");
         }
 
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new APIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken!");
         }
 
         User user = new User();
@@ -72,6 +78,33 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
-        return "User registered successfully!.";
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+        confirmationTokenRepository.save(confirmationToken);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete Registration!");
+        mailMessage.setText("To confirm your account, please click here: "
+                +"http://localhost:8085/confirm-account?token="+confirmationToken.getConfirmationToken());
+        emailService.sendEmail(mailMessage);
+
+        System.out.println("Confirmation Token: " + confirmationToken.getConfirmationToken());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Verify email by the link sent on your email address");
+    }
+
+    @Override
+    public ResponseEntity<?> confirmEmail(String confirmationToken) {
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+        if(token != null)
+        {
+            User user = userRepository.findByUserEmailIgnoreCase(token.getUser().getEmail());
+            user.setVerified(true);
+            userRepository.save(user);
+            return ResponseEntity.ok("Email verified successfully!");
+        }
+        return ResponseEntity.badRequest().body("Error: Couldn't verify email");
     }
 }
