@@ -37,6 +37,6 @@ public class User {
     @Column(name = "Password")
     private String password;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @Column(name = "Verification")
+    private boolean isVerified;
 }

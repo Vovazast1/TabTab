@@ -16,8 +16,8 @@ export class LocationsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router: Router
   ) {}
 
   ngOnInit() {
