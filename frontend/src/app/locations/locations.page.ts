@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
+import ActivityType from '../data/ActivityType';
 
 @Component({
   selector: 'app-locations',
@@ -11,24 +12,32 @@ import { ApiService } from '../providers/ApiService';
 export class LocationsPage implements OnInit {
   map!: L.Map;
   locations: any;
+  currentActivity?: ActivityType;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private apiService: ApiService
   ) {}
 
-  BasketballIcon = L.icon({ iconUrl: 'basketball-icon.png' });
-
   ngOnInit() {
-    this.map = new L.Map('map').setView([49.8431, 24.0361], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map Test'
-    }).addTo(this.map);
+    this.initializeMap();
 
+    this.goToLocations();
+
+    this.map.whenReady(() => {
+      setTimeout(() => {
+        if (this.map) {
+          this.map.invalidateSize();
+        }
+      }, 1000);
+    });
+  }
+
+  goToLocations() {
     this.route.params.subscribe(params => {
-      const activity = params['activity'];
-
-      this.apiService.getLocationsByActivity(activity).subscribe({
+      this.currentActivity = params['activity'];
+      this.apiService.getLocationsByActivity(this.currentActivity || ActivityType.Intelligence).subscribe({
         next: locations => {
           this.locations = locations;
 
@@ -42,13 +51,23 @@ export class LocationsPage implements OnInit {
         error: error => console.log(error)
       });
     });
+  }
 
-    this.map.whenReady(() => {
-      setTimeout(() => {
-        if (this.map) {
-          this.map.invalidateSize();
-        }
-      }, 1000);
+  initializeMap() {
+    this.map = new L.Map('map', { zoomControl: false }).setView([49.8431, 24.0361], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map Test'
+    }).addTo(this.map);
+  }
+
+  toggleLocationsType() {
+    const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
+
+    if (this.map != undefined) {
+      this.map.remove();
+    }
+    this.router.navigate(['pages/locations', newActivity]).then(() => {
+      window.location.reload();
     });
   }
 }
