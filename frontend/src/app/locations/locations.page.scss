@@ -14,7 +14,48 @@
     flex-wrap: wrap;
     justify-content: space-between;
   
-    ion-button {
+    ion-button{
       width: 30%;
     }
   }
+
+.lower-bar{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+
+  ion-card{
+    height: 4rem;
+    width: 22rem;
+    border-radius: 1.5rem;
+    background-color: #FFF6EB;
+    border-color: black;
+    border-style:groove;
+    display: flex;
+    justify-content: center;
+  }
+  
+  ion-button{
+    --background:#FFF6EB;
+    --box-shadow: 0;
+    display: flex;
+    justify-content: center;
+    width: 6rem;
+    
+  }
+  ion-icon{
+    margin-bottom: 0.3rem;
+  }
+  ion-text{
+    color:black;
+    font-size:x-small;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0rem;
+  }
+}
