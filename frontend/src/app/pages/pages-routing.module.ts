@@ -31,6 +31,18 @@ const routes: Routes = [
         path: '',
         redirectTo: '/pages/loader',
         pathMatch: 'full'
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+      },
+      {
+        path: 'favorite',
+        loadChildren: () => import('../favorite/favorite.module').then(m => m.FavoritePageModule)
+      },
+      {
+        path: 'chat',
+        loadChildren: () => import('../chat/chat.module').then(m => m.ChatPageModule)
       }
     ]
   },

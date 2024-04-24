@@ -70,4 +70,17 @@ export class LocationsPage implements OnInit {
       window.location.reload();
     });
   }
+
+  goToProfile() {
+    this.router.navigate(['pages/profile']);
+  }
+
+  
+  goToFavorite() {
+    this.router.navigate(['pages/favorite']);
+  }
+
+  goToChat() {
+    this.router.navigate(['pages/chat']);
+  }
 }
