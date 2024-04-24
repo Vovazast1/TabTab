@@ -1,27 +1,42 @@
 <ion-content>
   <div id="map"></div>
   <div class="top-button-container">
-    
     <ng-container *ngIf="currentActivity === 'Intelligence'">
       <ion-button size="small" color="success">Filter</ion-button>
       <ion-button size="small" color="success"><ion-img src="assets/icon/park-icon.png"></ion-img>Parks</ion-button>
       <ion-button size="small" color="success"><ion-img src="assets/icon/chess-icon.png"></ion-img>Chess</ion-button>
-      <ion-button size="small" color="success"><ion-img src="assets/icon/library-icon.png"></ion-img>Libraries</ion-button>
+      <ion-button size="small" color="success"
+        ><ion-img src="assets/icon/library-icon.png"></ion-img>Libraries</ion-button
+      >
       <ion-button size="small" color="success"><ion-img src="assets/icon/music-icon.png"></ion-img>Museums</ion-button>
       <ion-button size="small" color="success"><ion-img src="assets/icon/music-icon.png"></ion-img>Music</ion-button>
       <ion-button size="small" color="dark" (click)="toggleLocationsType()">Change</ion-button>
     </ng-container>
-    
-    
+
     <ng-container *ngIf="currentActivity === 'Sport'">
       <ion-button size="small" color="success">Filter</ion-button>
-      <ion-button size="small" color="success"><ion-img src="assets/icon/football-icon.png"></ion-img>Football</ion-button>
-      <ion-button size="small" color="success"><ion-img src="assets/icon/basketball-icon.png"></ion-img>Basketball</ion-button>
-      <ion-button size="small" color="success"><ion-img src="assets/icon/volleyball-icon.png"></ion-img>Volleyball</ion-button>
+      <ion-button size="small" color="success"
+        ><ion-img src="assets/icon/football-icon.png"></ion-img>Football</ion-button
+      >
+      <ion-button size="small" color="success"
+        ><ion-img src="assets/icon/basketball-icon.png"></ion-img>Basketball</ion-button
+      >
+      <ion-button size="small" color="success"
+        ><ion-img src="assets/icon/volleyball-icon.png"></ion-img>Volleyball</ion-button
+      >
       <ion-button size="small" color="success"><ion-img src="assets/icon/gym-icon.png"></ion-img>Gym</ion-button>
       <ion-button size="small" color="success"><ion-img src="assets/icon/tennis-icon.png"></ion-img>Tennis</ion-button>
       <ion-button size="small" color="dark" (click)="toggleLocationsType()">Change</ion-button>
     </ng-container>
   </div>
-</ion-content>
 
+  <div class="lower-bar">
+    <ion-card>
+      <ion-button (click)="goToChat()"> <ion-text> <ion-icon name="chatbox-outline" size="large"></ion-icon>Chat</ion-text></ion-button>
+      <ion-button (click)="goToFavorite()"><ion-text> <ion-icon name="bookmark-outline" size="large"></ion-icon>Favorite</ion-text></ion-button>
+      <ion-button> <ion-img src="assets/icon/search-icon.png" ></ion-img></ion-button> 
+      <ion-button> <ion-text><ion-icon name="location-outline" size="large"></ion-icon> Map</ion-text></ion-button>
+      <ion-button (click)="goToProfile()"><ion-text><ion-icon name="person-outline" size="large"></ion-icon>Profile</ion-text></ion-button>
+    </ion-card>
+  </div>
+</ion-content>

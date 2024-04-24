@@ -26,6 +26,9 @@
 @import "@ionic/angular/css/flex-utils.css";
 @import "~leaflet/dist/leaflet.css";
 
+* {
+  font-family:sans-serif !important;
+}
 .flex-center.box {
   display: flex;
   justify-content: center;

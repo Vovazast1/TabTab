@@ -82,7 +82,7 @@
       <ion-item color="success" lines="none" (click)="showPicker =!showPicker">
         <ion-text color="dark" slot="end">{{formattedString}}</ion-text>
         <ion-segment [(ngModel)]="selectedMode" [ngModelOptions]="{standalone: true}">
-          <ion-segment-button class="seg" [value]="mode" *ngFor="let mode of modes">
+          <ion-segment-button [value]="mode" *ngFor="let mode of modes">
             <ion-label>Birthday</ion-label>
           </ion-segment-button>
         </ion-segment>
