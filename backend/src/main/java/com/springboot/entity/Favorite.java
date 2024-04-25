@@ -26,10 +26,10 @@ public class Favorite {
     private long favoriteId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "UserID", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LocationID", referencedColumnName = "LocationID")
+    @JoinColumn(name = "LocationID", nullable = false)
     private Location location;
 }
