@@ -26,8 +26,11 @@ public class UserService {
         return userRepos.save(user);
     }
 
-    public Optional<User> getUser(String name) {
+    public User getUserByName(String name) {
         return userRepos.findByUsername(name);
     }
 
+    public User getUserById(long id) {
+        return userRepos.findByUserId(id);
+    }
 }
