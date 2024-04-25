@@ -6,19 +6,19 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-@Table(name="confirmationToken")
+@Table(name="confirmation_token")
 @Entity
 @Getter
 @Setter
@@ -26,18 +26,18 @@ import javax.persistence.TemporalType;
 public class ConfirmationToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="token_id")
-    private Long tokenId;
+    @Column(name="TokenID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int tokenId;
 
-    @Column(name="confirmation_token")
+    @Column(name="ConfirmationToken")
     private String confirmationToken;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false, name = "UserID")
     private User user;
 
     public ConfirmationToken() {}

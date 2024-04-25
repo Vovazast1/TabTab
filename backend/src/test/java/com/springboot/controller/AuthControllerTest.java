@@ -64,7 +64,7 @@ public class AuthControllerTest {
                 .GenerateToken(usernameOrEmail))
                 .thenReturn(token);
 
-        JWTAuthResponse response = authController.AuthenticateAndGetToken(loginDto);
+        JWTAuthResponse response = authController.login(loginDto);
 
         verify(authenticationManager)
                 .authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -88,7 +88,7 @@ public class AuthControllerTest {
                 .authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
 
-        assertThrows(UsernameNotFoundException.class, () -> authController.AuthenticateAndGetToken(loginDto));
+        assertThrows(UsernameNotFoundException.class, () -> authController.login(loginDto));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class AuthControllerTest {
                 .encode(registerDto.getPassword()))
                 .thenReturn("encodedPassword");
 
-        ResponseEntity<?> response = authController.registerUser(registerDto);
+        ResponseEntity<?> response = authController.register(registerDto);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("User registered successfully", response.getBody());
@@ -120,7 +120,7 @@ public class AuthControllerTest {
                 .existsByUsername(registerDto.getUsername()))
                 .thenReturn(true);
 
-        ResponseEntity<?> response = authController.registerUser(registerDto);
+        ResponseEntity<?> response = authController.register(registerDto);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Username is already taken!", response.getBody());
@@ -139,7 +139,7 @@ public class AuthControllerTest {
                 .existsByEmail(registerDto.getEmail()))
                 .thenReturn(true);
 
-        ResponseEntity<?> response = authController.registerUser(registerDto);
+        ResponseEntity<?> response = authController.register(registerDto);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Email is already taken!", response.getBody());
