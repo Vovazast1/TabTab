@@ -29,7 +29,7 @@ public class AuthController {
         return authService.login(loginDto);
     }
 
-    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    @GetMapping("/confirm-account")
     public ResponseEntity<?> confirmUserAccount(@RequestParam("token")String confirmationToken) {
         return authService.confirmEmail(confirmationToken);
     }
