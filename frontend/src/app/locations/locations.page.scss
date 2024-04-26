@@ -8,16 +8,21 @@
 }
 
 .top-button-container {
-  z-index: 1;
-  
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  
-    ion-button{
-      width: 30%;
-    }
   }
+  
+  ion-button[color="success"] {
+    shape-margin: round;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 30%;
+  }
+
+ 
 
 .lower-bar{
   position: fixed;
@@ -46,6 +51,14 @@
     width: 6rem;
     
   }
+
+  ion-button[color="dark"]{
+    display: flex;
+    margin-top: -3rem;
+
+    z-index: 1;
+  }
+
   ion-icon{
     margin-bottom: 0.3rem;
   }
@@ -59,3 +72,54 @@
     bottom: 0rem;
   }
 }
+
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem; /* Adjust margin as needed */
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+
+ion-modal {
+  --background: #FFF6EB;
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+
+ion-modal ion-toolbar {
+  --background: #FFF6EB;
+  --color:#FFF6EB;
+}
+
+
+
+.circle-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.circle-button-container ion-button {
+  margin: 0;
+  height: 5.2rem;
+  width: 5.2rem;
+}
+
+.circle-button-container ion-button img {
+  width: 100%; 
+  height: auto;
+}
+
