@@ -39,6 +39,7 @@
     background-color: #FFF6EB;
     border-color: black;
     border-style:groove;
+    border-width: 1px;
     display: flex;
     justify-content: center;
   }
@@ -48,8 +49,7 @@
     --box-shadow: 0;
     display: flex;
     justify-content: center;
-    width: 6rem;
-    
+    width: 4rem;
   }
 
   ion-button[color="dark"]{
@@ -59,9 +59,7 @@
     z-index: 1;
   }
 
-  ion-icon{
-    margin-bottom: 0.3rem;
-  }
+  
   ion-text{
     color:black;
     font-size:x-small;
@@ -77,22 +75,29 @@
 .image-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem; /* Adjust margin as needed */
+  padding: 5%;
+  height: 14rem;
+  
 }
+
 
 .image-wrapper img {
-  max-width: 100%;
-  max-height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0.5rem;
 }
-
 
 
 ion-modal {
   --background: #FFF6EB;
   --height: 50%;
-  --border-radius: 16px;
+  --border-radius: 20px;
   --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+padding: 5%;
+}
+
+ion-icon {
+  margin-bottom: 0.3rem;
 }
 
 ion-modal::part(backdrop) {
@@ -105,21 +110,54 @@ ion-modal ion-toolbar {
   --color:#FFF6EB;
 }
 
+ion-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
 
+ion-text {
+  color: black;
+  font-size: x-small;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+}
 
 .circle-button-container {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
+.container{
+  display: flex;
+  justify-content:space-around;
+  height: 5rem;
+  margin-bottom: 2rem;
+}
+
+ion-toolbar[color="success"]{
+  position: fixed;
+  bottom: 0;
+}
+
+ion-button[color="#FFF6EB"] {
+  --box-shadow: 0;
+  --border-radius:20px;
+  width: 8rem;
+  --border-color: black;
+  --border-style: solid;
+  --border-width: 1px;
+}
 .circle-button-container ion-button {
   margin: 0;
   height: 5.2rem;
-  width: 5.2rem;
+  width: 5.2rem; 
 }
-
-.circle-button-container ion-button img {
-  width: 100%; 
-  height: auto;
-}
+// .circle-button-container ion-button img {
+//   width: 100%; 
+//   height: auto;
+// }
 
