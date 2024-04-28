@@ -1,55 +1,69 @@
 <ion-content>
   <div id="map"></div>
   <div class="top-button-container">
-    
     <ng-container *ngFor="let button of getLocationButtons()">
       <ion-button size="small" shape="round" color="success">
         <ion-img [src]="button.src"></ion-img>{{button.label}}
       </ion-button>
     </ng-container>
   </div>
-    <ion-button color="gray85" >
-      <ion-list>
-        <ion-item>
-          <ion-select
-          label ="Fliter"
-            [multiple]="true"
-          >
-            <ion-select-option *ngFor="let type of getLocationTypes()" >{{ type }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </ion-button>
+  <ion-button color="gray85">
+    <ion-list>
+      <ion-item>
+        <ion-select label="Fliter" [multiple]="true">
+          <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-button>
   <div class="lower-bar">
     <ion-card>
-      <ion-button (click)="goToChat()"> <ion-text> <ion-icon name="chatbox-outline" size="large"></ion-icon>Chat</ion-text></ion-button>
-      <ion-button (click)="goToFavorite()"><ion-text> <ion-icon name="bookmark-outline" size="large"></ion-icon>Favorite</ion-text></ion-button>
-      
+      <ion-button (click)="goToChat()">
+        <ion-text> <ion-icon name="chatbox-outline" size="large"></ion-icon>Chat</ion-text></ion-button
+      >
+      <ion-button (click)="goToFavorite()"
+        ><ion-text> <ion-icon name="bookmark-outline" size="large"></ion-icon>Favorite</ion-text></ion-button
+      >
+
       <div class="circle-button-container">
         <ng-container *ngFor="let button of getImgSrc()">
-          <ion-button class="circle-button" color="main" size="small"  (click)="toggleLocationsType()">
-            <img [src]="button.src">
+          <ion-button class="circle-button" color="main" size="small" (click)="toggleLocationsType()">
+            <img [src]="button.src" />
           </ion-button>
         </ng-container>
       </div>
-      <ion-button> <ion-text><ion-icon name="location-outline" size="large"></ion-icon>Map</ion-text></ion-button>
-      <ion-button (click)="goToProfile()"><ion-text><ion-icon name="person-outline" size="large"></ion-icon>Profile</ion-text></ion-button>
+      <ion-button>
+        <ion-text><ion-icon name="location-outline" size="large"></ion-icon>Map</ion-text></ion-button
+      >
+      <ion-button (click)="goToProfile()"
+        ><ion-text><ion-icon name="person-outline" size="large"></ion-icon>Profile</ion-text></ion-button
+      >
     </ion-card>
   </div>
 
-  <ion-modal #modal >
+  <ion-modal #modal>
     <ng-template>
-      <ion-toolbar  color="success">
-        <ion-buttons slot="end">
-          <ion-button color="dark" (click)="modal.dismiss()">Close</ion-button>
-        </ion-buttons>
-        
+      <ion-buttons slot="end">
+        <ion-button color="dark" (click)="modal.dismiss()"
+          ><ion-icon name="close-outline" size="large"></ion-icon
+        ></ion-button>
+      </ion-buttons>
+
+      <ion-toolbar color="success">
         <span class="image-wrapper">
-          <img [src]="l" alt="Image">
+          <img [src]="l" alt="Image" />
         </span>
         <div class="container">
-          <ion-button class="button">Button 1</ion-button>
-          <ion-button class="button">Button 2</ion-button>
+          <ion-button color="#FFF6EB"
+            ><ion-text color="black">
+              <ion-icon name="bookmark-outline" size="large"></ion-icon>Add to favorite</ion-text
+            ></ion-button
+          >
+          <ion-button color="#FFF6EB">
+            <ion-text color="black">
+              <ion-icon name="chatbox-outline" size="large"></ion-icon>Open chat</ion-text
+            ></ion-button
+          >
         </div>
       </ion-toolbar>
     </ng-template>
