@@ -21,19 +21,12 @@ public class JwtTokenProvider {
     @Value("${app.jwt-secret}")
     private String jwtSecret;
 
-    @Value("${app-jwt-expiration-milliseconds}")
-    private long jwtExpirationDate;
-
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
-    }
-
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -50,10 +43,6 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
     public String GenerateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
@@ -65,7 +54,6 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1))
                 .signWith(key(), SignatureAlgorithm.HS256).compact();
     }
 
@@ -78,8 +66,6 @@ public class JwtTokenProvider {
             return true;
         } catch (MalformedJwtException malformedJwtException) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Invalid JWT Token");
-        } catch (ExpiredJwtException expiredJwtException) {
-            throw new APIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
         } catch (UnsupportedJwtException unsupportedJwtException) {
             throw new APIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
         } catch (IllegalArgumentException illegalArgumentException) {
