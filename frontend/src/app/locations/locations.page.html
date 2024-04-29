@@ -7,14 +7,11 @@
       </ion-button>
     </ng-container>
   </div>
-  <ion-button color="gray85">
-    <ion-list>
-      <ion-item>
-        <ion-select label="Fliter" [multiple]="true">
-          <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+  <!-- <ion-button size="small" (click)="goToFavoriteChat()">Chat</ion-button> -->
+  <ion-button color="success" size="small" shape="round">
+    <ion-select placeholder="Filter" [multiple]="true">
+      <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
+    </ion-select>
   </ion-button>
   <div class="lower-bar">
     <ion-card>
