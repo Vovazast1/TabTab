@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginPageForm } from './login.form';
 import { ApiService } from '../providers/ApiService';
+import { DTOResponse, storageKeys } from '../data';
 
 @Component({
   selector: 'app-login',
@@ -23,11 +24,18 @@ export class LoginPage implements OnInit {
     const password = this.form?.get('password')?.value;
 
     this.apiService.login(email, password).subscribe({
-      next: value => {
-        console.log(value);
-        this.router.navigate(['pages/activity']);
+      next: (response: DTOResponse) => {
+        if (response) {
+          localStorage.setItem(storageKeys.token, response.accessToken);
+          this.router.navigate(['pages/activity']);
+          console.log('Token is saved!.');
+        } else {
+          console.error('Token not found in response.');
+        }
       },
-      error: () => console.error('Incorrect login or password.')
+      error: (error: any) => {
+        console.error('Error occurred during login:', error);
+      }
     });
   }
 

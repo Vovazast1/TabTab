@@ -2,8 +2,9 @@ import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType, Location } from '../data';
+import { ActivityType, Location, storageKeys } from '../data';
 import { IonModal } from '@ionic/angular';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-locations',
@@ -116,6 +117,7 @@ export class LocationsPage implements OnInit {
   public getImgSrc() {
     return this.currentActivity === ActivityType.Sport ? this.sportImg : this.intelligenceImg;
   }
+
   findImage(locationId: number) {
     let n: string = locationId.toString();
     this.l = `assets/modal-img/${n}.png`;
@@ -123,6 +125,8 @@ export class LocationsPage implements OnInit {
 
   getLocationTypes() {
     const types = this.locations.map(location => location.type);
-    return [...new Set(types)];
+    const filteredTypes = types.filter(type => types.includes(type));
+    console.log(localStorage.getItem(storageKeys.token));
+    return Array.from(new Set(filteredTypes));
   }
 }

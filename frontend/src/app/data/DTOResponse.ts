@@ -1,4 +1,4 @@
-export interface DTOResponse {
+export default interface DTOResponse {
   accessToken: string;
   tokenType: string;
 }
