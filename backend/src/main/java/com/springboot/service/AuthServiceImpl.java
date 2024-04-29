@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
                         loginDto.getPassword()));
         if (authentication.isAuthenticated()) {
             return JWTAuthResponse.builder()
-                    .accessToken(jwtTokenProvider.GenerateToken(loginDto.getUsernameOrEmail())).build();
+                    .accessToken(jwtTokenProvider.GenerateToken(loginDto.getUsernameOrEmail())).tokenType("Bearer").build();
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
         }
