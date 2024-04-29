@@ -2,7 +2,6 @@ package com.springboot.security;
 
 import com.springboot.entity.User;
 import com.springboot.repository.UserRepository;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +25,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                         "User not found with username or email: " + usernameOrEmail));
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), new ArrayList<GrantedAuthority>());
+                user.getPassword(), new ArrayList<>());
     }
 }
