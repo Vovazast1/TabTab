@@ -1,18 +1,16 @@
 package com.springboot.controller;
 
-import com.springboot.entity.Favorite;
 import com.springboot.entity.User;
 import com.springboot.service.FavoriteService;
 import com.springboot.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -41,6 +39,30 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @DeleteMapping("user/{id}")
+    public void deleteUserById(@PathVariable long id) { userService.deleteUserById(id); }
 
+    @PostMapping("user/{id}/changeUsername")
+    public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestBody String name) {
+        User user = userService.getUserById(id);
 
+        if (user.getUsername().equals(name))
+            return ResponseEntity.badRequest().body("Name matches the previous!");
+
+        user.setUsername(name);
+        userService.saveUser(user);
+        return ResponseEntity.ok("Name successfully changed!");
+    }
+
+    @PostMapping("user/{id}/changeEmail")
+    public ResponseEntity<?> changeEmail(@PathVariable long id, @RequestBody String email) {
+        User user = userService.getUserById(id);
+
+        if (user.getUsername().equals(email))
+            return ResponseEntity.badRequest().body("Email matches the previous!");
+
+        user.setEmail(email);
+        userService.saveUser(user);
+        return ResponseEntity.ok("Email successfully changed!");
+    }
 }
