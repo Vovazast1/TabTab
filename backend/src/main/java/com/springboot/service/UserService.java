@@ -3,6 +3,7 @@ package com.springboot.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.springboot.entity.Favorite;
 import com.springboot.entity.User;
 import com.springboot.repository.UserRepository;
 
@@ -33,4 +34,10 @@ public class UserService {
     public User getUserById(long id) {
         return userRepos.findByUserId(id);
     }
+
+    public void deleteUserById(long id) {
+        User userToDelete = userRepos.findByUserId(id);
+        userRepos.delete(userToDelete);
+    }
+
 }
