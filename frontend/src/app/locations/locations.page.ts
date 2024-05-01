@@ -110,6 +110,10 @@ export class LocationsPage implements OnInit {
     this.router.navigate(['pages/chat']);
   }
 
+  goToLocationChat() {
+    this.router.navigate(['pages/location-chat']);
+  }
+
   public getLocationButtons() {
     return this.currentActivity === ActivityType.Sport ? this.locationsSportButtons : this.locationsIntelligenceButtons;
   }

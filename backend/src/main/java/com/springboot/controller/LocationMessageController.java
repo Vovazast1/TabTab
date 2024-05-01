@@ -1,6 +1,8 @@
+
 package com.springboot.controller;
 
-import com.springboot.payload.LocationChatMessage;
+import java.text.SimpleDateFormat;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -8,21 +10,27 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.springboot.payload.LocationChatMessageDto;
+import java.util.Date;
 
 @Controller
 public class LocationMessageController {
 
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public LocationChatMessage sendMessage(@Payload LocationChatMessage chatMessage){
-        return chatMessage;
+    @MessageMapping("/chat")
+    @SendTo("/topic/messages")
+    public LocationChatMessageDto sendMessage(LocationChatMessageDto locationChatMessageDto) throws Exception {
+        String timestamp = new SimpleDateFormat("HH:mm").format(new Date());
+        return new LocationChatMessageDto(locationChatMessageDto.getMessage(), timestamp,
+                locationChatMessageDto.getUserId());
     }
 
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public")
-    public LocationChatMessage addUser(@Payload LocationChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
-        // Add username in webSocket Session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        return chatMessage;
-    }
+    // @MessageMapping("/chat.addUser")
+    // @SendTo("/topic/public")
+    // public LocationChatMessage addUser(@Payload LocationChatMessage chatMessage,
+    // SimpMessageHeaderAccessor headerAccessor){
+    // // Add username in webSocket Session
+    // headerAccessor.getSessionAttributes().put("username",
+    // chatMessage.getSender());
+    // return chatMessage;
+    // }
 }

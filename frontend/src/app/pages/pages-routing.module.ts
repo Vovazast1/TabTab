@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'chat',
         loadChildren: () => import('../chat/chat.module').then(m => m.ChatPageModule)
+      },
+      {
+        path: 'location-chat',
+        loadChildren: () => import('../location-chat/location-chat.module').then(m => m.LocationChatPageModule)
       }
     ]
   },

@@ -7,7 +7,7 @@
       </ion-button>
     </ng-container>
   </div>
-  <!-- <ion-button size="small" (click)="goToFavoriteChat()">Chat</ion-button> -->
+  <ion-button size="small" (click)="goToLocationChat()">Chat</ion-button>
   <ion-button color="success" size="small" shape="round">
     <ion-select placeholder="Filter" [multiple]="true">
       <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
