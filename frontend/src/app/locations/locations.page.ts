@@ -130,7 +130,7 @@ export class LocationsPage implements OnInit {
   getLocationTypes() {
     const types = this.locations.map(location => location.type);
     const filteredTypes = types.filter(type => types.includes(type));
-    console.log(localStorage.getItem(storageKeys.token));
+
     return Array.from(new Set(filteredTypes));
   }
 }

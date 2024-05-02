@@ -1,26 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
 import { LocationChatPageRoutingModule } from './location-chat-routing.module';
-
 import { LocationChatPage } from './location-chat.page';
-
-import { ApiService } from '../providers/ApiService';
 import { HttpClientModule } from '@angular/common/http';
+import { WebSocketAPI } from '../components/WebSocketAPI';
+import { ApiService } from '../providers/ApiService';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    LocationChatPageRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  providers: [ApiService],
+  imports: [CommonModule, FormsModule, IonicModule, LocationChatPageRoutingModule, HttpClientModule],
+  providers: [ApiService, WebSocketAPI],
   declarations: [LocationChatPage]
 })
 export class LocationChatPageModule {}
