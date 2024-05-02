@@ -26,6 +26,9 @@ export class LoginPage implements OnInit {
     this.apiService.login(email, password).subscribe({
       next: (response: DTOResponse) => {
         if (response) {
+          const decodedToken = atob(response.accessToken.split('.')[1]);
+          const claims = JSON.parse(decodedToken);
+          localStorage.setItem(storageKeys.userId, claims.userId);
           localStorage.setItem(storageKeys.token, response.accessToken);
           this.router.navigate(['pages/activity']);
           console.log('Token is saved!.');

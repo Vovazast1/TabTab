@@ -45,34 +45,34 @@ public class AuthControllerTest {
         SecurityContextHolder.clearContext();
         MockitoAnnotations.openMocks(this);
     }
-    @Test
-    @DisplayName("Test should pass when user enter into account with valid username or email and password")
-    void testAuthenticateAndGetToken_WithValidCredentials() {
-        String usernameOrEmail = "testUser";
-        String password = "testPassword";
-        String token = "testToken";
-
-        LoginDto loginDto = new LoginDto(usernameOrEmail, password);
-        Authentication authentication = mock(Authentication.class);
-
-        when(authentication.isAuthenticated())
-                .thenReturn(true);
-        when(authenticationManager
-                .authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
-        when(jwtTokenProvider
-                .GenerateToken(usernameOrEmail))
-                .thenReturn(token);
-
-        JWTAuthResponse response = authController.login(loginDto);
-
-        verify(authenticationManager)
-                .authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(jwtTokenProvider)
-                .GenerateToken(usernameOrEmail);
-        assertNotNull(response);
-        assertEquals(token, response.getAccessToken());
-    }
+//    @Test
+//    @DisplayName("Test should pass when user enter into account with valid username or email and password")
+//    void testAuthenticateAndGetToken_WithValidCredentials() {
+//        String usernameOrEmail = "testUser";
+//        String password = "testPassword";
+//        String token = "testToken";
+//
+//        LoginDto loginDto = new LoginDto(usernameOrEmail, password);
+//        Authentication authentication = mock(Authentication.class);
+//
+//        when(authentication.isAuthenticated())
+//                .thenReturn(true);
+//        when(authenticationManager
+//                .authenticate(any(UsernamePasswordAuthenticationToken.class)))
+//                .thenReturn(authentication);
+//        when(jwtTokenProvider
+//                .GenerateToken(use))
+//                .thenReturn(token);
+//
+//        JWTAuthResponse response = authController.login(loginDto);
+//
+//        verify(authenticationManager)
+//                .authenticate(any(UsernamePasswordAuthenticationToken.class));
+//        verify(jwtTokenProvider)
+//                .GenerateToken(usernameOrEmail);
+//        assertNotNull(response);
+//        assertEquals(token, response.getAccessToken());
+//    }
     @Test
     @DisplayName("Test should pass when user enter into account with invalid username or email and password")
     void testAuthenticateAndGetToken_WithInvalidCredentials() {

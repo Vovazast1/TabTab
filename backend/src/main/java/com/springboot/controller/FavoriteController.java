@@ -26,12 +26,8 @@ public class FavoriteController {
     }
 
     @PostMapping
-    public FavoriteDto addFavorite(@RequestBody FavoriteDto favoriteDTO) {
-        return this.favoriteToDto(
-                favoriteService.addFavorite(
-                        favoriteDTO.userId,
-                        favoriteDTO.locationId)
-        );
+    public void addFavorite(@RequestBody FavoriteDto favoriteDTO) {
+        this.favoriteService.addFavorite(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
     }
 
     @DeleteMapping("{favoriteId}")
@@ -41,9 +37,8 @@ public class FavoriteController {
 
     private FavoriteDto favoriteToDto(Favorite favorite) {
         FavoriteDto favoriteDto = new FavoriteDto();
-        favoriteDto.favoriteId = favorite.getFavoriteId();
-        favoriteDto.userId = favorite.getUser().getUserId();
-        favoriteDto.locationId = favorite.getLocation().getLocationId();
+        favoriteDto.setUserId(favorite.getUser().getUserId());
+        favoriteDto.setLocationId(favorite.getLocation().getLocationId());
         return favoriteDto;
     }
 }

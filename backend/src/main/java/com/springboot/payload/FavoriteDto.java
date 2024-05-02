@@ -1,9 +1,13 @@
 package com.springboot.payload;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FavoriteDto {
-    public long favoriteId;
-
-    public long userId;
-
-    public long locationId;
+    private long userId;
+    private long locationId;
 }
