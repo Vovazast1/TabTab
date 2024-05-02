@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -51,9 +53,13 @@ public class AuthServiceImpl implements AuthService {
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getUsernameOrEmail(),
                         loginDto.getPassword()));
-        if (authentication.isAuthenticated()) {
+
+        Optional<User> user = userRepository.findByUsernameOrEmail(
+                loginDto.getUsernameOrEmail(), loginDto.getUsernameOrEmail());
+
+        if (authentication.isAuthenticated() && user.isPresent()) {
             return JWTAuthResponse.builder()
-                    .accessToken(jwtTokenProvider.GenerateToken(loginDto.getUsernameOrEmail())).tokenType("Bearer").build();
+                    .accessToken(jwtTokenProvider.GenerateToken(user.get())).tokenType("Bearer").build();
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
         }

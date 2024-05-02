@@ -51,16 +51,19 @@
           <img [src]="l" alt="Image" />
         </span>
         <div class="container">
-          <ion-button color="#FFF6EB"
-            ><ion-text color="black">
-              <ion-icon name="bookmark-outline" size="large"></ion-icon>Add to favorite</ion-text
-            ></ion-button
-          >
-          <ion-button color="#FFF6EB">
+
+          <ion-button color="#FFF6EB" (click)="addToFavorite()">
             <ion-text color="black">
-              <ion-icon name="chatbox-outline" size="large"></ion-icon>Open chat</ion-text
-            ></ion-button
-          >
+              <ion-icon name="bookmark-outline" size="large"></ion-icon> Add to favorite
+            </ion-text>
+          </ion-button>
+
+          <ion-button color="#FFF6EB" (click)="goToChat()">
+            <ion-text color="black">
+              <ion-icon name="chatbox-outline" size="large"></ion-icon> Open chat
+            </ion-text>
+          </ion-button>
+
         </div>
       </ion-toolbar>
     </ng-template>

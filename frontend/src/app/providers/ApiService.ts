@@ -5,13 +5,12 @@ import { ActivityType, Location, DTOResponse } from '../data';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  public authAPI = 'http://localhost:8080/api/v1/auth';
-  public locationAPI = 'http://localhost:8080/api/v1/locations';
+  public API = 'http://localhost:8080/api/v1';
 
   constructor(private http: HttpClient) {}
 
   login(usernameOrEmail: string, password: string): Observable<DTOResponse> {
-    return this.http.post<DTOResponse>(this.authAPI + '/login', {
+    return this.http.post<DTOResponse>(this.API + '/auth/login', {
       usernameOrEmail,
       password
     });
@@ -19,7 +18,7 @@ export class ApiService {
 
   register(email: string, username: string, birthday: Date, password: string): Observable<string> {
     return this.http.post(
-      this.authAPI + '/register',
+      this.API + '/auth/register',
       {
         email,
         username,
@@ -34,6 +33,13 @@ export class ApiService {
   }
 
   getLocationsByActivity(activity: ActivityType): Observable<Location[]> {
-    return this.http.get<Location[]>(this.locationAPI + `?activity=${activity}`);
+    return this.http.get<Location[]>(this.API + `/locations?activity=${activity}`);
+  }
+
+  addToFavorite(userId: number, locationId: number) {
+    return this.http.post(this.API + '/favorites', {
+      userId,
+      locationId
+    });
   }
 }
