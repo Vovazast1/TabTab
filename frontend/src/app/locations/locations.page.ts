@@ -4,7 +4,7 @@ import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
 import { ActivityType, Location, storageKeys } from '../data';
 import { IonModal } from '@ionic/angular';
-import { filter } from 'rxjs';
+import Type from '../data/Type';
 
 @Component({
   selector: 'app-locations',
@@ -19,10 +19,10 @@ export class LocationsPage implements OnInit {
   currentActivity?: ActivityType;
 
   public locationsIntelligenceButtons = [
-    { src: 'assets/icon/park-icon.png', label: 'Parks' },
+    { src: 'assets/icon/park-icon.png', label: 'Park' },
     { src: 'assets/icon/chess-icon.png', label: 'Chess' },
-    { src: 'assets/icon/library-icon.png', label: 'Libraries' },
-    { src: 'assets/icon/music-icon.png', label: 'Museums' },
+    { src: 'assets/icon/library-icon.png', label: 'Library' },
+    { src: 'assets/icon/museus-icon.png', label: 'Museum' },
     { src: 'assets/icon/music-icon.png', label: 'Music' }
   ];
   public locationsSportButtons = [
@@ -32,6 +32,7 @@ export class LocationsPage implements OnInit {
     { src: 'assets/icon/gym-icon.png', label: 'Gym' },
     { src: 'assets/icon/tennis-icon.png', label: 'Tennis' }
   ];
+
   public sportImg = [{ src: 'assets/icon/intelligence.png' }];
   public intelligenceImg = [{ src: 'assets/icon/sport.png' }];
 
@@ -66,8 +67,46 @@ export class LocationsPage implements OnInit {
           this.locations = locations;
 
           locations.forEach(location => {
+            const AnyIcon = L.icon({ iconUrl: 'assets/icon/football-icon.png' });
+
+            const FootballIcon = L.icon({ iconUrl: 'assets/icon/football-icon.png' });
             const BasketballIcon = L.icon({ iconUrl: 'assets/icon/basketball-icon.png' });
-            L.marker([location.latitude, location.longitude], { icon: BasketballIcon })
+            const VolleyballIcon = L.icon({ iconUrl: 'assets/icon/volleyball-icon.png' });
+            const GymIcon = L.icon({ iconUrl: 'assets/icon/gym-icon.png' });
+            const TennisIcon = L.icon({ iconUrl: 'assets/icon/tennis-icon.png' });
+
+            const ParkIcon = L.icon({ iconUrl: 'assets/icon/park-icon.png' });
+            const ChessIcon = L.icon({ iconUrl: 'assets/icon/chess-icon.png' });
+            const LibraryIcon = L.icon({ iconUrl: 'assets/icon/library-icon.png' });
+            const MuseumIcon = L.icon({ iconUrl: 'assets/icon/museum-icon.png' });
+            const MusicIcon = L.icon({ iconUrl: 'assets/icon/music-icon.png' });
+
+            const Icon =
+              location.activity === ActivityType.Sport
+                ? location.type === Type.Football
+                  ? FootballIcon
+                  : location.type === Type.Basketball
+                    ? BasketballIcon
+                    : location.type === Type.Volleyball
+                      ? VolleyballIcon
+                      : location.type === Type.Gym
+                        ? GymIcon
+                        : location.type === Type.Tennis
+                          ? TennisIcon
+                          : AnyIcon
+                : location.type === Type.Park
+                  ? ParkIcon
+                  : location.type === Type.Chess
+                    ? ChessIcon
+                    : location.type === Type.Library
+                      ? LibraryIcon
+                      : location.type === Type.Museum
+                        ? MuseumIcon
+                        : location.type === Type.Music
+                          ? MusicIcon
+                          : AnyIcon;
+
+            L.marker([location.latitude, location.longitude], { icon: Icon })
               .addTo(this.map)
               .on('click', () => {
                 const numberToFind = location.locationId;

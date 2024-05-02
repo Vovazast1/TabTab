@@ -4,10 +4,10 @@ const enum Type {
   Basketball = 'Basketball',
   Tennis = 'Tennis',
   Gym = 'Gym',
-  Parks = 'Parks',
+  Park = 'Park',
   Chess = 'Chess',
-  Libraries = 'Libraries',
-  Museums = 'Museums',
+  Library = 'Library',
+  Museum = 'Museum',
   Music = 'Music'
 }
 
