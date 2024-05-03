@@ -35,9 +35,10 @@ public class SocketService {
         sendSocketMessage(senderClient,storedMessage,message.getRoom());
     }
 
-    public void saveInfoMessage(SocketIOClient senderClient, String message, String room){
+    public void saveInfoMessage(SocketIOClient senderClient, String message, String room, String username){
         MessageDto storedMessage = messageService.saveMessage(MessageDto.builder()
                 .messageType(MessageType.CLIENT)
+                .username(username)
                 .content(message)
                 .room(room)
                 .build());

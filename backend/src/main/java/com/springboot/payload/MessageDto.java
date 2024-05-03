@@ -15,8 +15,8 @@ import lombok.*;
 @Builder
 public class MessageDto extends Base {
     @Enumerated(EnumType.STRING)
-    private MessageType messageType;
-    private String content;
-    private String room;
-    private String username;
+    public MessageType messageType;
+    public String content;
+    public String room;
+    public String username;
 }
