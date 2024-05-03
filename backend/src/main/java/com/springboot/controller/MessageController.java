@@ -19,8 +19,8 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    @GetMapping("/{room}")
-    public ResponseEntity<List<MessageDto>> getMessages(@PathVariable("room") String room) {
+    @GetMapping("{room}")
+    public ResponseEntity<List<MessageDto>> getMessages(@PathVariable String room) {
         return ResponseEntity.ok(messageService.getMessages(room));
     }
 }

@@ -1,34 +1,7 @@
-<div id="main-content" class="container">
-  
-    <div class="row">
-        <div class="col-md-12">
-           {{ message }}
-        </div>
-    </div>
-    
-  <div class="row">
-      <div class="col-md-6">
-          <form class="form-inline">
-              <div class="form-group">
-                  <label for="connect">WebSocket connection:</label>
-                  <button (click)="webSocketApi.connect()" class="btn btn-default" type="submit">Connect</button>
-                  <button (click)="webSocketApi.disconnect()" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                  </button>
-              </div>
-          </form>
-      </div>
-      <div class="col-md-6">
-          <form class="form-inline">
-              <div class="form-group">
-                  <label for="name">What is your name?</label>
-                  <input type="text" [(ngModel)]="message.userId" class="form-control" name="name"> <br>
-              </div>
-              <button (click)="webSocketApi.sendMessage('string')" class="btn btn-default" type="submit">Send</button>
-          </form>
-      </div>
-
-      <p> {{ message.message }}</p>
+<div class="login_root">
+    <form class="login_form" (submit)="checkForLogin($event)">
+      <input type="text" required placeholder="room name" [(ngModel)]="room" name="room">
+      <input type="text" required placeholder="username" [(ngModel)]="username" name="username">
+      <input type="submit" value="Login">
+    </form>
   </div>
- 
-</div>
-<router-outlet></router-outlet>

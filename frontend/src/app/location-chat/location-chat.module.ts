@@ -5,12 +5,12 @@ import { IonicModule } from '@ionic/angular';
 import { LocationChatPageRoutingModule } from './location-chat-routing.module';
 import { LocationChatPage } from './location-chat.page';
 import { HttpClientModule } from '@angular/common/http';
-import { WebSocketAPI } from '../components/WebSocketAPI';
+
 import { ApiService } from '../providers/ApiService';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, LocationChatPageRoutingModule, HttpClientModule],
-  providers: [ApiService, WebSocketAPI],
+  providers: [ApiService],
   declarations: [LocationChatPage]
 })
 export class LocationChatPageModule {}

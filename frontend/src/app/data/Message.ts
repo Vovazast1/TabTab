@@ -1,5 +1,6 @@
 export default interface Message {
-  userId: string;
-  message: string;
-  timestamp: string;
+  messageType: string;
+  content: string;
+  room: string;
+  username: string;
 }

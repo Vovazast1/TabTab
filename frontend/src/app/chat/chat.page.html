@@ -1,3 +1,25 @@
-<ion-content [fullscreen]="true">
-  
-</ion-content>
+<div class="message_root_div">
+    <span class="room_name">Room: {{ room }}</span>
+    <span class="user_name">Welcome: {{ username }}</span>
+    <div class="message_component message_list">
+        <div *ngFor="let message of messageList; let idx = index" class="message_item_{{ message.messageType.toLowerCase() }}{{ message.username === username ? '_self' : '' }}">
+            <span *ngIf="message.messageType.toLowerCase() !== 'server' && message.username !== username" class="message_item_username">{{ message.username }}</span>
+            <div class="message_content_{{ message.messageType.toLowerCase() }}{{ message.username === username ? '_self' : '' }}">
+                <span class="message_content_value">{{ message.content }}</span>
+                <span>{{ message.createdDateTime | date: 'HH:mm' }}</span>
+            </div>
+        </div>
+        <div #messagesEndRef></div>
+    </div>
+    <form class="chat-input" (ngSubmit)="sendMessage()">
+        <input type="text" [(ngModel)]="messageInput" placeholder="Type a message" name="messageInput">
+        <button type="submit">
+            <ng-container *ngIf="messageInput === ''; else fillButton">
+                <i class="ri-send-plane-line" style="font-size: 25px;"></i>
+            </ng-container>
+            <ng-template #fillButton>
+                <i class="ri-send-plane-fill" style="font-size: 25px; color: #2671ff;"></i>
+            </ng-template>
+        </button>
+    </form>
+</div>
