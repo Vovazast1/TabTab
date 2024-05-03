@@ -1,7 +1,6 @@
-// package com.springboot.payload;
+package com.springboot.payload;
 
-// public enum MessageType {
-// CHAT,
-// JOIN,
-// LEAVE
-// }
+public enum MessageType {
+    SERVER,
+    CLIENT,
+}
