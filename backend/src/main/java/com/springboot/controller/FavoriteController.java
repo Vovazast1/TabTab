@@ -27,6 +27,13 @@ public class FavoriteController {
 
     @PostMapping
     public void addFavorite(@RequestBody FavoriteDto favoriteDTO) {
+        Long favoriteId = favoriteService.getFavoriteId(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
+
+        if (favoriteId != null) {
+            this.favoriteService.deleteFavorite(favoriteId);
+            return;
+        }
+
         this.favoriteService.addFavorite(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
     }
 
