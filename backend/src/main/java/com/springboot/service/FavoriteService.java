@@ -26,6 +26,8 @@ public class FavoriteService {
         return favoriteRepository.findByUserUserId(userId);
     }
 
+    public Long getFavoriteId(Long userId, Long locationId) { return favoriteRepository.getFavoriteId(userId, locationId);}
+
     public void addFavorite(Long userId, Long locationId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
