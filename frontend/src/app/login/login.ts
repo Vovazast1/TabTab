@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginPageForm } from './login.form';
 import { ApiService } from '../providers/ApiService';
 import { DTOResponse, storageKeys } from '../data';
+import { ToastService } from '../providers/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastService: ToastService
   ) {}
 
   login() {
@@ -38,6 +40,7 @@ export class LoginPage implements OnInit {
       },
       error: (error: any) => {
         console.error('Error occurred during login:', error);
+        this.toastService.showToast('Wrong email or password');
       }
     });
   }

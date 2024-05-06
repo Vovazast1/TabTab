@@ -4,6 +4,9 @@ import { ApiService } from '../providers/ApiService';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegisterPageForm } from './register.form';
 import { format, parseISO } from 'date-fns';
+import { concatMap, take } from 'rxjs';
+import { ToastController } from '@ionic/angular';
+import { ToastService } from '../providers/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +25,8 @@ export class RegisterPage implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toastService: ToastService
   ) {}
 
   setToday() {
@@ -41,18 +45,22 @@ export class RegisterPage implements OnInit {
     const username = this.form?.get('username')?.value;
     const birthday = this.form?.get('birthday')?.value;
     const password = this.form?.get('password')?.value;
-    this.apiService.register(email, username, birthday, password).subscribe({
-      next: () => {
-        this.apiService.login(email, password).subscribe({
-          next: R => {
-            console.log(R);
-            this.router.navigate(['/pages/activity']);
-          },
-          error: () => console.error('asdasdasd.')
-        });
-      },
-      error: () => console.error('Failed to load page.')
-    });
+    this.apiService
+      .register(email, username, birthday, password)
+      .pipe(
+        take(1),
+        concatMap(() => this.apiService.login(email, password))
+      )
+      .subscribe({
+        next: R => {
+          console.log(R);
+          this.router.navigate(['/pages/activity']);
+        },
+        error: err => {
+          this.toastService.showToast('Wrong email or username');
+          console.error(err);
+        }
+      });
   }
 
   goToLogin() {
