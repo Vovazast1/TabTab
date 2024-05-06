@@ -4,8 +4,8 @@ import { ApiService } from '../providers/ApiService';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegisterPageForm } from './register.form';
 import { format, parseISO } from 'date-fns';
-import { concatMap, take } from 'rxjs';
-import { ToastService } from '../providers/toast.service';
+import { concatMap, switchMap, take } from 'rxjs';
+import { ToastService } from '../providers/ToastService';
 
 @Component({
   selector: 'app-register',
@@ -48,15 +48,16 @@ export class RegisterPage implements OnInit {
       .register(email, username, birthday, password)
       .pipe(
         take(1),
-        concatMap(() => this.apiService.login(email, password))
+        switchMap(() => {
+          return this.apiService.login(email, password);
+        })
       )
       .subscribe({
-        next: R => {
-          console.log(R);
-          this.router.navigate(['/pages/activity']);
+        next: () => {
+          this.router.navigate(['/pages/verification']);
         },
         error: err => {
-          this.toastService.showToast('Wrong email or username');
+          this.toastService.showToast('Password or email is already taken!');
           console.error(err);
         }
       });
