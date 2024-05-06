@@ -46,4 +46,8 @@ export class ApiService {
   getVerificationByUserId(userId: number): Observable<Boolean> {
     return this.http.get<Boolean>(this.API + `/verification?user=${userId}`);
   }
+
+  getImageByLocationId(locationId: number) {
+    return this.http.get(this.API + `/locations/${locationId}`);
+  }
 }
