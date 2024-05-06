@@ -7,7 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/users")
@@ -40,7 +41,9 @@ public class UserController {
     }
 
     @DeleteMapping("user/{id}")
-    public void deleteUserById(@PathVariable long id) { userService.deleteUserById(id); }
+    public void deleteUserById(@PathVariable long id) {
+        userService.deleteUserById(id);
+    }
 
     @PostMapping("user/{id}/changeUsername")
     public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestBody String name) {
@@ -65,4 +68,10 @@ public class UserController {
         userService.saveUser(user);
         return ResponseEntity.ok("Email successfully changed!");
     }
+
+    @GetMapping("verification")
+    public Long getVerification(@PathVariable long id) {
+        return userService.getVerificationById(id);
+    }
+
 }

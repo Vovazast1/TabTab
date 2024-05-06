@@ -42,4 +42,8 @@ export class ApiService {
       locationId
     });
   }
+
+  getVerificationByUserId(userId: number) {
+    return this.http.get(this.API + `/verification?user=${userId}`);
+  }
 }

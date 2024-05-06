@@ -40,4 +40,7 @@ public class UserService {
         userRepos.delete(userToDelete);
     }
 
+    public Long getVerificationById(long id) {
+        return userRepos.getVerification(id);
+    }
 }
