@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LoginPageForm } from './login.form';
 import { ApiService } from '../providers/ApiService';
 import { DTOResponse, storageKeys } from '../data';
-import { ToastService } from '../providers/toast.service';
+import { ToastService } from '../providers/ToastService';
 
 @Component({
   selector: 'app-login',
