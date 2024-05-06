@@ -17,5 +17,4 @@ public class JacksonConfig {
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         return mapper;
     }
-
 }

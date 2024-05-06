@@ -1,8 +1,10 @@
 package com.springboot.entity;
 
+import com.springboot.payload.MessageType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -28,6 +30,11 @@ public class LocationMessage {
     @Column(name = "Message")
     private String message;
 
-    @Column(name = "Timestamp")
+    @Column(name = "Timestamp", nullable = false, updatable = false)
+    @CreationTimestamp
     private Date timestamp;
+
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType;
+
 }

@@ -1,8 +1,7 @@
 package com.springboot.controller;
 
-import com.springboot.payload.MessageDto;
+import com.springboot.payload.LocationMessageDto;
 import com.springboot.service.MessageService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,8 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    @GetMapping("{room}")
-    public ResponseEntity<List<MessageDto>> getMessages(@PathVariable String room) {
-        return ResponseEntity.ok(messageService.getMessages(room));
+    @GetMapping("{locationId}")
+    public ResponseEntity<List<LocationMessageDto>> getMessages(@PathVariable Long locationId) {
+        return ResponseEntity.ok(messageService.getMessages(locationId));
     }
 }

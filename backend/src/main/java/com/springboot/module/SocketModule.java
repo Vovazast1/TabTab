@@ -5,7 +5,8 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
-import com.springboot.payload.MessageDto;
+import com.springboot.payload.LocationMessageDto;
+import com.springboot.service.SocketService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +24,10 @@ public class SocketModule {
         this.socketService = socketService;
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
-        server.addEventListener("send_message", MessageDto.class, onChatReceived());
+        server.addEventListener("send_message", LocationMessageDto.class, onChatReceived());
     }
 
-    private DataListener<MessageDto> onChatReceived() {
+    private DataListener<LocationMessageDto> onChatReceived() {
         return(senderClient, data , ackSender) -> {
             log.info(data.toString());
             socketService.saveMessage(senderClient, data);
@@ -36,11 +37,26 @@ public class SocketModule {
     private DisconnectListener onDisconnected() {
         return client -> {
             var params = client.getHandshakeData().getUrlParams();
-            String room = String.join("", params.get("room"));
-            String username = String.join("", params.get("username"));
-            String content = String.join("", params.get("content"));
-            socketService.saveInfoMessage(client,content,room, username);
-            log.info("Socket ID[{}] - room[{}] - username [{}]  disconnected to chat module through", client.getSessionId().toString(), room, username);
+            long locationId = 0;
+
+            if (params.containsKey("locationId") && params.get("locationId") != null) {
+                try {
+                    locationId = Long.parseLong(params.get("locationId").stream().findFirst().orElse(""));
+                } catch (NumberFormatException e) {
+                }
+            }
+
+            long userId = 0;
+
+            if (params.containsKey("userId") && params.get("userId") != null) {
+                try {
+                    userId = Long.parseLong(params.get("userId").stream().findFirst().orElse(""));
+                } catch (NumberFormatException e) {
+                }
+            }
+            String message = String.join("", params.get("message"));
+            socketService.saveInfoMessage(client, message,locationId, userId);
+            log.info("Socket ID[{}] - room[{}] - username [{}]  disconnected to chat module through", client.getSessionId().toString(), locationId, userId);
         };
     }
 
@@ -48,17 +64,29 @@ public class SocketModule {
         return (client) -> {
             var params = client.getHandshakeData().getUrlParams();
 
-            String room = params.containsKey("room") && params.get("room") != null ?
-                    params.get("room").stream().collect(Collectors.joining()) : "";
+            long locationId = 0;
 
-            String username = params.containsKey("username") && params.get("username") != null ?
-                    params.get("username").stream().collect(Collectors.joining()) : "";
+            if (params.containsKey("locationId") && params.get("locationId") != null) {
+                try {
+                    locationId = Long.parseLong(params.get("locationId").stream().findFirst().orElse(""));
+                } catch (NumberFormatException e) {
+                }
+            }
 
-            String content = params.containsKey("content") && params.get("content") != null ?
-                    params.get("content").stream().collect(Collectors.joining()) : "";
+            long userId = 0;
 
-            if (!room.isEmpty() && !username.isEmpty() && !content.isEmpty()) {
-                client.joinRoom(room);
+            if (params.containsKey("userId") && params.get("userId") != null) {
+                try {
+                    userId = Long.parseLong(params.get("userId").stream().findFirst().orElse(""));
+                } catch (NumberFormatException e) {
+                }
+            }
+
+            String message = params.containsKey("message") && params.get("message") != null ?
+                    params.get("message").stream().collect(Collectors.joining()) : "";
+
+            if (!message.isEmpty()) {
+                client.joinRoom(String.valueOf(locationId));
             }
         };
     }
