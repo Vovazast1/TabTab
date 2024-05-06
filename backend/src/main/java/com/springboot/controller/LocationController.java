@@ -27,8 +27,13 @@ public class LocationController {
         return locationService.saveLocation(location);
     }
 
+//    @GetMapping("{id}")
+//    public Location getLocationById(@PathVariable Long id) {
+//        return locationService.getLocationById(id);
+//    }
+
     @GetMapping("{id}")
-    public Location getLocationById(@PathVariable Long id) {
-        return locationService.getLocationById(id);
+    public String getImageByLocationId(@PathVariable Long id) {
+        return locationService.getImageByLocationId(id);
     }
 }

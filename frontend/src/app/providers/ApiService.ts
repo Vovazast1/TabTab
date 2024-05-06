@@ -46,4 +46,8 @@ export class ApiService {
   getVerificationByUserId(userId: number) {
     return this.http.get(this.API + `/verification?user=${userId}`);
   }
+
+  getImageByLocationId(locationId: number) {
+    return this.http.get(this.API + `/locations/${locationId}`);
+  }
 }
