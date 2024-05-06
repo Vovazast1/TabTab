@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegisterPageForm } from './register.form';
 import { format, parseISO } from 'date-fns';
 import { concatMap, take } from 'rxjs';
-import { ToastController } from '@ionic/angular';
 import { ToastService } from '../providers/toast.service';
 
 @Component({
