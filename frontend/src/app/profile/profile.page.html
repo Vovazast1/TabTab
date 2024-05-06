@@ -1,1 +1,76 @@
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <div class="title">
+    <ion-button color="serengeti" (click)="goToLocations()">
+      <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+    </ion-button>
+    <ion-text color="newblack"> Profile </ion-text>
+  </div>
+  <ion-img src="assets/img/user-photo.png"></ion-img>
+  <ion-text color="newblack" style="font-size: 1.5rem; margin-bottom: 1rem">Username</ion-text>
+  <ion-card color="serengeti">
+    <ion-item color="success">
+      <ion-icon name="pencil-outline"></ion-icon>
+      <ion-input
+        text-align="center"
+        placeholder="Enter your new username"
+        label="Edit username"
+        label-placement="floating"
+        type="text"
+      ></ion-input>
+      <ion-button color="serengeti">
+        <ion-icon name="checkmark-circle-outline" size="large" shape="round"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item color="success">
+      <ion-icon name="pencil-outline"></ion-icon>
+      <ion-input
+        text-align="center"
+        placeholder="Enter your new email"
+        label="Edit email"
+        label-placement="floating"
+        type="text"
+      ></ion-input>
+      <ion-button color="serengeti">
+        <ion-icon name="checkmark-circle-outline" size="large" shape="round"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-card color="success">
+      <ion-item color="success">
+        <ion-icon name="pencil-outline"></ion-icon>
+        <ion-input
+          text-align="center"
+          placeholder="Enter your new password"
+          label="Edit password"
+          label-placement="floating"
+          type="text"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item color="success">
+        <ion-icon name="pencil-outline"></ion-icon>
+        <ion-input
+          text-align="center"
+          placeholder="Confirm your new password"
+          label="Confirm new password"
+          label-placement="floating"
+          type="text"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button class="confirm" color="serengeti">
+        <ion-text color="success">Confirm</ion-text>
+      </ion-button>
+    </ion-card>
+
+    <ion-button color="success">
+      <ion-button color="telegram"><ion-icon name="paper-plane-outline"></ion-icon></ion-button>
+      <ion-text> Click to go to telegram bot </ion-text>
+    </ion-button>
+
+    <ion-button color="danger" shape="round">
+      <ion-text color="newblack">Delete account</ion-text>
+    </ion-button>
+  </ion-card>
+</ion-content>
