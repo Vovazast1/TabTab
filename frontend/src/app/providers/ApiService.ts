@@ -33,21 +33,28 @@ export class ApiService {
   }
 
   getLocationsByActivity(activity: ActivityType): Observable<Location[]> {
-    return this.http.get<Location[]>(this.API + `/locations?activity=${activity}`);
+    return this.http.get<Location[]>(this.API + `/location?activity=${activity}`);
   }
 
   addToFavorite(userId: number, locationId: number) {
-    return this.http.post(this.API + '/favorites', {
+    return this.http.post(this.API + '/favorite', {
       userId,
       locationId
     });
   }
 
   getVerificationByUserId(userId: number): Observable<Boolean> {
-    return this.http.get<Boolean>(this.API + `/verification?user=${userId}`);
+    return this.http.get<Boolean>(this.API + `/user/${userId}/verification`);
   }
 
   getImageByLocationId(locationId: number) {
-    return this.http.get(this.API + `/locations/${locationId}`);
+    return this.http.get<String>(this.API + `/location/${locationId}/image`);
+  }
+
+  changeAvatar(userId: number, avatar: number) {
+    return this.http.post(this.API + `/user/${userId}/avatar`, {
+      userId,
+      avatar
+    });
   }
 }
