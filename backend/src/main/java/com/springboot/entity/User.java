@@ -39,4 +39,7 @@ public class User {
 
     @Column(name = "Verification")
     private boolean isVerified;
+
+    @Column(name = "Avatar")
+    private long avatar;
 }

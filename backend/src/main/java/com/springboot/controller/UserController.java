@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
@@ -30,9 +29,9 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("{name}")
-    public User getUserByName(@PathVariable String name) {
-        return userService.getUserByName(name);
+    @GetMapping("{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
     }
 
     @GetMapping("{id}")
@@ -40,25 +39,25 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @DeleteMapping("user/{id}")
+    @DeleteMapping("{id}")
     public void deleteUserById(@PathVariable long id) {
         userService.deleteUserById(id);
     }
 
-    @PostMapping("user/{id}/changeUsername")
-    public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestBody String name) {
+    @PostMapping("{id}/changeUsername")
+    public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestParam String name) {
         User user = userService.getUserById(id);
 
         if (user.getUsername().equals(name))
-            return ResponseEntity.badRequest().body("Name matches the previous!");
+            return ResponseEntity.badRequest().body("Username matches the previous!");
 
         user.setUsername(name);
         userService.saveUser(user);
-        return ResponseEntity.ok("Name successfully changed!");
+        return ResponseEntity.ok("Username successfully changed!");
     }
 
-    @PostMapping("user/{id}/changeEmail")
-    public ResponseEntity<?> changeEmail(@PathVariable long id, @RequestBody String email) {
+    @PostMapping("{id}/changeEmail")
+    public ResponseEntity<?> changeEmail(@PathVariable long id, @RequestParam String email) {
         User user = userService.getUserById(id);
 
         if (user.getUsername().equals(email))
@@ -69,9 +68,20 @@ public class UserController {
         return ResponseEntity.ok("Email successfully changed!");
     }
 
-    @GetMapping("verification")
+    @GetMapping("{id}/verification")
     public Long getVerification(@PathVariable long id) {
         return userService.getVerificationById(id);
     }
 
+    @PostMapping("{id}/avatar")
+    public ResponseEntity<?> changeAvatar(@PathVariable long id, @RequestParam long avatar) {
+        User user = userService.getUserById(id);
+
+        if (user.getAvatar() == avatar)
+            return ResponseEntity.badRequest().body("Avatar matches the previous!");
+
+        user.setAvatar(avatar);
+        userService.saveUser(user);
+        return ResponseEntity.ok("Avatar successfully changed!");
+    }
 }
