@@ -21,10 +21,6 @@ public class LocationService {
         return locationRepositories.save(location);
     }
 
-    public Location getLocationById(Long id) {
-        return locationRepositories.findByLocationId(id);
-    }
-
     public List<Location> getLocationByActivity(String activity){ return locationRepositories.findByActivity(activity); }
 
     public String getImageByLocationId(Long locationId) { return locationRepositories.getImageByLocationId(locationId);}

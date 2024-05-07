@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-@RequestMapping("/api/v1/locations")
+@RequestMapping("/api/v1/location")
 public class LocationController {
 
     @Autowired
@@ -26,11 +26,6 @@ public class LocationController {
     public Location saveLocation(@RequestBody Location location) {
         return locationService.saveLocation(location);
     }
-
-//    @GetMapping("{id}")
-//    public Location getLocationById(@PathVariable Long id) {
-//        return locationService.getLocationById(id);
-//    }
 
     @GetMapping("{id}")
     public String getImageByLocationId(@PathVariable Long id) {

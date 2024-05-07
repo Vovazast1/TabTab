@@ -143,8 +143,8 @@ export class LocationsPage implements OnInit {
   }
 
   findImage(locationId: number) {
-    let n: string = locationId.toString();
-    this.l = `assets/modal-img/${n}.png`;
+    const n = this.apiService.getImageByLocationId(locationId);
+    this.l = `${n}`;
   }
 
   getLocationTypes() {

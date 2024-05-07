@@ -48,7 +48,7 @@
 
       <ion-toolbar color="success">
         <span class="image-wrapper">
-          <img [src]="l" alt="Image" />
+          <img *ngIf="l" [src]="l" alt="Image" />
         </span>
         <div class="container">
 

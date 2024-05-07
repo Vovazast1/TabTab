@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-@RequestMapping("/api/v1/favorites")
+@RequestMapping("/api/v1/favorite")
 public class FavoriteController {
 
     @Autowired
