@@ -12,8 +12,6 @@ public interface LocationRepositories extends JpaRepository<Location, Long> {
 
     List<Location> findByActivity(String name);
 
-    Location findByLocationId(Long id);
-
     @Query("select u.image " +
             "from Location u " +
             "where u.locationId = :locationId")
