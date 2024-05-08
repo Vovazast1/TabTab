@@ -6,6 +6,7 @@ import { RegisterPageForm } from './register.form';
 import { format, parseISO } from 'date-fns';
 import { concatMap, switchMap, take } from 'rxjs';
 import { ToastService } from '../providers/ToastService';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,7 @@ export class RegisterPage implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
+    private loginPage: LoginPage,
     private toastService: ToastService
   ) {}
 
@@ -46,18 +48,19 @@ export class RegisterPage implements OnInit {
     const password = this.form?.get('password')?.value;
     this.apiService
       .register(email, username, birthday, password)
-      .pipe(
-        take(1),
-        switchMap(() => {
-          return this.apiService.login(email, password);
-        })
-      )
+      // .pipe(
+      //   take(1),
+      //   switchMap(() => {
+      //     return this.apiService.login(email, password);
+      //   })
+      // )
       .subscribe({
         next: () => {
           this.router.navigate(['/pages/verification']);
+          this.loginPage.login(email, password);
         },
         error: err => {
-          this.toastService.showToast('Password or email is already taken!');
+          this.toastService.showToast('Username or email is already taken!');
           console.error(err);
         }
       });

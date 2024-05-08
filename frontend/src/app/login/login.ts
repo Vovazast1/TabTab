@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginPageForm } from './login.form';
 import { ApiService } from '../providers/ApiService';
 import { DTOResponse, storageKeys } from '../data';
 import { ToastService } from '../providers/ToastService';
+import { VerificationPage } from '../verification/verification';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +19,11 @@ export class LoginPage implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
+    private verificationPage: VerificationPage,
     private toastService: ToastService
   ) {}
 
-  login() {
-    const email = this.form?.get('email')?.value;
-    const password = this.form?.get('password')?.value;
-
+  login(email: AbstractControl, password: AbstractControl) {
     this.apiService.login(email, password).subscribe({
       next: (response: DTOResponse) => {
         if (response) {
@@ -32,7 +31,9 @@ export class LoginPage implements OnInit {
           const claims = JSON.parse(decodedToken);
           localStorage.setItem(storageKeys.userId, claims.userId);
           localStorage.setItem(storageKeys.token, response.accessToken);
-          this.router.navigate(['pages/activity']);
+
+          this.verificationPage.checkVerification();
+
           console.log('Token is saved!.');
         } else {
           console.error('Token not found in response.');

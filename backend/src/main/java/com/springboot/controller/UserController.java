@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -56,16 +57,16 @@ public class UserController {
         return ResponseEntity.ok("Username successfully changed!");
     }
 
-    @PostMapping("{id}/changeEmail")
-    public ResponseEntity<?> changeEmail(@PathVariable long id, @RequestParam String email) {
+    @PostMapping("{id}/changePassword")
+    public ResponseEntity<?> changePassword(@PathVariable long id, @RequestParam String password) {
         User user = userService.getUserById(id);
 
-        if (user.getUsername().equals(email))
-            return ResponseEntity.badRequest().body("Email matches the previous!");
+        if (user.getPassword().equals(password))
+            return ResponseEntity.badRequest().body("Password matches the previous!");
 
-        user.setEmail(email);
+        user.setPassword(password);
         userService.saveUser(user);
-        return ResponseEntity.ok("Email successfully changed!");
+        return ResponseEntity.ok("Password successfully changed!");
     }
 
     @GetMapping("{id}/verification")
@@ -73,7 +74,7 @@ public class UserController {
         return userService.getVerificationById(id);
     }
 
-    @PostMapping("{id}/avatar")
+    @PostMapping("{id}/changeAvatar")
     public ResponseEntity<?> changeAvatar(@PathVariable long id, @RequestParam long avatar) {
         User user = userService.getUserById(id);
 
