@@ -88,7 +88,7 @@ export class LocationsPage implements OnInit {
               .addTo(this.map)
               .on('click', () => {
                 this.selectedLocationId = location.locationId;
-                this.findImage(this.selectedLocationId);
+                this.setLocationImage(this.selectedLocationId);
                 this.ngZone.run(() => this.modal!.present());
               });
           });
@@ -142,9 +142,9 @@ export class LocationsPage implements OnInit {
     return this.currentActivity === ActivityType.Sport ? this.sportImg : this.intelligenceImg;
   }
 
-  findImage(locationId: number) {
-    const n = this.apiService.getImageByLocationId(locationId);
-    this.l = `${n}`;
+  setLocationImage(locationId: number) {
+    const location = this.locations.find(location => location.locationId === locationId);
+    this.l = location?.image ?? '';
   }
 
   getLocationTypes() {
