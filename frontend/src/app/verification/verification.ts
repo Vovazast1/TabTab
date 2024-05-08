@@ -22,9 +22,15 @@ export class VerificationPage implements OnInit {
 
   checkVerification() {
     const thisUserId = Number(localStorage.getItem(storageKeys.userId));
+
     this.apiService.getVerificationByUserId(thisUserId).subscribe({
-      next: () => this.router.navigate(['/pages/activity']),
-      error: () => this.toastService.showToast('Not verified yet! Visit your email')
+      next: value => {
+        if (value) {
+          this.router.navigate(['/pages/activity']);
+        } else {
+          this.toastService.showToast('Verify your email!');
+        }
+      }
     });
   }
 }

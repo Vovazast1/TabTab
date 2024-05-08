@@ -38,7 +38,7 @@ public class User {
     private String password;
 
     @Column(name = "Verification")
-    private boolean isVerified;
+    private long isVerified;
 
     @Column(name = "Avatar")
     private long avatar;
