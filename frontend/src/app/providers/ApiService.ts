@@ -10,7 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  login(usernameOrEmail: AbstractControl, password: AbstractControl): Observable<DTOResponse> {
+  login(usernameOrEmail: string, password: string): Observable<DTOResponse> {
     return this.http.post<DTOResponse>(this.API + '/auth/login', {
       usernameOrEmail,
       password
@@ -44,8 +44,8 @@ export class ApiService {
     });
   }
 
-  getVerificationByUserId(userId: number): Observable<number> {
-    return this.http.get<number>(this.API + `/user/${userId}/verification`);
+  getVerificationByUserId(userId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
   }
 
   getImageByLocationId(locationId: number) {
@@ -53,23 +53,14 @@ export class ApiService {
   }
 
   changeAvatar(userId: number, avatar: number) {
-    return this.http.post(this.API + `/user/${userId}/changeAvatar`, {
-      userId,
-      avatar
-    });
+    return this.http.post(this.API + `/user/${userId}/changeAvatar?avatar=${avatar}`, {});
   }
 
   changeUsername(userId: number, username: string) {
-    return this.http.post(this.API + `/user/${userId}/changeUsername`, {
-      userId,
-      username
-    });
+    return this.http.post(this.API + `/user/${userId}/changeUsername?username=${username}`, {});
   }
 
   changePassword(userId: number, password: string) {
-    return this.http.post(this.API + `/user/${userId}/changePassword`, {
-      userId,
-      password
-    });
+    return this.http.post(this.API + `/user/${userId}/changePassword?password=${password}`, {});
   }
 }

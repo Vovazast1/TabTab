@@ -31,7 +31,7 @@
   </form>
 
   
-  <ion-button color="newblack" size="full" shape="round" [disabled]="!form.valid" (click)="login(form.get('email'), form.get('password'))">Log in</ion-button>
+  <ion-button color="newblack" size="full" shape="round" [disabled]="!form.valid" (click)="handleLoginClick()">Log in</ion-button>
 
   <ion-button color="success" fill="clear" size="full">
     <ion-text color="newblack">Forgot your password?</ion-text>

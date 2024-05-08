@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../providers/ApiService';
 import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
+import { getFormString } from '../utils';
 
 @Component({
   selector: 'app-profile',
@@ -44,14 +45,11 @@ export class ProfilePage implements OnInit {
   // }
 
   changeUsername() {
-    const username = this.form?.get('username')?.value;
+    const username = getFormString(this.form, 'username');
 
-    const thisUserId = Number(localStorage.getItem(storageKeys.userId));
-    this.apiService.changeUsername(thisUserId, username).subscribe({
-      next: () => {
-        this.router.navigate(['/pages/profile']).then();
-        window.location.reload();
-      },
+    const userId = Number(localStorage.getItem(storageKeys.userId));
+    this.apiService.changeUsername(userId, username).subscribe({
+      next: () => this.toastService.showToast('Username changed!'),
       error: () => this.toastService.showToast('Username matches the previous!')
     });
   }
@@ -67,10 +65,7 @@ export class ProfilePage implements OnInit {
 
     const thisUserId = Number(localStorage.getItem(storageKeys.userId));
     this.apiService.changePassword(thisUserId, password).subscribe({
-      next: () => {
-        this.router.navigate(['/pages/profile']).then();
-        window.location.reload();
-      },
+      next: () => this.toastService.showToast('Password changed!'),
       error: () => this.toastService.showToast('Password matches the previous!')
     });
   }

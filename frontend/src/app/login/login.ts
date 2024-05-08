@@ -6,6 +6,7 @@ import { ApiService } from '../providers/ApiService';
 import { DTOResponse, storageKeys } from '../data';
 import { ToastService } from '../providers/ToastService';
 import { VerificationPage } from '../verification/verification';
+import { getFormDate, getFormString } from '../utils';
 
 @Component({
   selector: 'app-login',
@@ -23,24 +24,24 @@ export class LoginPage implements OnInit {
     private toastService: ToastService
   ) {}
 
-  login(email: AbstractControl, password: AbstractControl) {
+  handleLoginClick() {
+    const email = getFormString(this.form, 'email');
+    const password = getFormString(this.form, 'password');
+    this.login(email, password);
+  }
+
+  login(email: string, password: string) {
     this.apiService.login(email, password).subscribe({
       next: (response: DTOResponse) => {
-        if (response) {
-          const decodedToken = atob(response.accessToken.split('.')[1]);
-          const claims = JSON.parse(decodedToken);
-          localStorage.setItem(storageKeys.userId, claims.userId);
-          localStorage.setItem(storageKeys.token, response.accessToken);
+        const decodedToken = atob(response.accessToken.split('.')[1]);
+        const claims = JSON.parse(decodedToken);
+        localStorage.setItem(storageKeys.userId, claims.userId);
+        localStorage.setItem(storageKeys.token, response.accessToken);
 
-          this.verificationPage.checkVerification();
-
-          console.log('Token is saved!.');
-        } else {
-          console.error('Token not found in response.');
-        }
+        this.router.navigate(['/pages/verification']);
+        this.verificationPage.checkVerification();
       },
-      error: (error: any) => {
-        console.error('Error occurred during login:', error);
+      error: () => {
         this.toastService.showToast('Wrong email or password');
       }
     });

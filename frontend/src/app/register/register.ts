@@ -7,6 +7,7 @@ import { format, parseISO } from 'date-fns';
 import { concatMap, switchMap, take } from 'rxjs';
 import { ToastService } from '../providers/ToastService';
 import { LoginPage } from '../login/login';
+import { getFormDate, getFormString } from '../utils';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ import { LoginPage } from '../login/login';
   styleUrls: ['./register.scss']
 })
 export class RegisterPage implements OnInit {
-  form!: FormGroup;
+  form?: FormGroup;
   registerForm?: RegisterPageForm;
   modes = ['date'];
   selectedMode = 'date';
@@ -42,28 +43,19 @@ export class RegisterPage implements OnInit {
   register() {
     this.registerForm?.getForm().markAllAsTouched();
 
-    const email = this.form?.get('email')?.value;
-    const username = this.form?.get('username')?.value;
-    const birthday = this.form?.get('birthday')?.value;
-    const password = this.form?.get('password')?.value;
-    this.apiService
-      .register(email, username, birthday, password)
-      // .pipe(
-      //   take(1),
-      //   switchMap(() => {
-      //     return this.apiService.login(email, password);
-      //   })
-      // )
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/pages/verification']);
-          this.loginPage.login(email, password);
-        },
-        error: err => {
-          this.toastService.showToast('Username or email is already taken!');
-          console.error(err);
-        }
-      });
+    const email = getFormString(this.form, 'email');
+    const username = getFormString(this.form, 'username');
+    const birthday = getFormDate(this.form, 'birthday');
+    const password = getFormString(this.form, 'password');
+    this.apiService.register(email, username, birthday, password).subscribe({
+      next: () => {
+        this.router.navigate(['/pages/verification']);
+        this.loginPage.login(email, password);
+      },
+      error: () => {
+        this.toastService.showToast('Username or email is already taken!');
+      }
+    });
   }
 
   goToLogin() {
