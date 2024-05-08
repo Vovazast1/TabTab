@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Set;
 
 @Table(name = "User", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "Username" }),
@@ -38,7 +37,7 @@ public class User {
     private String password;
 
     @Column(name = "Verification")
-    private boolean isVerified;
+    private Boolean isVerified;
 
     @Column(name = "Avatar")
     private long avatar;
