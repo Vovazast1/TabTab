@@ -46,13 +46,13 @@ public class UserController {
     }
 
     @PostMapping("{id}/changeUsername")
-    public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestParam String name) {
+    public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestParam String username) {
         User user = userService.getUserById(id);
 
-        if (user.getUsername().equals(name))
+        if (user.getUsername().equals(username))
             return ResponseEntity.badRequest().body("Username matches the previous!");
 
-        user.setUsername(name);
+        user.setUsername(username);
         userService.saveUser(user);
         return ResponseEntity.ok("Username successfully changed!");
     }
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @GetMapping("{id}/verification")
-    public Long getVerification(@PathVariable long id) {
+    public Boolean getVerification(@PathVariable long id) {
         return userService.getVerificationById(id);
     }
 

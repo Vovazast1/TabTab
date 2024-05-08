@@ -37,7 +37,8 @@ public class UserService {
         userRepos.delete(userToDelete);
     }
 
-    public Long getVerificationById(long id) {
-        return userRepos.getVerification(id);
+    public Boolean getVerificationById(long id) {
+        User user = userRepos.findByUserId(id);
+        return user.getIsVerified();
     }
 }
