@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginPageForm } from './login.form';
 import { ApiService } from '../providers/ApiService';
 import { DTOResponse, storageKeys } from '../data';
 import { ToastService } from '../providers/ToastService';
+import { VerificationPage } from '../verification/verification';
+import { getFormDate, getFormString } from '../utils';
 
 @Component({
   selector: 'app-login',
@@ -18,28 +20,28 @@ export class LoginPage implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
+    private verificationPage: VerificationPage,
     private toastService: ToastService
   ) {}
 
-  login() {
-    const email = this.form?.get('email')?.value;
-    const password = this.form?.get('password')?.value;
+  handleLoginClick() {
+    const email = getFormString(this.form, 'email');
+    const password = getFormString(this.form, 'password');
+    this.login(email, password);
+  }
 
+  login(email: string, password: string) {
     this.apiService.login(email, password).subscribe({
       next: (response: DTOResponse) => {
-        if (response) {
-          const decodedToken = atob(response.accessToken.split('.')[1]);
-          const claims = JSON.parse(decodedToken);
-          localStorage.setItem(storageKeys.userId, claims.userId);
-          localStorage.setItem(storageKeys.token, response.accessToken);
-          this.router.navigate(['pages/activity']);
-          console.log('Token is saved!.');
-        } else {
-          console.error('Token not found in response.');
-        }
+        const decodedToken = atob(response.accessToken.split('.')[1]);
+        const claims = JSON.parse(decodedToken);
+        localStorage.setItem(storageKeys.userId, claims.userId);
+        localStorage.setItem(storageKeys.token, response.accessToken);
+
+        this.router.navigate(['/pages/verification']);
+        this.verificationPage.checkVerification();
       },
-      error: (error: any) => {
-        console.error('Error occurred during login:', error);
+      error: () => {
         this.toastService.showToast('Wrong email or password');
       }
     });

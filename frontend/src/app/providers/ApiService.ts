@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivityType, Location, DTOResponse } from '../data';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -43,8 +44,8 @@ export class ApiService {
     });
   }
 
-  getVerificationByUserId(userId: number): Observable<Boolean> {
-    return this.http.get<Boolean>(this.API + `/user/${userId}/verification`);
+  getVerificationByUserId(userId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
   }
 
   getImageByLocationId(locationId: number) {
@@ -52,9 +53,14 @@ export class ApiService {
   }
 
   changeAvatar(userId: number, avatar: number) {
-    return this.http.post(this.API + `/user/${userId}/avatar`, {
-      userId,
-      avatar
-    });
+    return this.http.post(this.API + `/user/${userId}/changeAvatar?avatar=${avatar}`, {});
+  }
+
+  changeUsername(userId: number, username: string) {
+    return this.http.post(this.API + `/user/${userId}/changeUsername?username=${username}`, {});
+  }
+
+  changePassword(userId: number, password: string) {
+    return this.http.post(this.API + `/user/${userId}/changePassword?password=${password}`, {});
   }
 }

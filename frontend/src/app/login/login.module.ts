@@ -8,6 +8,7 @@ import { ApiService } from '../providers/ApiService';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../components/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { VerificationPage } from '../verification/verification';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { AppRoutingModule } from '../app-routing.module';
     HttpClientModule,
     SharedModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, VerificationPage],
   declarations: [LoginPage]
 })
 export class LoginPageModule {}

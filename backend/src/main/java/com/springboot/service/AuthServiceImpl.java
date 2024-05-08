@@ -107,7 +107,7 @@ public class AuthServiceImpl implements AuthService {
         if(token != null)
         {
             User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
-            user.setVerified(true);
+            user.setIsVerified(1);
             userRepository.save(user);
             return ResponseEntity.ok("Email verified successfully!");
         }
