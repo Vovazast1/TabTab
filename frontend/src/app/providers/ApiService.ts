@@ -48,10 +48,6 @@ export class ApiService {
     return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
   }
 
-  getImageByLocationId(locationId: number) {
-    return this.http.get<String>(this.API + `/location/${locationId}/image`);
-  }
-
   changeAvatar(userId: number, avatar: number) {
     return this.http.post(this.API + `/user/${userId}/changeAvatar?avatar=${avatar}`, {});
   }
