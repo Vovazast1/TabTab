@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivityType, Location, DTOResponse } from '../data';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -9,7 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  login(usernameOrEmail: string, password: string): Observable<DTOResponse> {
+  login(usernameOrEmail: AbstractControl, password: AbstractControl): Observable<DTOResponse> {
     return this.http.post<DTOResponse>(this.API + '/auth/login', {
       usernameOrEmail,
       password
@@ -43,8 +44,8 @@ export class ApiService {
     });
   }
 
-  getVerificationByUserId(userId: number): Observable<Boolean> {
-    return this.http.get<Boolean>(this.API + `/user/${userId}/verification`);
+  getVerificationByUserId(userId: number): Observable<number> {
+    return this.http.get<number>(this.API + `/user/${userId}/verification`);
   }
 
   getImageByLocationId(locationId: number) {
@@ -52,9 +53,23 @@ export class ApiService {
   }
 
   changeAvatar(userId: number, avatar: number) {
-    return this.http.post(this.API + `/user/${userId}/avatar`, {
+    return this.http.post(this.API + `/user/${userId}/changeAvatar`, {
       userId,
       avatar
+    });
+  }
+
+  changeUsername(userId: number, username: string) {
+    return this.http.post(this.API + `/user/${userId}/changeUsername`, {
+      userId,
+      username
+    });
+  }
+
+  changePassword(userId: number, password: string) {
+    return this.http.post(this.API + `/user/${userId}/changePassword`, {
+      userId,
+      password
     });
   }
 }
