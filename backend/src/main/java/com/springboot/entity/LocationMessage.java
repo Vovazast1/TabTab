@@ -2,6 +2,7 @@ package com.springboot.entity;
 
 import com.springboot.payload.MessageType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Table(name = "Location_Message")
 @Getter
 @Setter
+@Builder
 public class LocationMessage {
 
     @Id
@@ -35,6 +37,19 @@ public class LocationMessage {
     private Date timestamp;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "MessageType" , nullable = false)
     private MessageType messageType;
 
+    public LocationMessage() {
+
+    }
+
+    public LocationMessage(long locationMessageID, User user, Location location, String message, Date timestamp, MessageType messageType) {
+        this.locationMessageID = locationMessageID;
+        this.user = user;
+        this.location = location;
+        this.message = message;
+        this.timestamp = timestamp;
+        this.messageType = messageType;
+    }
 }

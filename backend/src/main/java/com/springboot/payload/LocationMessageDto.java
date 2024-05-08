@@ -1,11 +1,7 @@
 package com.springboot.payload;
 
-import com.springboot.entity.LocationMessage;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
-
-import java.io.Serializable;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Data
 @AllArgsConstructor
@@ -13,9 +9,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-public class LocationMessageDto {
-    private MessageType messageType;
-    private String message;
-    private long locationId;
-    private long userId;
+public class LocationMessageDto{
+    public MessageType messageType;
+    public String message;
+    public long locationId;
+    public long userId;
 }

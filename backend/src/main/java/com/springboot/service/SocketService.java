@@ -1,10 +1,14 @@
 package com.springboot.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
+import com.springboot.entity.Location;
+import com.springboot.entity.LocationMessage;
+import com.springboot.entity.User;
 import com.springboot.payload.LocationMessageDto;
 import com.springboot.payload.MessageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +16,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SocketService {
 
-    private final MessageService messageService;
+    @Autowired
+    private LocationMessageService locationMessageService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private LocationService locationService;
+
 
     public void sendSocketMessage(SocketIOClient senderClient, LocationMessageDto message, long locationId){
         for(
@@ -25,23 +37,46 @@ public class SocketService {
     }
 
     public void saveMessage(SocketIOClient senderClient, LocationMessageDto message){
-        LocationMessageDto storedMessage = messageService.saveMessage(LocationMessageDto.builder()
+
+        User user = userService.getUserById(message.getUserId());
+        Location location = locationService.getLocationById(message.getLocationId());
+
+
+
+        LocationMessage storedMessage = locationMessageService.saveMessage(LocationMessage.builder()
                 .messageType(MessageType.CLIENT)
                 .message(message.getMessage())
-                .locationId(message.getLocationId())
-                .userId(message.getUserId())
+                .location(location)
+                .user(user)
                 .build());
-        sendSocketMessage(senderClient,storedMessage, message.getLocationId());
+        LocationMessageDto storedMessageDto = locationToDto(storedMessage);
+
+        sendSocketMessage(senderClient,storedMessageDto, message.getLocationId());
     }
 
     public void saveInfoMessage(SocketIOClient senderClient, String message, long locationId, long userId){
-        LocationMessageDto storedMessage = messageService.saveMessage(LocationMessageDto.builder()
+        User user = userService.getUserById(userId);
+
+        Location location = locationService.getLocationById(locationId);
+
+        LocationMessage storedMessage = locationMessageService.saveMessage(LocationMessage.builder()
                 .messageType(MessageType.CLIENT)
-                .userId(userId)
+                .user(user)
                 .message(message)
-                .locationId(locationId)
+                .location(location)
                 .build());
-        sendSocketMessage(senderClient,storedMessage,locationId);
+
+        LocationMessageDto storedMessageDto = locationToDto(storedMessage);
+        sendSocketMessage(senderClient,storedMessageDto,locationId);
+    }
+
+    private LocationMessageDto locationToDto(LocationMessage locationMessage) {
+        LocationMessageDto locationMessageDto = new LocationMessageDto();
+        locationMessageDto.messageType = locationMessage.getMessageType();
+        locationMessageDto.userId = locationMessage.getUser().getUserId();
+        locationMessageDto.locationId = locationMessage.getLocation().getLocationId();
+        locationMessageDto.message = locationMessage.getMessage();
+        return locationMessageDto;
     }
 
 }
