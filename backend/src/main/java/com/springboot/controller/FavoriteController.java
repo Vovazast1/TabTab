@@ -17,12 +17,20 @@ public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
 
-    @GetMapping
-    public List<FavoriteDto> getFavorites(@RequestParam Long userId) {
-        List<Favorite> favorites = favoriteService.getFavorites(userId);
+    @GetMapping("{id}")
+    public List<FavoriteDto> getFavorites(@PathVariable Long id) {
+        List<Favorite> favorites = favoriteService.getFavorites(id);
         return favorites.stream()
                 .map(this::favoriteToDto)
                 .collect(Collectors.toList());
+    }
+
+    private FavoriteDto favoriteToDto(Favorite favorite) {
+        FavoriteDto favoriteDto = new FavoriteDto();
+        favoriteDto.setFavoriteId(favorite.getFavoriteId());
+        favoriteDto.setUserId(favorite.getUser().getUserId());
+        favoriteDto.setLocationId(favorite.getLocation().getLocationId());
+        return favoriteDto;
     }
 
     @PostMapping
@@ -40,12 +48,5 @@ public class FavoriteController {
     @DeleteMapping("{favoriteId}")
     public void deleteFavorite(@PathVariable Long favoriteId) {
         favoriteService.deleteFavorite(favoriteId);
-    }
-
-    private FavoriteDto favoriteToDto(Favorite favorite) {
-        FavoriteDto favoriteDto = new FavoriteDto();
-        favoriteDto.setUserId(favorite.getUser().getUserId());
-        favoriteDto.setLocationId(favorite.getLocation().getLocationId());
-        return favoriteDto;
     }
 }

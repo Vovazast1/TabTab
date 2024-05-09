@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivityType, Location, DTOResponse } from '../data';
+import { ActivityType, Favorite, Location, DTOResponse } from '../data';
 import { AbstractControl } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +35,10 @@ export class ApiService {
 
   getLocationsByActivity(activity: ActivityType): Observable<Location[]> {
     return this.http.get<Location[]>(this.API + `/location?activity=${activity}`);
+  }
+
+  getFavorites(userId: number): Observable<Favorite[]> {
+    return this.http.get<Favorite[]>(this.API + `/favorite/${userId}`);
   }
 
   addToFavorite(userId: number, locationId: number) {

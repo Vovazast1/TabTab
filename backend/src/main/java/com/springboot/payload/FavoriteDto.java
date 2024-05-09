@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FavoriteDto {
+    private long favoriteId;
     private long userId;
     private long locationId;
 }
