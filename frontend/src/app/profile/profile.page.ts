@@ -6,7 +6,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../providers/ApiService';
 import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
-import { getFormString } from '../utils';
+import { getFormString, getFormNumber } from '../utils';
+import Avatar from '../data/Avatar';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,14 @@ export class ProfilePage implements OnInit {
   currentActivity?: ActivityType;
   map!: L.Map;
   public l: string = '';
+
+  private Avatars = {
+    [Avatar.Avatar1]: 'assets/avatar/Avatar1.png',
+    [Avatar.Avatar2]: 'assets/avatar/Avatar2.png',
+    [Avatar.Avatar3]: 'assets/avatar/Avatar3.png',
+    [Avatar.Avatar4]: 'assets/avatar/Avatar4.png',
+    [Avatar.Avatar5]: 'assets/avatar/Avatar5.png'
+  };
 
   constructor(
     private router: Router,
@@ -40,9 +49,15 @@ export class ProfilePage implements OnInit {
     window.location.reload();
   }
 
-  // changeAvatar() {
-  //   const avatar = this.form?.get('avatar')?.value;
-  // }
+  changeAvatar() {
+    const avatar = getFormNumber(this.form, 'avatar');
+
+    const userId = Number(localStorage.getItem(storageKeys.userId));
+    this.apiService.changeAvatar(userId, avatar).subscribe({
+      next: () => this.toastService.showToast('Avatar successfully changed!'),
+      error: () => this.toastService.showToast('Avatar matches the previous!')
+    });
+  }
 
   changeUsername() {
     const username = getFormString(this.form, 'username');

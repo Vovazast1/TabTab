@@ -83,6 +83,6 @@ public class UserController {
 
         user.setAvatar(avatar);
         userService.saveUser(user);
-        return ResponseEntity.ok("Avatar successfully changed!");
+        return ResponseEntity.ok("");
     }
 }
