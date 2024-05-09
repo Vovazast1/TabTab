@@ -1,9 +1,14 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType, Location, storageKeys, Type } from '../data';
+import { ActivityType, Location, storageKeys, Intelligence, Sport } from '../data';
 import { IonModal } from '@ionic/angular';
+
+interface ExtendedMarker {
+  nativeMarker: L.Marker;
+  location: Location;
+}
 
 @Component({
   selector: 'app-locations',
@@ -35,23 +40,25 @@ export class LocationsPage implements OnInit {
   public sportImg = [{ src: 'assets/icon/intelligence.png' }];
   public intelligenceImg = [{ src: 'assets/icon/sport.png' }];
 
-  public l: string = '';
+  public l: String = '';
+  public markers: ExtendedMarker[] = [];
+  public filteredMarkers: ExtendedMarker[] = [];
 
   private iconMap = {
-    [Type.Football]: 'assets/icon/football-icon.png',
-    [Type.Volleyball]: 'assets/icon/volleyball-icon.png',
-    [Type.Basketball]: 'assets/icon/basketball-icon.png',
-    [Type.Tennis]: 'assets/icon/tennis-icon.png',
-    [Type.Gym]: 'assets/icon/gym-icon.png',
-    [Type.Park]: 'assets/icon/park-icon.png',
-    [Type.Chess]: 'assets/icon/chess-icon.png',
-    [Type.Library]: 'assets/icon/library-icon.png',
-    [Type.Museum]: 'assets/icon/museum-icon.png',
-    [Type.Music]: 'assets/icon/music-icon.png'
+    [Sport.Football]: 'assets/icon/football-icon.png',
+    [Sport.Volleyball]: 'assets/icon/volleyball-icon.png',
+    [Sport.Basketball]: 'assets/icon/basketball-icon.png',
+    [Sport.Tennis]: 'assets/icon/tennis-icon.png',
+    [Sport.Gym]: 'assets/icon/gym-icon.png',
+    [Intelligence.Park]: 'assets/icon/park-icon.png',
+    [Intelligence.Chess]: 'assets/icon/chess-icon.png',
+    [Intelligence.Library]: 'assets/icon/library-icon.png',
+    [Intelligence.Museum]: 'assets/icon/museum-icon.png',
+    [Intelligence.Music]: 'assets/icon/music-icon.png'
   };
 
   private selectedLocationId: number | null = null;
-
+  public selectedLocation: Location | null = null;
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
@@ -83,14 +90,15 @@ export class LocationsPage implements OnInit {
           locations.forEach(location => {
             const iconUrl = this.iconMap[location.type] ?? 'assets/icon/favicon.png';
             const icon = L.icon({ iconUrl });
-
-            L.marker([location.latitude, location.longitude], { icon })
+            const marker = L.marker([location.latitude, location.longitude], { icon })
               .addTo(this.map)
               .on('click', () => {
                 this.selectedLocationId = location.locationId;
                 this.setLocationImage(this.selectedLocationId);
                 this.ngZone.run(() => this.modal!.present());
               });
+
+            this.markers.push({ nativeMarker: marker, location });
           });
         },
         error: error => console.log(error)
@@ -100,7 +108,7 @@ export class LocationsPage implements OnInit {
 
   initializeMap() {
     this.map = new L.Map('map', { zoomControl: false }).setView([49.8431, 24.0361], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map Test'
     }).addTo(this.map);
   }
@@ -151,5 +159,42 @@ export class LocationsPage implements OnInit {
     const types = this.locations.map(location => location.type);
     const filteredTypes = types.filter(type => types.includes(type));
     return Array.from(new Set(filteredTypes));
+  }
+
+  handleChange(event: Event) {
+    this.markers.forEach((marker: ExtendedMarker) => marker.nativeMarker.remove());
+
+    const typeValue = Array.from((event as any).target.value);
+    if (typeValue.length === 0) {
+      this.markers.forEach(
+        (marker: ExtendedMarker) =>
+          (marker.nativeMarker = L.marker([marker.location.latitude, marker.location.longitude], {
+            icon: marker.nativeMarker.getIcon()
+          })
+            .addTo(this.map)
+            .on('click', () => this.handleMarkerClick(marker)))
+      );
+      return;
+    }
+
+    this.filteredMarkers = this.markers.filter((marker: ExtendedMarker) => typeValue.includes(marker.location.type));
+    this.filteredMarkers.forEach((filteredMarker: ExtendedMarker) => {
+      const nativeMarker = L.marker([filteredMarker.location.latitude, filteredMarker.location.longitude], {
+        icon: filteredMarker.nativeMarker.getIcon()
+      })
+        .addTo(this.map)
+        .on('click', () => this.handleMarkerClick(filteredMarker));
+
+      const marker = this.markers.find(mark => mark.location.locationId === filteredMarker.location.locationId);
+      if (marker) {
+        marker.nativeMarker = nativeMarker;
+      }
+    });
+  }
+
+  handleMarkerClick(marker: ExtendedMarker) {
+    this.selectedLocationId = marker.location.locationId;
+    this.setLocationImage(this.selectedLocationId);
+    this.ngZone.run(() => this.modal!.present());
   }
 }
