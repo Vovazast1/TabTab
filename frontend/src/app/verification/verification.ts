@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../providers/ApiService';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { storageKeys } from '../data';
 import { ToastService } from '../providers/ToastService';
