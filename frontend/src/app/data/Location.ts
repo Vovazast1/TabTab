@@ -1,11 +1,11 @@
 import ActivityType from './ActivityType';
-import Type from './Type';
+import { Sport, Intelligence } from './Type';
 
 export default interface Location {
   locationId: number;
   locationName: string;
   activity: ActivityType;
-  type: Type;
+  type: Sport | Intelligence;
   latitude: number;
   longitude: number;
   image: string;
