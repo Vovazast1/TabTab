@@ -1,0 +1,2 @@
+ALTER TABLE user
+    ALTER Avatar SET DEFAULT 1;

@@ -29,13 +29,14 @@
       <ion-item color="success">
         <ion-icon name="pencil-outline"></ion-icon>
         <ion-input
+          formControlName="avatar"
           text-align="center"
-          placeholder="Enter your new email"
-          label="Edit email"
+          placeholder="Enter your new avatar"
+          label="Edit avatar"
           label-placement="floating"
           type="text"
         ></ion-input>
-        <ion-button color="serengeti">
+        <ion-button color="serengeti" (click)="changeAvatar()">
           <ion-icon name="checkmark-circle-outline" size="large" shape="round"></ion-icon>
         </ion-button>
       </ion-item>

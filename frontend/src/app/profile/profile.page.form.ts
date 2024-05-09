@@ -9,6 +9,7 @@ export class ProfilePageForm {
 
   createForm(): FormGroup {
     return this.formBuilder.group({
+      avatar: ['', [Validators.min(1), Validators.max(5)]],
       username: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['']
