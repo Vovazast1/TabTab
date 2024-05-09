@@ -50,11 +50,11 @@ public class UserController {
         User user = userService.getUserById(id);
 
         if (user.getUsername().equals(username))
-            return ResponseEntity.badRequest().body("Username matches the previous!");
+            return ResponseEntity.badRequest().build();
 
         user.setUsername(username);
         userService.saveUser(user);
-        return ResponseEntity.ok("Username successfully changed!");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("{id}/changePassword")
@@ -62,11 +62,11 @@ public class UserController {
         User user = userService.getUserById(id);
 
         if (user.getPassword().equals(password))
-            return ResponseEntity.badRequest().body("Password matches the previous!");
+            return ResponseEntity.badRequest().build();
 
         user.setPassword(password);
         userService.saveUser(user);
-        return ResponseEntity.ok("Password successfully changed!");
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{id}/verification")
@@ -79,10 +79,10 @@ public class UserController {
         User user = userService.getUserById(id);
 
         if (user.getAvatar() == avatar)
-            return ResponseEntity.badRequest().body("Avatar matches the previous!");
+            return ResponseEntity.badRequest().build();
 
         user.setAvatar(avatar);
         userService.saveUser(user);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok().build();
     }
 }
