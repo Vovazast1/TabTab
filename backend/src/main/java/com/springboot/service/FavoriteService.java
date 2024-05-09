@@ -22,8 +22,8 @@ public class FavoriteService {
     @Autowired
     LocationRepositories locationRepositories;
 
-    public List<Favorite> getFavorites(Long userId) {
-        return favoriteRepository.findByUserUserId(userId);
+    public List<Favorite> getFavorites(Long id) {
+        return favoriteRepository.findByUserUserId(id);
     }
 
     public Long getFavoriteId(Long userId, Long locationId) { return favoriteRepository.getFavoriteId(userId, locationId);}
