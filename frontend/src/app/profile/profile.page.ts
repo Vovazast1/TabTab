@@ -84,4 +84,8 @@ export class ProfilePage implements OnInit {
       error: () => this.toastService.showToast('Password matches the previous!')
     });
   }
+
+  getUsername() {
+    return localStorage.getItem(storageKeys.sub);
+  }
 }
