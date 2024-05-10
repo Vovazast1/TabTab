@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivityType, Favorite, Location, DTOResponse, Message } from '../data';
-import { AbstractControl } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   public API = 'http://localhost:8080/api/v1';
-  public authAPI = 'http://localhost:8080/api/v1/auth';
-  public locationAPI = 'http://localhost:8080/api/v1/locations';
-  public messageAPI = 'http://localhost:8080/api/v1/messages';
+  public authAPI = `${this.API}/auth`;
+  public locationAPI = `${this.API}/locations`;
+  public messageAPI = `${this.API}/messages`;
 
   constructor(private http: HttpClient) {}
 

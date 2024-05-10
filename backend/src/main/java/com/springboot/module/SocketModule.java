@@ -1,6 +1,5 @@
 package com.springboot.module;
 
-
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
@@ -10,11 +9,9 @@ import com.springboot.entity.Location;
 import com.springboot.entity.LocationMessage;
 import com.springboot.entity.User;
 import com.springboot.payload.LocationMessageDto;
-import com.springboot.repository.LocationRepositories;
+import com.springboot.repository.LocationRepository;
 import com.springboot.repository.UserRepository;
-import com.springboot.service.LocationService;
 import com.springboot.service.SocketService;
-import com.springboot.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,29 +24,25 @@ public class SocketModule {
 
     private final SocketIOServer server;
     private final SocketService socketService;
+
     @Autowired
-    private LocationService locationService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private LocationRepositories locationRepositories;
+    private LocationRepository locationRepository;
     @Autowired
     private UserRepository userRepository;
 
-    public SocketModule(SocketIOServer server, SocketService socketService, LocationService locationService, UserService userService, LocationRepositories locationRepositories, UserRepository userRepository) {
+    public SocketModule(SocketIOServer server, SocketService socketService, LocationRepository locationRepository,
+            UserRepository userRepository) {
         this.server = server;
         this.socketService = socketService;
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
         server.addEventListener("send_message", LocationMessageDto.class, onChatReceived());
-        this.locationService = locationService;
-        this.userService = userService;
-        this.locationRepositories = locationRepositories;
+        this.locationRepository = locationRepository;
         this.userRepository = userRepository;
     }
 
     private DataListener<LocationMessageDto> onChatReceived() {
-        return(senderClient, data , ackSender) -> {
+        return (senderClient, data, ackSender) -> {
             log.info(data.toString());
             socketService.saveMessage(senderClient, data);
         };
@@ -58,7 +51,7 @@ public class SocketModule {
     private DisconnectListener onDisconnected() {
         return client -> {
             long locationId = getLocationIdFromClient(client);
-            Location location = locationRepositories.findById(locationId).orElse(null);
+            Location location = locationRepository.findById(locationId).orElse(null);
 
             long userId = getUserIdFromClient(client);
             User user = userRepository.findById(userId).orElse(null);
@@ -68,7 +61,7 @@ public class SocketModule {
     private ConnectListener onConnected() {
         return (client) -> {
             long locationId = getLocationIdFromClient(client);
-            Location location = locationRepositories.findByLocationId(locationId);
+            Location location = locationRepository.findByLocationId(locationId);
             long userId = getUserIdFromClient(client);
             User user = userRepository.findByUserId(userId);
 
@@ -112,10 +105,11 @@ public class SocketModule {
         return userId;
     }
 
-    public String getMessageFromClient(SocketIOClient client ) {
+    public String getMessageFromClient(SocketIOClient client) {
         var params = client.getHandshakeData().getUrlParams();
-        String message = params.containsKey("message") && params.get("message") != null ?
-                params.get("message").stream().collect(Collectors.joining()) : "";
+        String message = params.containsKey("message") && params.get("message") != null
+                ? params.get("message").stream().collect(Collectors.joining())
+                : "";
         return message;
     }
 
