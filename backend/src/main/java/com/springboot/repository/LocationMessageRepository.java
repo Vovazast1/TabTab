@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface LocationMessageRepository extends JpaRepository<LocationMessage, Long> {
-    List<LocationMessage> findByLocationLocationId(Long locationId);
+    List<LocationMessage> findByLocationLocationId(int locationId);
 }

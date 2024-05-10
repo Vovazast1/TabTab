@@ -23,7 +23,7 @@ public class MessageController {
     private LocationMessageService locationMessageService;
 
     @GetMapping
-    public List<LocationMessageDto> getMessages(@RequestParam Long locationId) {
+    public List<LocationMessageDto> getMessages(@RequestParam int locationId) {
         List<LocationMessage> messages = locationMessageService.getMessages(locationId);
         return messages.stream()
                 .map(this::locationToDto)

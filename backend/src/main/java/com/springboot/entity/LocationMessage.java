@@ -10,14 +10,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "Location_Message")
+@Table(name = "location_message")
 @Getter
 @Setter
 @Builder
 public class LocationMessage {
 
     @Id
-    @Column(name = "LocationMessageID")
+    @Column(name = "location_messageid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long locationMessageID;
 

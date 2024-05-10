@@ -15,7 +15,7 @@ public class LocationMessageService {
 
     private final LocationMessageRepository locationMessageRepository;
 
-    public List<LocationMessage> getMessages(Long locationId) {
+    public List<LocationMessage> getMessages(int locationId) {
         return locationMessageRepository.findByLocationLocationId(locationId);
     }
 
