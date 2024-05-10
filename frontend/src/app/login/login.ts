@@ -35,8 +35,9 @@ export class LoginPage implements OnInit {
       next: (response: DTOResponse) => {
         const decodedToken = atob(response.accessToken.split('.')[1]);
         const claims = JSON.parse(decodedToken);
-        localStorage.setItem(storageKeys.userId, claims.userId);
         localStorage.setItem(storageKeys.token, response.accessToken);
+        localStorage.setItem(storageKeys.userId, claims.userId);
+        localStorage.setItem(storageKeys.sub, claims.sub);
 
         this.router.navigate(['/pages/verification']);
         this.verificationPage.checkVerification();

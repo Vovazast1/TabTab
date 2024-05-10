@@ -1,4 +1,5 @@
 export const storageKeys = {
   token: 'token',
-  userId: 'userId'
+  userId: 'userId',
+  sub: 'sub'
 };
