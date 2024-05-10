@@ -1,14 +1,15 @@
-const enum Type {
+export enum Sport {
   Football = 'Football',
   Volleyball = 'Volleyball',
   Basketball = 'Basketball',
   Tennis = 'Tennis',
-  Gym = 'Gym',
-  Parks = 'Parks',
-  Chess = 'Chess',
-  Libraries = 'Libraries',
-  Museums = 'Museums',
-  Music = 'Music'
+  Gym = 'Gym'
 }
 
-export default Type;
+export enum Intelligence {
+  Park = 'Park',
+  Chess = 'Chess',
+  Library = 'Library',
+  Museum = 'Museum',
+  Music = 'Music'
+}

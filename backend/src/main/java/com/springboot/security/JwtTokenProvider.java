@@ -1,5 +1,6 @@
 package com.springboot.security;
 
+import com.springboot.entity.User;
 import com.springboot.exception.APIException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -43,9 +44,10 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
-    public String GenerateToken(String username) {
+    public String GenerateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        claims.put("userId", user.getUserId());
+        return createToken(claims, user.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String username) {

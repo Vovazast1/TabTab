@@ -9,7 +9,7 @@
   </div>
   <ion-button size="small" (click)="goToLocationChat()">Chat</ion-button>
   <ion-button color="success" size="small" shape="round">
-    <ion-select placeholder="Filter" [multiple]="true">
+    <ion-select placeholder="Filter" (ionChange)="handleChange($event)" [multiple]="true">
       <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
     </ion-select>
   </ion-button>
@@ -48,19 +48,22 @@
 
       <ion-toolbar color="success">
         <span class="image-wrapper">
-          <img [src]="l" alt="Image" />
+          <img *ngIf="l" [src]="l" alt="Image" />
         </span>
         <div class="container">
-          <ion-button color="#FFF6EB"
-            ><ion-text color="black">
-              <ion-icon name="bookmark-outline" size="large"></ion-icon>Add to favorite</ion-text
-            ></ion-button
-          >
-          <ion-button color="#FFF6EB">
+
+          <ion-button color="#FFF6EB" (click)="addToFavorite()">
             <ion-text color="black">
-              <ion-icon name="chatbox-outline" size="large"></ion-icon>Open chat</ion-text
-            ></ion-button
-          >
+              <ion-icon name="bookmark-outline" size="large"></ion-icon> Add to favorite
+            </ion-text>
+          </ion-button>
+
+          <ion-button color="#FFF6EB" (click)="goToChat()">
+            <ion-text color="black">
+              <ion-icon name="chatbox-outline" size="large"></ion-icon> Open chat
+            </ion-text>
+          </ion-button>
+
         </div>
       </ion-toolbar>
     </ng-template>

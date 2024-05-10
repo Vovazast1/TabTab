@@ -1,0 +1,44 @@
+.image-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; 
+  background-image: url('../../assets/img/verification.png');
+  background-size: cover; 
+  background-position: center; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 9999; 
+}
+
+
+.image-container ion-img {
+  width: 100%; 
+  height: auto; 
+}
+
+.centered-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ion-text {
+    
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center; 
+    --box-shadow:1;
+  }
+}
+
+ion-button[color="dark"] {
+  display: flex;
+  text-transform: initial;
+  width: 14rem;
+  height: 3rem;
+  margin: auto;
+}

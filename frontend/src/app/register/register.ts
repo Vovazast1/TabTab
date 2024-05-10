@@ -4,6 +4,10 @@ import { ApiService } from '../providers/ApiService';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegisterPageForm } from './register.form';
 import { format, parseISO } from 'date-fns';
+import { concatMap, switchMap, take } from 'rxjs';
+import { ToastService } from '../providers/ToastService';
+import { LoginPage } from '../login/login';
+import { getFormDate, getFormString } from '../utils';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +15,7 @@ import { format, parseISO } from 'date-fns';
   styleUrls: ['./register.scss']
 })
 export class RegisterPage implements OnInit {
-  form!: FormGroup;
+  form?: FormGroup;
   registerForm?: RegisterPageForm;
   modes = ['date'];
   selectedMode = 'date';
@@ -22,7 +26,9 @@ export class RegisterPage implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private loginPage: LoginPage,
+    private toastService: ToastService
   ) {}
 
   setToday() {
@@ -37,21 +43,18 @@ export class RegisterPage implements OnInit {
   register() {
     this.registerForm?.getForm().markAllAsTouched();
 
-    const email = this.form?.get('email')?.value;
-    const username = this.form?.get('username')?.value;
-    const birthday = this.form?.get('birthday')?.value;
-    const password = this.form?.get('password')?.value;
+    const email = getFormString(this.form, 'email');
+    const username = getFormString(this.form, 'username');
+    const birthday = getFormDate(this.form, 'birthday');
+    const password = getFormString(this.form, 'password');
     this.apiService.register(email, username, birthday, password).subscribe({
       next: () => {
-        this.apiService.login(email, password).subscribe({
-          next: R => {
-            console.log(R);
-            this.router.navigate(['/pages/activity']);
-          },
-          error: () => console.error('asdasdasd.')
-        });
+        this.router.navigate(['/pages/verification']);
+        this.loginPage.login(email, password);
       },
-      error: () => console.error('Failed to load page.')
+      error: () => {
+        this.toastService.showToast('Username or email is already taken!');
+      }
     });
   }
 

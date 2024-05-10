@@ -22,11 +22,13 @@ public class FavoriteService {
     @Autowired
     LocationRepositories locationRepositories;
 
-    public List<Favorite> getFavorites(Long userId) {
-        return favoriteRepository.findByUserUserId(userId);
+    public List<Favorite> getFavorites(Long id) {
+        return favoriteRepository.findByUserUserId(id);
     }
 
-    public Favorite addFavorite(Long userId, Long locationId) {
+    public Long getFavoriteId(Long userId, Long locationId) { return favoriteRepository.getFavoriteId(userId, locationId);}
+
+    public void addFavorite(Long userId, Long locationId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
@@ -36,8 +38,7 @@ public class FavoriteService {
         Favorite favorite = new Favorite();
         favorite.setUser(user);
         favorite.setLocation(location);
-
-        return favoriteRepository.save(favorite);
+        favoriteRepository.save(favorite);
     }
 
     public void deleteFavorite(Long favoriteId) {
