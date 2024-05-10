@@ -66,7 +66,11 @@ export class ApiService {
     return this.http.post(this.API + `/user/${userId}/changePassword?password=${password}`, {});
   }
 
-  getMessages(room: string) {
-    return this.http.get<Message[]>(this.messageAPI + `/${room}`);
+  getLocations(): Observable<Location[]> {
+    return this.http.get<Location[]>(this.locationAPI);
+  }
+
+  getMessages(locationId: number) {
+    return this.http.get<Message[]>(this.messageAPI + `?locationId=${locationId}`);
   }
 }

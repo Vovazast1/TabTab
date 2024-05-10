@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SocketService } from '../components/SocketService';
 import { ApiService } from '../providers/ApiService';
 import { TimeService } from '../components/TimeService';
+import { Location, storageKeys } from '../data';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat-page',
@@ -9,12 +11,12 @@ import { TimeService } from '../components/TimeService';
   styleUrls: ['./chat.page.scss']
 })
 export class ChatPage implements OnInit {
-  room!: string;
-  username!: string;
+  userId!: number;
   messageInput: string = '';
   messageList: any[] = [];
-
   private _messagesEndRef?: ElementRef;
+  locationId?: number;
+  locationName?: string;
 
   @ViewChild('messagesEndRef', { static: false })
   set messagesEndRef(value: ElementRef | undefined) {
@@ -25,34 +27,41 @@ export class ChatPage implements OnInit {
   constructor(
     private socketService: SocketService,
     private apiService: ApiService,
-    private timeService: TimeService
+    private timeService: TimeService,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    // Initialize room and username here
-    this.socketService.connect('asd', 'jopa00');
-    this.room = 'Your Room';
-    this.username = 'Your Username';
-    this.connectSocket();
-    this.fetchMessages();
+  ngOnInit() {
+    this.userId = parseInt(localStorage.getItem(storageKeys.userId) || '0');
+    this.route.params.subscribe(params => {
+      this.locationId = params['locationId'];
+      this.locationName = params['locationName'];
+
+      if (this.userId && this.locationId) {
+        this.socketService.connect(this.locationId, this.userId);
+        this.connectSocket();
+        this.fetchMessages();
+      }
+    });
   }
 
-  connectSocket(): void {
+  connectSocket() {
     this.socketService.getSocketResponse().subscribe(response => {
       this.addMessageToList(response);
     });
   }
 
-  fetchMessages(): void {
-    this.apiService.getMessages(this.room).subscribe(
-      responseData => {
-        this.messageList = responseData;
-        this.scrollToBottom();
-      },
-      error => {
-        console.error('Error fetching messages:', error);
-      }
-    );
+  fetchMessages() {
+    this.locationId &&
+      this.apiService.getMessages(this.locationId).subscribe(
+        responseData => {
+          this.messageList = responseData;
+          this.scrollToBottom();
+        },
+        error => {
+          console.error('Error fetching messages:', error);
+        }
+      );
   }
 
   addMessageToList(message: any): void {
@@ -61,12 +70,14 @@ export class ChatPage implements OnInit {
   }
 
   sendMessage(): void {
+    console.log(this.socketService);
     if (this.messageInput !== '') {
-      this.socketService.sendData({ content: this.messageInput });
+      this.socketService.sendData({ message: this.messageInput });
       const time = this.timeService.timeStampConverter(Date.now()); // Convert current timestamp
+
       this.addMessageToList({
-        content: this.messageInput,
-        username: this.username,
+        message: this.messageInput,
+        userId: this.userId,
         createdDateTime: time,
         messageType: 'CLIENT'
       });

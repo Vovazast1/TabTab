@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class MessageController {
     @Autowired
     private LocationMessageService locationMessageService;
 
-    @GetMapping("{locationId}")
-    public List<LocationMessageDto> getMessages(@PathVariable Long locationId) {
+    @GetMapping
+    public List<LocationMessageDto> getMessages(@RequestParam Long locationId) {
         List<LocationMessage> messages = locationMessageService.getMessages(locationId);
         return messages.stream()
                 .map(this::locationToDto)

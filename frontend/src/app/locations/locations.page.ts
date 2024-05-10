@@ -58,7 +58,7 @@ export class LocationsPage implements OnInit {
   };
 
   private selectedLocationId: number | null = null;
-  public selectedLocation: Location | null = null;
+  private selectedLocationName: string | null = null;
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
@@ -94,6 +94,7 @@ export class LocationsPage implements OnInit {
               .addTo(this.map)
               .on('click', () => {
                 this.selectedLocationId = location.locationId;
+                this.selectedLocationName = location.locationName;
                 this.setLocationImage(this.selectedLocationId);
                 this.ngZone.run(() => this.modal!.present());
               });
@@ -132,7 +133,7 @@ export class LocationsPage implements OnInit {
   }
 
   goToChat() {
-    this.router.navigate(['pages/chat']);
+    this.router.navigate(['pages/chat', this.selectedLocationId, this.selectedLocationName]);
   }
 
   addToFavorite() {
@@ -140,10 +141,6 @@ export class LocationsPage implements OnInit {
       const userId = Number(localStorage.getItem(storageKeys.userId));
       this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe();
     }
-  }
-
-  goToLocationChat() {
-    this.router.navigate(['pages/location-chat']);
   }
 
   public getLocationButtons() {

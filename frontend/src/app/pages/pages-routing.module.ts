@@ -41,16 +41,12 @@ const routes: Routes = [
         loadChildren: () => import('../favorite/favorite.module').then(m => m.FavoritePageModule)
       },
       {
-        path: 'chat',
+        path: 'chat/:locationId/:locationName',
         loadChildren: () => import('../chat/chat.module').then(m => m.ChatPageModule)
       },
       {
         path: 'verification',
         loadChildren: () => import('../verification/verification.module').then(m => m.VerificationPageModule)
-      },
-      {
-        path: 'location-chat',
-        loadChildren: () => import('../location-chat/location-chat.module').then(m => m.LocationChatPageModule)
       }
     ]
   },
