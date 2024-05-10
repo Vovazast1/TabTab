@@ -5,7 +5,7 @@ export default interface LocationMessageDto {
   userId: number;
 }
 
-enum MessageType {
+export enum MessageType {
   SERVER,
   CLIENT
 }

@@ -38,7 +38,7 @@ export class ChatPage implements OnInit {
       this.locationName = params['locationName'];
 
       if (this.userId && this.locationId) {
-        this.socketService.connect(this.locationId, this.userId);
+        this.socketService.connect(this.locationId, this.userId, message => this.messageList.push(message));
         this.connectSocket();
         this.fetchMessages();
       }

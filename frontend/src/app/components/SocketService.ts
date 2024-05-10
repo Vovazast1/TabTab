@@ -4,6 +4,8 @@ import { Observable, Subject } from 'rxjs'; // Import Subject
 import io from 'socket.io-client'; // Import only io
 
 import { SOCKET_BASE_URL } from '../data';
+import LocationMessageDto, { MessageType } from '../data/LocationMessageDTO';
+import { Client } from 'stompjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,9 @@ export class SocketService {
 
   constructor(private http: HttpClient) {}
 
-  public connect(locatioId: number, userId: number): void {
+  public connect(locatioId: number, userId: number, onReceive: (message: LocationMessageDto) => void): void {
+    this.locationId = locatioId;
+    this.userId = userId;
     this.socket = io(SOCKET_BASE_URL, {
       reconnection: false,
       query: { userId: userId, locatioId: locatioId }
@@ -25,8 +29,8 @@ export class SocketService {
     this.socket.on('connect', () => (this.isConnected = true));
     this.socket.on('read_message', (res: any) => {
       console.log(res);
+      onReceive(res);
       this.socketResponseSubject.next({
-        // Emit value to the Subject
         locationId: res.locationId,
         message: res.message,
         userId: res.userId,
@@ -43,12 +47,17 @@ export class SocketService {
   }
 
   public sendData(payload: any) {
-    this.socket.emit('send_message', {
+    if (!this.locationId || !this.userId) {
+      return;
+    }
+    const message: LocationMessageDto = {
       locationId: this.locationId,
       message: payload.message,
-      userId: this.userId,
-      messageType: 'CLIENT'
-    });
+      messageType: MessageType.CLIENT,
+      userId: this.userId
+    };
+    console.log(message);
+    this.socket.emit('send_message', message);
   }
 
   getSocketResponse(): Observable<any> {
