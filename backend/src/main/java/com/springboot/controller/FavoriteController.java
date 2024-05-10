@@ -49,4 +49,9 @@ public class FavoriteController {
     public void deleteFavorite(@PathVariable Long favoriteId) {
         favoriteService.deleteFavorite(favoriteId);
     }
+
+    @GetMapping
+    public Boolean isFavorite(@RequestParam Long userId, @RequestParam Long locationId) {
+        return favoriteService.getFavoriteId(userId, locationId) != null;
+    }
 }

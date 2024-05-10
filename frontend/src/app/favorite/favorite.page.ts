@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../providers/ApiService';
 import { Favorite, storageKeys } from '../data';
+import { LocationsPage } from '../locations/locations.page';
 
 @Component({
   selector: 'app-favorite',
@@ -10,7 +11,10 @@ import { Favorite, storageKeys } from '../data';
 export class FavoritePage implements OnInit {
   favorites: Favorite[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private locationspage: LocationsPage
+  ) {}
 
   ngOnInit() {
     const userId = Number(localStorage.getItem(storageKeys.userId));
@@ -23,6 +27,8 @@ export class FavoritePage implements OnInit {
           console.log(favorite.favoriteId);
           console.log(favorite.userId);
           console.log(favorite.locationId);
+          console.log(this.locationspage.setLocationImage(favorite.locationId));
+          console.log(this.locationspage.setLocationName(favorite.locationId));
         });
       }
     });

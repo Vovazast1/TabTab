@@ -40,7 +40,7 @@ export class LocationsPage implements OnInit {
   public sportImg = [{ src: 'assets/icon/intelligence.png' }];
   public intelligenceImg = [{ src: 'assets/icon/sport.png' }];
 
-  public l: String = '';
+  public imageUrl: String = '';
   public markers: ExtendedMarker[] = [];
   public filteredMarkers: ExtendedMarker[] = [];
 
@@ -94,8 +94,10 @@ export class LocationsPage implements OnInit {
               .addTo(this.map)
               .on('click', () => {
                 this.selectedLocationId = location.locationId;
-                this.setLocationImage(this.selectedLocationId);
+                this.imageUrl = this.setLocationImage(this.selectedLocationId);
                 this.ngZone.run(() => this.modal!.present());
+
+                this.getFavoriteStatus(Number(localStorage.getItem(storageKeys.userId)), location.locationId);
               });
 
             this.markers.push({ nativeMarker: marker, location });
@@ -152,7 +154,21 @@ export class LocationsPage implements OnInit {
 
   setLocationImage(locationId: number) {
     const location = this.locations.find(location => location.locationId === locationId);
-    this.l = location?.image ?? '';
+    return location?.image ?? '';
+  }
+
+  setLocationName(locationId: number) {
+    const location = this.locations.find(location => location.locationId === locationId);
+    return location?.locationName ?? '';
+  }
+
+  getFavoriteStatus(userId: number, locationId: number) {
+    this.apiService.isFavorite(userId, locationId).subscribe({
+      next: value => {
+        if (value) console.log('FAVORITE, FULL IMAGE');
+        else console.log('NOT FAVORITE, BORDER IMAGE');
+      }
+    });
   }
 
   getLocationTypes() {
@@ -194,7 +210,7 @@ export class LocationsPage implements OnInit {
 
   handleMarkerClick(marker: ExtendedMarker) {
     this.selectedLocationId = marker.location.locationId;
-    this.setLocationImage(this.selectedLocationId);
+    this.imageUrl = this.setLocationImage(this.selectedLocationId);
     this.ngZone.run(() => this.modal!.present());
   }
 }
