@@ -21,8 +21,6 @@ export class ProfilePage implements OnInit {
   map!: L.Map;
   public l: string = '';
 
-   public username: string = '';
-
   private Avatars = {
     [Avatar.Avatar1]: 'assets/avatar/Avatar1.png',
     [Avatar.Avatar2]: 'assets/avatar/Avatar2.png',
