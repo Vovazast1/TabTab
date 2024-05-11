@@ -8,6 +8,7 @@ import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
 import { getFormString, getFormNumber } from '../utils';
 import Avatar from '../data/Avatar';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -16,10 +17,11 @@ import Avatar from '../data/Avatar';
 })
 export class ProfilePage implements OnInit {
   form?: FormGroup;
-
   currentActivity?: ActivityType;
   map!: L.Map;
   public l: string = '';
+
+   public username: string = '';
 
   private Avatars = {
     [Avatar.Avatar1]: 'assets/avatar/Avatar1.png',
@@ -42,11 +44,13 @@ export class ProfilePage implements OnInit {
 
   async goToLocations() {
     const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
+
+    await this.router.navigate(['pages/locations', newActivity]);
     if (this.map) {
+
       this.map.remove();
     }
     await this.router.navigate(['pages/locations', newActivity]);
-    window.location.reload();
   }
 
   changeAvatar() {
@@ -88,4 +92,15 @@ export class ProfilePage implements OnInit {
   getUsername() {
     return localStorage.getItem(storageKeys.sub);
   }
+
+  getAllAvatars() {
+    return Object.values(this.Avatars);
+  }
+
+  onIonInfinite(ev: InfiniteScrollCustomEvent) {
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+ 
 }

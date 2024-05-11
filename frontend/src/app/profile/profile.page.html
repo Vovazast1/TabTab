@@ -1,15 +1,46 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <div class="title">
     <ion-button color="serengeti" (click)="goToLocations()">
       <ion-icon name="chevron-back-outline" size="large"></ion-icon>
     </ion-button>
     <ion-text color="newblack"> Profile </ion-text>
   </div>
-  <ion-img src="assets/img/user-photo.png"></ion-img>
-  <ion-text color="newblack" style="font-size: 1.5rem; margin-bottom: 1rem">Username</ion-text>
+
+  <ion-card class="photo">
+    <ion-button class="user-photo" id="open-modal">
+      <ion-img src="assets/avatar/user-photo.png"> </ion-img>
+    </ion-button>
+  </ion-card>
+
+
+  
+  <ion-modal #modal trigger="open-modal">
+    <ng-template>
+      <ion-buttons>
+        <ion-button color="dark" (click)="modal.dismiss()"
+          ><ion-icon name="close-outline" size="large"></ion-icon
+        ></ion-button>
+      </ion-buttons>
+      
+      <ion-content class="avatars">
+    <ion-list>
+      <ion-card class="card-avatar">
+        <ion-button class="avatar" *ngFor="let avatar of getAllAvatars()">
+          <ion-img [src]="avatar"></ion-img>
+        </ion-button>
+        </ion-card>
+        </ion-list>
+      </ion-content>
+      <ion-infinite-scroll>
+      </ion-infinite-scroll>
+    </ng-template>
+  </ion-modal>
+
+  
+
+  <ion-text color="dark">{{ getUsername() }}</ion-text>
 
   <form [formGroup]="form">
-
     <ion-card color="serengeti">
       <ion-item color="success">
         <ion-icon name="pencil-outline"></ion-icon>
@@ -80,6 +111,5 @@
         <ion-text color="newblack">Delete account</ion-text>
       </ion-button>
     </ion-card>
-
   </form>
 </ion-content>
