@@ -96,8 +96,6 @@ export class LocationsPage implements OnInit {
                 this.selectedLocationId = location.locationId;
                 this.imageUrl = this.setLocationImage(this.selectedLocationId);
                 this.ngZone.run(() => this.modal!.present());
-
-                this.getFavoriteStatus(Number(localStorage.getItem(storageKeys.userId)), location.locationId);
               });
 
             this.markers.push({ nativeMarker: marker, location });
@@ -141,6 +139,7 @@ export class LocationsPage implements OnInit {
     if (this.selectedLocationId !== null) {
       const userId = Number(localStorage.getItem(storageKeys.userId));
       this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe();
+      this.getFavoriteStatus(Number(localStorage.getItem(storageKeys.userId)), this.selectedLocationId);
     }
   }
 
@@ -155,11 +154,6 @@ export class LocationsPage implements OnInit {
   setLocationImage(locationId: number) {
     const location = this.locations.find(location => location.locationId === locationId);
     return location?.image ?? '';
-  }
-
-  setLocationName(locationId: number) {
-    const location = this.locations.find(location => location.locationId === locationId);
-    return location?.locationName ?? '';
   }
 
   getFavoriteStatus(userId: number, locationId: number) {

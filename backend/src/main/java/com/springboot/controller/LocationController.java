@@ -1,6 +1,7 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Location;
+import com.springboot.payload.LocationDto;
 import com.springboot.service.LocationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,5 +26,14 @@ public class LocationController {
     @PostMapping
     public Location saveLocation(@RequestBody Location location) {
         return locationService.saveLocation(location);
+    }
+
+    @GetMapping("{id}")
+    public LocationDto getLocation(@PathVariable Long id) {
+        return new LocationDto(
+                id,
+                locationService.getLocationByLocationId(id).getLocationName(),
+                locationService.getLocationByLocationId(id).getImage()
+        );
     }
 }

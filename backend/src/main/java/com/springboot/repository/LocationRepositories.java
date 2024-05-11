@@ -11,4 +11,6 @@ import java.util.List;
 public interface LocationRepositories extends JpaRepository<Location, Long> {
 
     List<Location> findByActivity(String name);
+
+    Location findLocationByLocationId(Long locationId);
 }
