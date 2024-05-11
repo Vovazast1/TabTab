@@ -26,11 +26,11 @@ public class FavoriteController {
     }
 
     private FavoriteDto favoriteToDto(Favorite favorite) {
-        FavoriteDto favoriteDto = new FavoriteDto();
-        favoriteDto.setFavoriteId(favorite.getFavoriteId());
-        favoriteDto.setUserId(favorite.getUser().getUserId());
-        favoriteDto.setLocationId(favorite.getLocation().getLocationId());
-        return favoriteDto;
+        return new FavoriteDto(
+                favorite.getFavoriteId(),
+                favorite.getUser().getUserId(),
+                favorite.getLocation().getLocationId()
+        );
     }
 
     @PostMapping
