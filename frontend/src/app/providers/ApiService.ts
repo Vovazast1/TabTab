@@ -48,6 +48,10 @@ export class ApiService {
     });
   }
 
+  isFavorite(userId: number, locationId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.API + `/favorite?userId=${userId}&locationId=${locationId}`);
+  }
+
   getVerificationByUserId(userId: number): Observable<boolean> {
     return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
   }

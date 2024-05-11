@@ -26,9 +26,4 @@ public class LocationController {
     public Location saveLocation(@RequestBody Location location) {
         return locationService.saveLocation(location);
     }
-
-    @GetMapping("{id}")
-    public String getImageByLocationId(@PathVariable Long id) {
-        return locationService.getImageByLocationId(id);
-    }
 }
