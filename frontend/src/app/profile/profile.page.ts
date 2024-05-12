@@ -8,7 +8,6 @@ import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
 import { getFormString, getFormNumber } from '../utils';
 import Avatar from '../data/Avatar';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -102,11 +101,5 @@ export class ProfilePage implements OnInit {
 
   getAvatars() {
     return this.avatars;
-  }
-
-  onIonInfinite(ev: InfiniteScrollCustomEvent) {
-    setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 500);
   }
 }
