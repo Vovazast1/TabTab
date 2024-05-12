@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActivityType, storageKeys } from '../data';
+import { ActivityType, User, storageKeys } from '../data';
 import * as L from 'leaflet';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../providers/ApiService';
@@ -19,15 +19,16 @@ export class ProfilePage implements OnInit {
   form?: FormGroup;
   currentActivity?: ActivityType;
   map!: L.Map;
-  public l: string = '';
+  user: User | null = null;
+  userAvatar: string = '';
 
-  private Avatars = {
-    [Avatar.Avatar1]: 'assets/avatar/Avatar1.png',
-    [Avatar.Avatar2]: 'assets/avatar/Avatar2.png',
-    [Avatar.Avatar3]: 'assets/avatar/Avatar3.png',
-    [Avatar.Avatar4]: 'assets/avatar/Avatar4.png',
-    [Avatar.Avatar5]: 'assets/avatar/Avatar5.png'
-  };
+  private avatars = [
+    { id: Avatar.Avatar1, src: 'assets/avatar/Avatar1.png' },
+    { id: Avatar.Avatar2, src: 'assets/avatar/Avatar2.png' },
+    { id: Avatar.Avatar3, src: 'assets/avatar/Avatar3.png' },
+    { id: Avatar.Avatar4, src: 'assets/avatar/Avatar4.png' },
+    { id: Avatar.Avatar5, src: 'assets/avatar/Avatar5.png' }
+  ];
 
   constructor(
     private router: Router,
@@ -38,25 +39,29 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.form = new ProfilePageForm(this.formBuilder).createForm();
+
+    this.apiService.getUser(Number(localStorage.getItem(storageKeys.userId))).subscribe({
+      next: user => {
+        this.user = user;
+        this.userAvatar = this.getAvatarSrc(this.user.avatar);
+      }
+    });
   }
 
-  async goToLocations() {
-    const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
-
-    await this.router.navigate(['pages/locations', newActivity]);
+  goToLocations() {
     if (this.map) {
-
       this.map.remove();
     }
-    await this.router.navigate(['pages/locations', newActivity]);
+    this.router.navigate(['pages/locations', this.currentActivity]);
   }
 
-  changeAvatar() {
-    const avatar = getFormNumber(this.form, 'avatar');
-
+  changeAvatar(avatar: Avatar) {
     const userId = Number(localStorage.getItem(storageKeys.userId));
     this.apiService.changeAvatar(userId, avatar).subscribe({
-      next: () => this.toastService.showToast('Avatar successfully changed!'),
+      next: () => {
+        this.toastService.showToast('Avatar successfully changed!');
+        this.userAvatar = this.getAvatarSrc(avatar);
+      },
       error: () => this.toastService.showToast('Avatar matches the previous!')
     });
   }
@@ -91,8 +96,12 @@ export class ProfilePage implements OnInit {
     return localStorage.getItem(storageKeys.sub);
   }
 
-  getAllAvatars() {
-    return Object.values(this.Avatars);
+  getAvatarSrc(avatar: Avatar) {
+    return this.avatars.find(a => a.id === avatar)?.src ?? '';
+  }
+
+  getAvatars() {
+    return this.avatars;
   }
 
   onIonInfinite(ev: InfiniteScrollCustomEvent) {
@@ -100,5 +109,4 @@ export class ProfilePage implements OnInit {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
- 
 }

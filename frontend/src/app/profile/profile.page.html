@@ -8,7 +8,7 @@
 
   <ion-card class="photo">
     <ion-button class="user-photo" id="open-modal">
-      <ion-img src="assets/avatar/user-photo.png"> </ion-img>
+      <ion-img [src] ="userAvatar"> </ion-img>
     </ion-button>
   </ion-card>
 
@@ -16,6 +16,7 @@
   
   <ion-modal #modal trigger="open-modal">
     <ng-template>
+
       <ion-buttons>
         <ion-button color="dark" (click)="modal.dismiss()"
           ><ion-icon name="close-outline" size="large"></ion-icon
@@ -23,16 +24,17 @@
       </ion-buttons>
       
       <ion-content class="avatars">
-    <ion-list>
-      <ion-card class="card-avatar">
-        <ion-button class="avatar" *ngFor="let avatar of getAllAvatars()">
-          <ion-img [src]="avatar"></ion-img>
-        </ion-button>
-        </ion-card>
+        <ion-list>
+          <ion-card class="card-avatar" *ngFor="let avatar of getAvatars()">
+            <ion-button class="avatar" (click)="changeAvatar(avatar.id)">
+              <ion-img [src]="avatar.src"></ion-img>
+            </ion-button>
+          </ion-card>
         </ion-list>
+        <ion-infinite-scroll>
+        </ion-infinite-scroll>
       </ion-content>
-      <ion-infinite-scroll>
-      </ion-infinite-scroll>
+      
     </ng-template>
   </ion-modal>
 
@@ -60,14 +62,13 @@
       <ion-item color="success">
         <ion-icon name="pencil-outline"></ion-icon>
         <ion-input
-          formControlName="avatar"
           text-align="center"
           placeholder="Enter your new avatar"
           label="Edit avatar"
           label-placement="floating"
           type="text"
         ></ion-input>
-        <ion-button color="serengeti" (click)="changeAvatar()">
+        <ion-button color="serengeti">
           <ion-icon name="checkmark-circle-outline" size="large" shape="round"></ion-icon>
         </ion-button>
       </ion-item>
