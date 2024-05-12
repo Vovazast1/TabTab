@@ -22,6 +22,4 @@ public class LocationService {
     }
 
     public List<Location> getLocationByActivity(String activity) { return locationRepositories.findByActivity(activity); }
-
-    public Location getLocationByLocationId(Long locationId) { return locationRepositories.findLocationByLocationId(locationId);}
 }

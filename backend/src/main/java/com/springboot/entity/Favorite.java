@@ -29,7 +29,7 @@ public class Favorite {
     @JoinColumn(name = "UserID", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LocationID", nullable = false)
     private Location location;
 }
