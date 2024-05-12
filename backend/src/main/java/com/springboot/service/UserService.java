@@ -38,7 +38,10 @@ public class UserService {
     }
 
     public Boolean getVerificationById(long id) {
-        User user = userRepos.findByUserId(id);
-        return user.getIsVerified();
+        return userRepos.findByUserId(id).getIsVerified();
+    }
+
+    public Long getAvatarById(long id) {
+        return userRepos.findByUserId(id).getAvatar();
     }
 }

@@ -30,11 +30,6 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("{username}")
-    public User getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
-    }
-
     @GetMapping("{id}")
     public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
@@ -72,6 +67,11 @@ public class UserController {
     @GetMapping("{id}/verification")
     public Boolean getVerification(@PathVariable long id) {
         return userService.getVerificationById(id);
+    }
+
+    @GetMapping("{id}/avatar")
+    public Long getAvatar(@PathVariable long id) {
+        return userService.getAvatarById(id);
     }
 
     @PostMapping("{id}/changeAvatar")
