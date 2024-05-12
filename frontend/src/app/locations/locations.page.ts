@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType, Location, storageKeys, Intelligence, Sport } from '../data';
+import { ActivityType, Location, storageKeys, Intelligence, Sport, Favorite } from '../data';
 import { IonModal } from '@ionic/angular';
 
 interface ExtendedMarker {
@@ -20,6 +20,7 @@ export class LocationsPage implements OnInit {
   public modal?: IonModal;
   map!: L.Map;
   locations: Location[] = [];
+  favorites: Favorite[] = [];
   currentActivity?: ActivityType;
 
   public locationsIntelligenceButtons = [
@@ -69,7 +70,9 @@ export class LocationsPage implements OnInit {
   ngOnInit() {
     this.initializeMap();
 
-    this.goToLocations();
+    this.loadFavorites();
+
+    this.loadLocations();
 
     this.map.whenReady(() => {
       setTimeout(() => {
@@ -80,7 +83,7 @@ export class LocationsPage implements OnInit {
     });
   }
 
-  goToLocations() {
+  loadLocations() {
     this.route.params.subscribe(params => {
       this.currentActivity = params['activity'];
       this.apiService.getLocationsByActivity(this.currentActivity!).subscribe({
@@ -104,6 +107,19 @@ export class LocationsPage implements OnInit {
         error: error => console.log(error)
       });
     });
+  }
+
+  loadFavorites() {
+    this.apiService.getFavorites(Number(localStorage.getItem(storageKeys.userId))).subscribe({
+      next: favorites => {
+        this.favorites = favorites;
+      }
+    });
+  }
+
+  getFavorites() {
+    console.log(this.favorites);
+    return this.favorites;
   }
 
   initializeMap() {
@@ -139,7 +155,7 @@ export class LocationsPage implements OnInit {
     if (this.selectedLocationId !== null) {
       const userId = Number(localStorage.getItem(storageKeys.userId));
       this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe();
-      this.getFavoriteStatus(Number(localStorage.getItem(storageKeys.userId)), this.selectedLocationId);
+      this.getFavoriteStatus(this.selectedLocationId);
     }
   }
 
@@ -156,13 +172,8 @@ export class LocationsPage implements OnInit {
     return location?.image ?? '';
   }
 
-  getFavoriteStatus(userId: number, locationId: number) {
-    this.apiService.isFavorite(userId, locationId).subscribe({
-      next: value => {
-        if (value) console.log('FAVORITE, FULL IMAGE');
-        else console.log('NOT FAVORITE, BORDER IMAGE');
-      }
-    });
+  getFavoriteStatus(locationId: number) {
+    return this.favorites.some(favorite => favorite.locationId === locationId);
   }
 
   getLocationTypes() {

@@ -11,4 +11,6 @@ public class FavoriteDto {
     private long favoriteId;
     private long userId;
     private long locationId;
+    private String image;
+    private String address;
 }

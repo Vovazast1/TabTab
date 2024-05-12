@@ -23,10 +23,8 @@ export class FavoritePage implements OnInit {
           console.log(favorite.favoriteId);
           console.log(favorite.userId);
           console.log(favorite.locationId);
-          this.apiService.getLocationDto(favorite.locationId).subscribe(locationDto => {
-            console.log(locationDto.image);
-            console.log(locationDto.locationName);
-          });
+          console.log(favorite.image);
+          console.log(favorite.address);
         });
       }
     });
