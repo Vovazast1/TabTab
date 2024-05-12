@@ -37,9 +37,9 @@ public class AuthServiceImpl implements AuthService {
 
 
     public AuthServiceImpl(AuthenticationManager authenticationManager,
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            JwtTokenProvider jwtTokenProvider) {
+                           UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -92,7 +92,7 @@ public class AuthServiceImpl implements AuthService {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setText("To confirm your account, please click here: "
-                +"http://localhost:8080/api/v1/auth/confirm-account?token="+confirmationToken.getConfirmationToken());
+                + "http://localhost:8080/api/v1/auth/confirm-account?token=" + confirmationToken.getConfirmationToken());
         emailService.sendEmail(mailMessage);
 
         System.out.println("Confirmation Token: " + confirmationToken.getConfirmationToken());
@@ -104,8 +104,7 @@ public class AuthServiceImpl implements AuthService {
     public ResponseEntity<?> confirmEmail(String confirmationToken) {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
 
-        if(token != null)
-        {
+        if (token != null) {
             User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
             user.setIsVerified(true);
             userRepository.save(user);
