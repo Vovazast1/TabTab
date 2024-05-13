@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../providers/ApiService';
-import { Favorite, UserId } from '../data';
+import { ActivityType, Favorite, UserId } from '../data';
+import { ActivityService } from '../components/activity.service';
+import * as L from 'leaflet';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favorite',
@@ -9,10 +12,19 @@ import { Favorite, UserId } from '../data';
 })
 export class FavoritePage implements OnInit {
   favorites: Favorite[] = [];
+  map!: L.Map;
+  currentActivity: ActivityType | null = null;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private activityService: ActivityService
+  ) {}
 
   ngOnInit() {
+    this.activityService.currentActivity$.subscribe(activity => {
+      this.currentActivity = activity;
+    });
     this.loadFavorites();
   }
 
@@ -26,5 +38,12 @@ export class FavoritePage implements OnInit {
 
   deleteFavorite(favoriteId: number) {
     this.apiService.deleteFavorite(favoriteId).subscribe();
+  }
+
+  goToLocations() {
+    if (this.map) {
+      this.map.remove();
+    }
+    this.router.navigate(['pages/locations', this.currentActivity]);
   }
 }
