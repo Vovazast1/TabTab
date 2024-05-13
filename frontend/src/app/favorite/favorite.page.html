@@ -1,1 +1,22 @@
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <div class="title">
+    <ion-button color="serengeti">
+      <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+    </ion-button>
+    <ion-text color="newblack"> Favorite </ion-text>
+  </div>
+
+  <div class="button-container">
+    <ng-container>
+      <ion-card *ngFor="let favorite of favorites" class="element">
+        <span class="image-wrapper">
+          <img [src]="imageUrl" alt="Image" />
+        </span>
+        <ion-text color="dark">{{ favorite.address }}</ion-text>
+        <ion-button color="success">
+          <ion-icon name="bookmark-outline" size="large"></ion-icon>
+        </ion-button>
+      </ion-card>
+    </ng-container>
+  </div>
+</ion-content>

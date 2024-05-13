@@ -10,6 +10,9 @@ import { Favorite, storageKeys } from '../data';
 export class FavoritePage implements OnInit {
   favorites: Favorite[] = [];
 
+    public imageUrl: String = '';
+  public address: string = '';
+
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
@@ -20,13 +23,23 @@ export class FavoritePage implements OnInit {
 
         favorites.forEach(favorite => {
           console.log('GOT A FAVORITE!');
-          console.log(favorite.favoriteId);
-          console.log(favorite.userId);
-          console.log(favorite.locationId);
           console.log(favorite.image);
           console.log(favorite.address);
+          this.setLocationImage(favorite.image);
+          this.findAddress(favorite.address);
         });
       }
     });
   }
+
+  setLocationImage(image: string) {
+    this.imageUrl = image;
+    return this.imageUrl;
+  }
+
+  findAddress(locationName: string) {
+    this.address = locationName;
+    return this.address;
+  }
+
 }
