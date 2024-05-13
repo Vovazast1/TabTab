@@ -44,6 +44,7 @@ export class LocationsPage implements OnInit {
   public imageUrl: String = '';
   public markers: ExtendedMarker[] = [];
   public filteredMarkers: ExtendedMarker[] = [];
+  public address: string = '';
 
   private iconMap = {
     [Sport.Football]: 'assets/icon/football-icon.png',
@@ -98,6 +99,7 @@ export class LocationsPage implements OnInit {
               .on('click', () => {
                 this.selectedLocationId = location.locationId;
                 this.imageUrl = this.setLocationImage(this.selectedLocationId);
+                this.findAddress(location.locationName);
                 this.ngZone.run(() => this.modal!.present());
               });
 
@@ -175,6 +177,11 @@ export class LocationsPage implements OnInit {
   getFavoriteStatus(locationId: number) {
     return this.favorites.some(favorite => favorite.locationId === locationId);
   }
+  
+  findAddress(locationName: string) {
+    this.address = locationName;
+  }
+  
 
   getLocationTypes() {
     const types = this.locations.map(location => location.type);

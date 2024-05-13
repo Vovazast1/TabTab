@@ -46,26 +46,26 @@
         ></ion-button>
       </ion-buttons>
 
-      <ion-toolbar color="success">
+      <ion-card color="success">
         <span class="image-wrapper">
           <img *ngIf="imageUrl" [src]="imageUrl" alt="Image" />
         </span>
+        
         <div class="container">
-
-          <ion-button color="#FFF6EB" (click)="addToFavorite()">
-            <ion-text color="black">
-              <ion-icon name="bookmark-outline" size="large"></ion-icon> Add to favorite
-            </ion-text>
-          </ion-button>
-
+          <ion-text color="dark">Address: {{ address }}</ion-text>
+          <ng-container>
+            <ion-button color="#FFF6EB"  (click)="addToFavorite()">
+              <ion-text color="black">
+                <ion-icon name="bookmark-outline" size="large"></ion-icon> Add to favorite
+              </ion-text>
+            </ion-button>
+          </ng-container>
           <ion-button color="#FFF6EB" (click)="goToChat()">
-            <ion-text color="black">
-              <ion-icon name="chatbox-outline" size="large"></ion-icon> Open chat
-            </ion-text>
+            <ion-text color="black"> <ion-icon name="chatbox-outline" size="large"></ion-icon> Open chat </ion-text>
           </ion-button>
-
         </div>
-      </ion-toolbar>
+      </ion-card>
     </ng-template>
   </ion-modal>
 </ion-content>
+
