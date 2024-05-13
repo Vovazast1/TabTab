@@ -25,4 +25,12 @@ ion-button[color="serengeti"]{
   display: flex;
   justify-content: center;
   --box-shadow:0;
+  --border-radius: 10rem;
+}
+
+.photo {
+  background: #78CB80;
+  box-shadow: none !important;
+  display: flex;
+  justify-content: center;
 }
