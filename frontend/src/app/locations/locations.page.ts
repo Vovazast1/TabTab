@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
 import { ActivityType, Location, storageKeys, Intelligence, Sport, Favorite } from '../data';
 import { IonModal } from '@ionic/angular';
+import { ActivityService } from '../components/activity.service';
 
 interface ExtendedMarker {
   nativeMarker: L.Marker;
@@ -21,7 +22,7 @@ export class LocationsPage implements OnInit {
   map!: L.Map;
   locations: Location[] = [];
   favorites: Favorite[] = [];
-  currentActivity?: ActivityType;
+  currentActivity: ActivityType | null = null;
 
   public locationsIntelligenceButtons = [
     { src: 'assets/icon/park-icon.png', label: 'Park' },
@@ -64,6 +65,7 @@ export class LocationsPage implements OnInit {
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
+    private activityService: ActivityService,
     private apiService: ApiService,
     private router: Router
   ) {}
@@ -73,7 +75,18 @@ export class LocationsPage implements OnInit {
 
     this.loadFavorites();
 
-    this.loadLocations();
+    this.activityService.currentActivity$.subscribe(activity => {
+      this.currentActivity = activity;
+      if (activity) {
+        this.loadLocations(activity);
+      }
+    });
+    this.route.params.subscribe(params => {
+      const initialActivity = params['activity'];
+      if (initialActivity) {
+        this.activityService.setCurrentActivity(initialActivity);
+      }
+    });
 
     this.map.whenReady(() => {
       setTimeout(() => {
@@ -84,30 +97,27 @@ export class LocationsPage implements OnInit {
     });
   }
 
-  loadLocations() {
-    this.route.params.subscribe(params => {
-      this.currentActivity = params['activity'];
-      this.apiService.getLocationsByActivity(this.currentActivity!).subscribe({
-        next: locations => {
-          this.locations = locations;
+  loadLocations(activity: ActivityType) {
+    this.apiService.getLocationsByActivity(activity).subscribe({
+      next: locations => {
+        this.locations = locations;
 
-          locations.forEach(location => {
-            const iconUrl = this.iconMap[location.type] ?? 'assets/icon/favicon.png';
-            const icon = L.icon({ iconUrl });
-            const marker = L.marker([location.latitude, location.longitude], { icon })
-              .addTo(this.map)
-              .on('click', () => {
-                this.selectedLocationId = location.locationId;
-                this.imageUrl = this.setLocationImage(this.selectedLocationId);
-                this.findAddress(location.locationName);
-                this.ngZone.run(() => this.modal!.present());
-              });
+        locations.forEach(location => {
+          const iconUrl = this.iconMap[location.type] ?? 'assets/icon/favicon.png';
+          const icon = L.icon({ iconUrl });
+          const marker = L.marker([location.latitude, location.longitude], { icon })
+            .addTo(this.map)
+            .on('click', () => {
+              this.selectedLocationId = location.locationId;
+              this.imageUrl = this.setLocationImage(this.selectedLocationId);
+              this.findAddress(location.locationName);
+              this.ngZone.run(() => this.modal!.present());
+            });
 
-            this.markers.push({ nativeMarker: marker, location });
-          });
-        },
-        error: error => console.log(error)
-      });
+          this.markers.push({ nativeMarker: marker, location });
+        });
+      },
+      error: error => console.log(error)
     });
   }
 
@@ -134,9 +144,12 @@ export class LocationsPage implements OnInit {
   async toggleLocationsType() {
     const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
 
+    this.activityService.setCurrentActivity(newActivity);
+
     if (this.map) {
       this.map.remove();
     }
+
     await this.router.navigate(['pages/locations', newActivity]);
     window.location.reload();
   }
