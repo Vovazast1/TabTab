@@ -80,7 +80,7 @@ export class ProfilePage implements OnInit {
         this.toastService.showToast('Username changed!');
         this.username = this.getUsername();
       },
-      error: () => this.toastService.showToast('Username matches the previous!')
+      error: () => this.toastService.showToast('Username matches the previous or already taken!')
     });
   }
 
