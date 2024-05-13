@@ -1,8 +1,15 @@
 <ion-content>
   <div id="map"></div>
+  <div class="top-button-container">
+    <ng-container *ngFor="let button of getLocationButtons()">
+      <ion-button size="small" shape="round" color="success">
+        <ion-img [src]="button.src"></ion-img>{{button.label}}
+      </ion-button>
+    </ng-container>
+  </div>
   <!-- <ion-button size="small" (click)="goToFavoriteChat()">Chat</ion-button> -->
-  <ion-button color="success" size="small" shape="round" class="alert-button-group">
-    <ion-select placeholder="Filter" (ionChange)="handleChange($event)" [multiple]="true" class="custom-select">
+  <ion-button color="success" size="small" shape="round">
+    <ion-select placeholder="Filter" (ionChange)="handleChange($event)" [multiple]="true">
       <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
     </ion-select>
   </ion-button>

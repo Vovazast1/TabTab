@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../providers/ApiService';
 import { Router } from '@angular/router';
-import { storageKeys } from '../data';
+import { UserId, storageKeys } from '../data';
 import { ToastService } from '../providers/ToastService';
 
 @Component({
@@ -20,9 +20,7 @@ export class VerificationPage implements OnInit {
   ngOnInit() {}
 
   checkVerification() {
-    const thisUserId = Number(localStorage.getItem(storageKeys.userId));
-
-    this.apiService.getVerificationByUserId(thisUserId).subscribe({
+    this.apiService.getVerificationByUserId(UserId).subscribe({
       next: value => {
         if (value) {
           this.router.navigate(['/pages/activity']);
