@@ -61,7 +61,7 @@ ion-content {
 
   .message_component {
     width: 100%;
-    height: 60vh;
+    height: 55vh;
     overflow-y: auto; 
     position: fixed;
     bottom: 5rem;
@@ -70,7 +70,7 @@ ion-content {
   }
 
   .message_list {
-    height: 60vh;
+    height: 55vh;
     width: 100%;
     display: flex;
     overflow-y: scroll;
@@ -193,9 +193,20 @@ ion-content {
   }
 
   .message-time {
-    position: fixed;
-    right: 1rem;
     color: #000000;
+    font-size: 0.7rem;
+    position:absolute;
+    right: 1rem;
+    margin-top: 0.2rem;
+  }
+
+  .message-item {
+    --background: #FFF6EB;
+    color:#000000;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
   }
 
 }

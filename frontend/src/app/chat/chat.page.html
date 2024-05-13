@@ -13,7 +13,7 @@
       <div class="message_component message_list">
         <div *ngFor="let message of messageList; let idx = index" class="message_item_{{ message.messageType.toLowerCase() }}{{ message.userId === userId ? '_self' : '' }}">
           <div>
-          <ion-item>
+          <ion-item class="message-item" lines="none">
           <span *ngIf="message.messageType.toLowerCase() !== 'server' && message.userId !== userId" class="message_item_username">{{ message.userId }}</span>
           <div class="message_message_{{ message.messageType.toLowerCase() }}{{ message.userId === userId ? '_self' : '' }}">
             <span class="message_message_value">{{ message.message  }}</span>
