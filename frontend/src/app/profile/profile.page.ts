@@ -96,7 +96,7 @@ export class ProfilePage implements OnInit {
   deleteAccount() {
     this.apiService.deleteUser(UserId).subscribe({
       next: () => this.router.navigate(['pages/login']),
-      error: () => this.toastService.showToast('CANNOT DELETE')
+      error: () => this.toastService.showToast('CANNOT DELETE!')
     });
   }
 
