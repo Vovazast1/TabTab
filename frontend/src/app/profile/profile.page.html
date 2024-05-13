@@ -13,7 +13,7 @@
   </ion-card>
 
 
-  
+
   <ion-modal #modal trigger="open-modal">
     <ng-template>
 
@@ -22,7 +22,7 @@
           ><ion-icon name="close-outline" size="large"></ion-icon
         ></ion-button>
       </ion-buttons>
-      
+
       <ion-content class="avatars">
         <ion-list>
           <ion-card class="card-avatar" *ngFor="let avatar of getAvatars()">
@@ -34,13 +34,13 @@
         <ion-infinite-scroll>
         </ion-infinite-scroll>
       </ion-content>
-      
+
     </ng-template>
   </ion-modal>
 
-  
 
-  <ion-text color="dark">{{ getUsername() }}</ion-text>
+
+  <ion-text color="dark"> {{username}} </ion-text>
 
   <form [formGroup]="form">
     <ion-card color="serengeti">
@@ -94,7 +94,7 @@
         <ion-text> Click to go to telegram bot </ion-text>
       </ion-button>
 
-      <ion-button color="danger" shape="round">
+      <ion-button color="danger" shape="round" (click)="deleteAccount()">
         <ion-text color="newblack">Delete account</ion-text>
       </ion-button>
     </ion-card>
