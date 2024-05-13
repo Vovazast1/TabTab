@@ -24,10 +24,6 @@ public class UserService {
         return userRepos.save(user);
     }
 
-    public User getUserByUsername(String username) {
-        return userRepos.findByUsername(username);
-    }
-
     public User getUserById(long id) {
         return userRepos.findByUserId(id);
     }
@@ -44,4 +40,6 @@ public class UserService {
     public Long getAvatarById(long id) {
         return userRepos.findByUserId(id).getAvatar();
     }
+
+    public Boolean getUsernameStatus(String username) { return userRepos.existsByUsername(username); }
 }
