@@ -10,10 +10,10 @@
     <ng-container>
       <ion-card *ngFor="let favorite of favorites" class="element">
         <span class="image-wrapper">
-          <img [src]="imageUrl" alt="Image" />
+          <img [src]="favorite.image" alt="Image" />
         </span>
         <ion-text color="dark">{{ favorite.address }}</ion-text>
-        <ion-button color="success">
+        <ion-button color="success" (click)="deleteFavorite(favorite.favoriteId)">
           <ion-icon name="bookmark-outline" size="large"></ion-icon>
         </ion-button>
       </ion-card>

@@ -47,12 +47,20 @@ export class ApiService {
     });
   }
 
+  deleteFavorite(favoriteId: number) {
+    return this.http.delete(this.API + `/favorite/${favoriteId}`);
+  }
+
   getVerificationByUserId(userId: number): Observable<boolean> {
     return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
   }
 
   getUser(userId: number): Observable<User> {
     return this.http.get<User>(this.API + `/user/${userId}`);
+  }
+
+  deleteUser(userId: number) {
+    return this.http.delete(this.API + `/user/${userId}`);
   }
 
   changeAvatar(userId: number, avatar: number) {
