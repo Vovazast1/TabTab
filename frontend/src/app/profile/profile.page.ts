@@ -8,6 +8,7 @@ import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
 import { getFormString } from '../utils';
 import Avatar from '../data/Avatar';
+import { ActivityService } from '../components/activity.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,7 @@ import Avatar from '../data/Avatar';
 })
 export class ProfilePage implements OnInit {
   form?: FormGroup;
-  currentActivity?: ActivityType;
+  currentActivity: ActivityType | null = null;
   map!: L.Map;
   user: User | null = null;
   userAvatar: string = '';
@@ -34,6 +35,7 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
+    private activityService: ActivityService,
     private toastService: ToastService
   ) {}
 
@@ -46,6 +48,10 @@ export class ProfilePage implements OnInit {
         this.userAvatar = this.getAvatarSrc(this.user.avatar);
         this.username = this.getUsername();
       }
+    });
+
+    this.activityService.currentActivity$.subscribe(activity => {
+      this.currentActivity = activity;
     });
   }
 
