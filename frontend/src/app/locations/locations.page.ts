@@ -134,6 +134,7 @@ export class LocationsPage implements OnInit {
 
   goToChat() {
     this.router.navigate(['pages/chat', this.selectedLocationId, this.selectedLocationName]);
+    this.modal?.dismiss();
   }
 
   addToFavorite() {

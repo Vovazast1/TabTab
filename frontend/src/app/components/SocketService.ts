@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs'; // Import Subject
 import io from 'socket.io-client'; // Import only io
-
 import { SOCKET_BASE_URL } from '../data';
 import LocationMessageDto, { MessageType } from '../data/LocationMessageDTO';
-import { Client } from 'stompjs';
 
 @Injectable({
   providedIn: 'root'

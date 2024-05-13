@@ -40,13 +40,15 @@ export class ProfilePage implements OnInit {
     this.form = new ProfilePageForm(this.formBuilder).createForm();
   }
 
-  async goToLocations() {
-    const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
+  ngOnDestroy() {
     if (this.map) {
       this.map.remove();
     }
+  }
+
+  async goToLocations() {
+    const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
     await this.router.navigate(['pages/locations', newActivity]);
-    window.location.reload();
   }
 
   changeAvatar() {

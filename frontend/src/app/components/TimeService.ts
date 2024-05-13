@@ -6,10 +6,7 @@ import { Injectable } from '@angular/core';
 export class TimeService {
   constructor() {}
 
-  public timeStampConverter(time: number): string {
-    const date = new Date(time);
-    const minute = date.getMinutes();
-    const hour = date.getHours();
-    return `${hour}:${minute}`;
+  public timeStampConverter(time: number): Date {
+    return new Date(time);
   }
 }

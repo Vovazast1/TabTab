@@ -12,11 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChatPage implements OnInit {
   userId!: number;
+  username: string = '';
   messageInput: string = '';
   messageList: any[] = [];
   private _messagesEndRef?: ElementRef;
   locationId?: number;
   locationName?: string;
+  locations: Location[] = [];
+  public l: String = '';
 
   @ViewChild('messagesEndRef', { static: false })
   set messagesEndRef(value: ElementRef | undefined) {
@@ -89,5 +92,10 @@ export class ChatPage implements OnInit {
     if (this._messagesEndRef) {
       this._messagesEndRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+  setLocationImage(locationId: number) {
+    const location = this.locations.find(location => location.locationId === locationId);
+    this.l = location?.image ?? '';
   }
 }
