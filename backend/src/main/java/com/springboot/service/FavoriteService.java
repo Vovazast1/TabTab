@@ -42,7 +42,6 @@ public class FavoriteService {
     }
 
     public void deleteFavorite(Long favoriteId) {
-       Favorite favoriteToDelete = favoriteRepository.getFavoriteByFavoriteId(favoriteId);
-       favoriteRepository.delete(favoriteToDelete);
+       favoriteRepository.delete(favoriteRepository.getFavoriteByFavoriteId(favoriteId));
     }
 }

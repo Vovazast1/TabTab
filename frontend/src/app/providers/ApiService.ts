@@ -51,6 +51,10 @@ export class ApiService {
     return this.http.delete(this.API + `/favorite/${favoriteId}`);
   }
 
+  deleteFavorites(userId: number) {
+    return this.http.delete(this.API + `/favorite?userId=${userId}`);
+  }
+
   getVerificationByUserId(userId: number): Observable<boolean> {
     return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
   }
