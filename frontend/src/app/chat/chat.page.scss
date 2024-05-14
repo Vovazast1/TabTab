@@ -36,6 +36,8 @@ ion-content {
   .message_root_div {
     position: relative; /* Ensure positioning context */
     z-index: 1; /* Move content above the background */
+      
+    }
   }
 
   .room_name {
@@ -97,7 +99,7 @@ ion-content {
   }
   .message_item_username {
     display: flex;
-    color: #fdfdfd;
+    color: #1b0b0b;
     user-select: none;
     margin-bottom: 5px;
     margin-left: 15px;
@@ -195,9 +197,8 @@ ion-content {
   .message-time {
     color: #000000;
     font-size: 0.7rem;
-    position:absolute;
     right: 1rem;
-    margin-top: 0.2rem;
+    top: 0.2rem; /* Adjust top position */
   }
 
   .message-item {
@@ -209,6 +210,5 @@ ion-content {
     margin-top: 1rem;
   }
 
-}
 
 
