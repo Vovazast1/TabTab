@@ -42,6 +42,11 @@ public class UserController {
 
     @PostMapping("{id}/changeUsername")
     public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestParam String username) {
+
+        if (userService.getUsernameStatus(username)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         User user = userService.getUserById(id);
 
         if (user.getUsername().equals(username))
