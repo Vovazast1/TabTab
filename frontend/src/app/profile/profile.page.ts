@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActivityType, User, UserId } from '../data';
+import { ActivityType, User, storageKeys } from '../data';
 import * as L from 'leaflet';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../providers/ApiService';
 import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
-import { getFormString } from '../utils';
+import { getFormString, getUserId } from '../utils';
 import Avatar from '../data/Avatar';
 import { ActivityService } from '../components/activity.service';
 
@@ -42,7 +42,7 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.form = new ProfilePageForm(this.formBuilder).createForm();
 
-    this.apiService.getUser(UserId).subscribe({
+    this.apiService.getUser(getUserId()).subscribe({
       next: user => {
         this.user = user;
         this.userAvatar = this.getAvatarSrc(this.user.avatar);
@@ -63,7 +63,7 @@ export class ProfilePage implements OnInit {
   }
 
   changeAvatar(avatar: Avatar) {
-    this.apiService.changeAvatar(UserId, avatar).subscribe({
+    this.apiService.changeAvatar(getUserId(), avatar).subscribe({
       next: () => {
         this.toastService.showToast('Avatar successfully changed!');
         this.userAvatar = this.getAvatarSrc(avatar);
@@ -75,10 +75,11 @@ export class ProfilePage implements OnInit {
   changeUsername() {
     const username = getFormString(this.form, 'username');
 
-    this.apiService.changeUsername(UserId, username).subscribe({
+    this.apiService.changeUsername(getUserId(), username).subscribe({
       next: () => {
         this.toastService.showToast('Username changed!');
-        this.username = this.getUsername();
+        this.username = username;
+        localStorage.setItem(storageKeys.sub, username);
       },
       error: () => this.toastService.showToast('Username matches the previous or already taken!')
     });
@@ -93,15 +94,15 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    this.apiService.changePassword(UserId, password).subscribe({
+    this.apiService.changePassword(getUserId(), password).subscribe({
       next: () => this.toastService.showToast('Password changed!'),
       error: () => this.toastService.showToast('Password matches the previous!')
     });
   }
 
   deleteAccount() {
-    this.deleteFavorites(UserId);
-    this.apiService.deleteUser(UserId).subscribe({
+    this.deleteFavorites(getUserId());
+    this.apiService.deleteUser(getUserId()).subscribe({
       next: () => this.router.navigate(['pages/login']),
       error: () => this.toastService.showToast('CANNOT DELETE!')
     });
