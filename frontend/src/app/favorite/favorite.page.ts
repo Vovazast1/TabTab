@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType, Favorite, UserId } from '../data';
+import { ActivityType, Favorite, storageKeys } from '../data';
 import { ActivityService } from '../components/activity.service';
 import * as L from 'leaflet';
 import { Router } from '@angular/router';
+import { getUserId } from '../utils';
 
 @Component({
   selector: 'app-favorite',
@@ -29,7 +30,7 @@ export class FavoritePage implements OnInit {
   }
 
   loadFavorites() {
-    this.apiService.getFavorites(UserId).subscribe({
+    this.apiService.getFavorites(getUserId()).subscribe({
       next: favorites => {
         this.favorites = favorites;
       }

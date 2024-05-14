@@ -5,6 +5,7 @@ import { ApiService } from '../providers/ApiService';
 import { ActivityType, Location, storageKeys, Intelligence, Sport, Favorite } from '../data';
 import { IonModal } from '@ionic/angular';
 import { ActivityService } from '../components/activity.service';
+import { getUserId } from '../utils';
 
 interface ExtendedMarker {
   nativeMarker: L.Marker;
@@ -122,7 +123,7 @@ export class LocationsPage implements OnInit {
   }
 
   loadFavorites() {
-    this.apiService.getFavorites(Number(localStorage.getItem(storageKeys.userId))).subscribe({
+    this.apiService.getFavorites(getUserId()).subscribe({
       next: favorites => {
         this.favorites = favorites;
       }
@@ -168,7 +169,7 @@ export class LocationsPage implements OnInit {
 
   addToFavorite() {
     if (this.selectedLocationId !== null) {
-      const userId = Number(localStorage.getItem(storageKeys.userId));
+      const userId = getUserId();
       this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe();
       this.getFavoriteStatus(this.selectedLocationId);
     }
