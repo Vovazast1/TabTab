@@ -51,4 +51,12 @@ public class FavoriteController {
     public void deleteFavorite(@PathVariable Long favoriteId) {
         favoriteService.deleteFavorite(favoriteId);
     }
+
+    @DeleteMapping
+    public void deleteFavorites(@RequestParam Long userId) {
+        List<Favorite> favorites = favoriteService.getFavorites(userId);
+        for (Favorite favorite: favorites) {
+            favoriteService.deleteFavorite(favorite.getFavoriteId());
+        }
+    }
 }

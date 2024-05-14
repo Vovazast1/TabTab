@@ -1,9 +1,7 @@
 package com.springboot.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.springboot.entity.Favorite;
 import com.springboot.entity.User;
 import com.springboot.repository.UserRepository;
 

@@ -100,10 +100,15 @@ export class ProfilePage implements OnInit {
   }
 
   deleteAccount() {
+    this.deleteFavorites(UserId);
     this.apiService.deleteUser(UserId).subscribe({
       next: () => this.router.navigate(['pages/login']),
       error: () => this.toastService.showToast('CANNOT DELETE!')
     });
+  }
+
+  deleteFavorites(userId: number) {
+    this.apiService.deleteFavorites(userId).subscribe();
   }
 
   getUsername() {
