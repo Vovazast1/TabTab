@@ -120,6 +120,8 @@ public class SocketModule {
         locationMessageDto.locationId = locationMessage.getLocation().getLocationId();
         locationMessageDto.message = locationMessage.getMessage();
         locationMessageDto.timestamp = locationMessage.getTimestamp();
+        locationMessageDto.username = locationMessage.getUser().getUsername();
+        locationMessageDto.avatar = locationMessage.getUser().getAvatar();
         return locationMessageDto;
     }
 

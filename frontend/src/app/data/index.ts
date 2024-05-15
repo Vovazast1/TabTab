@@ -8,4 +8,4 @@ export * from './constants';
 
 export { SOCKET_BASE_URL } from './apiConstant';
 export { API_BASE_URL } from './apiConstant';
-export { default as Message, MessageType } from './LocationMessageDTO';
+export { default as Message, MessageType } from './LocationMessage';

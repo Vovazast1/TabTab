@@ -1,42 +1,42 @@
 <ion-content *ngIf="location && user">
-    <ion-grid class="image-container">
-    </ion-grid>
-    <ion-button class="move-back" (click)="goToLocations()">
-      <ion-icon name="chevron-back-outline" size="large"></ion-icon>
-    </ion-button>
-    <span class="image-wrapper">
-        <img  [src]="location.image" alt="Image" />
-      </span>
-      <span class="room_name">{{ location.locationName }}</span>
-    <div class="message_root_div">
+  <ion-grid class="image-container">
+  </ion-grid>
+  <ion-button class="move-back" (click)="goToLocations()">
+    <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+  </ion-button>
+  <span class="image-wrapper">
+      <img  [src]="location.image" alt="Image" />
+    </span>
+    <span class="room_name">{{ location.locationName }}</span>
+  <div class="message_root_div">
 
-      <div class="message_component message_list">
-        <div *ngFor="let message of messageList; let idx = index" class="message_item_{{ message.messageType.toLowerCase() }}{{ message.userId === user.userId ? '_self' : '' }}">
-          <div>
-          <ion-item class="message-item" lines="none">
+    <div class="message_component message_list">
+      <div *ngFor="let message of messageList; let idx = index" class="message_item{{ message.userId === user.userId ? '_self' : '' }}">
+        <div>
+        <ion-item class="message-item" lines="none">
 <!--          <span *ngIf="message.messageType.toLowerCase() !== 'server' && message.userId !== user.userId" class="message_item_username">{{ message.userId }}</span>-->
-          <div class="message_message_{{ message.messageType.toLowerCase() }}{{ message.userId === user.userId ? '_self' : '' }}">
-            <img *ngIf="user.avatar" class="message_message_avatar" src="assets/avatar/Avatar{{user.avatar}}.png">
-            <div class="message_message_username">{{ user.username  }}</div>
-            <span class="message_message_value">{{ message.message  }}</span>
-          </div>
-          </ion-item>
-          <span class="message-time">{{ message.timestamp | date: 'HH:mm' }}</span>
+        <div class="message_message{{ message.userId === user.userId ? '_self' : '' }}">
+          <img *ngIf="message.avatar" class="message-avatar" src="assets/avatar/Avatar{{message.avatar}}.png">
+          <div class="message_message_username">{{ message.username  }}</div>
+          <span class="message_message_value">{{ message.message  }}</span>
         </div>
-        </div>
-        <div #messagesEndRef></div>
+        </ion-item>
+        <span class="message-time">{{ message.timestamp | date: 'HH:mm' }}</span>
       </div>
-      <form class="chat-input" (ngSubmit)="sendMessage()">
-        <input type="text" [(ngModel)]="messageInput" placeholder="Type a message" name="messageInput">
-        <button class="submit" type="submit">
-          <ng-container *ngIf="messageInput === ''; else fillButton">
-            <i class="ri-send-plane-line" style="font-size: 25px;"></i>
-          </ng-container>
-          <ng-template #fillButton>
-            <i class="ri-send-plane-fill" style="font-size: 25px; color: #929292;"></i>
-          </ng-template>
-          <ion-icon class="send-icon" name="paper-plane-outline" size="large"></ion-icon>
-        </button>
-      </form>
+      </div>
+      <div #messagesEndRef></div>
     </div>
-  </ion-content>
+    <form class="chat-input" (ngSubmit)="sendMessage()">
+      <input type="text" [(ngModel)]="messageInput" placeholder="Type a message" name="messageInput">
+      <button class="submit" type="submit">
+        <ng-container *ngIf="messageInput === ''; else fillButton">
+          <i class="ri-send-plane-line" style="font-size: 25px;"></i>
+        </ng-container>
+        <ng-template #fillButton>
+          <i class="ri-send-plane-fill" style="font-size: 25px; color: #929292;"></i>
+        </ng-template>
+        <ion-icon class="send-icon" name="paper-plane-outline" size="large"></ion-icon>
+      </button>
+    </form>
+  </div>
+</ion-content>

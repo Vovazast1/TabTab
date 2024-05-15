@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, timestamp } from 'rxjs'; // Import Subject
 import io from 'socket.io-client'; // Import only io
 import { SOCKET_BASE_URL } from '../data';
-import LocationMessageDto, { MessageType } from '../data/LocationMessageDTO';
+import LocationMessage, { MessageType } from '../data/LocationMessage';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class SocketService {
 
   constructor(private http: HttpClient) {}
 
-  public connect(locatioId: number, userId: number, onReceive: (message: LocationMessageDto) => void): void {
+  public connect(locatioId: number, userId: number, onReceive: (message: LocationMessage) => void): void {
     this.locationId = locatioId;
     this.userId = userId;
     this.timestamp = timestamp;
@@ -46,17 +46,10 @@ export class SocketService {
     }
   }
 
-  public sendData(payload: any) {
+  public sendData(message: LocationMessage) {
     if (!this.locationId || !this.userId) {
       return;
     }
-    const message: LocationMessageDto = {
-      locationId: this.locationId,
-      message: payload.message,
-      messageType: MessageType.CLIENT,
-      userId: this.userId,
-      timestamp: payload.timestamp
-    };
     console.log(message);
     this.socket.emit('send_message', message);
   }

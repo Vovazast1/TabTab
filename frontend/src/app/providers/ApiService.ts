@@ -5,7 +5,7 @@ import { ActivityType, Favorite, Location, DTOResponse, Message, User } from '..
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  public API = 'http://localhost:8080/api/v1';
+  public API = 'http://localhost:5100/api/v1';
   public authAPI = `${this.API}/auth`;
   public locationAPI = `${this.API}/locations`;
   public messageAPI = `${this.API}/messages`;

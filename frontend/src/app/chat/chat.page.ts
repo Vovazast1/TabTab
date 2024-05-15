@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService } from '../components/activity.service';
 import * as L from 'leaflet';
 import { forkJoin, mergeMap, of, take, timestamp } from 'rxjs';
+import LocationMessage, { MessageType } from '../data/LocationMessage';
 
 @Component({
   selector: 'app-chat-page',
@@ -72,7 +73,7 @@ export class ChatPage implements OnInit {
     });
   }
 
-  addMessageToList(message: any): void {
+  addMessageToList(message: LocationMessage): void {
     this.messageList.push(message);
     this.scrollToBottom();
   }
@@ -80,16 +81,21 @@ export class ChatPage implements OnInit {
   sendMessage(): void {
     console.log(this.socketService);
     if (this.messageInput !== '') {
-      this.socketService.sendData({ message: this.messageInput });
-      const time = this.timeService.timeStampConverter(Date.now()); // Convert current timestamp
-
-      this.addMessageToList({
+      const time = this.timeService.timeStampConverter(Date.now());
+      const message = {
         message: this.messageInput,
         userId: this.user.userId,
+        locationId: this.location.locationId,
         timestamp: time,
-        messageType: 'CLIENT'
-      });
+        messageType: MessageType.CLIENT,
+        username: this.user.username,
+        avatar: this.user.avatar
+      }
+      this.socketService.sendData(message);
+
+      this.addMessageToList(message);
       this.messageInput = '';
+      this.scrollToBottom();
     }
   }
 

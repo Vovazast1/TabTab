@@ -18,4 +18,6 @@ public class LocationMessageDto {
     public long locationId;
     public long userId;
     public Date timestamp;
+    public String username;
+    public long avatar;
 }

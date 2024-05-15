@@ -82,7 +82,7 @@ ion-content {
       bottom: 5rem;
   }
   
-  .message_item_client {
+  .message_item{
     display: flex;
     width: 50%;
     justify-content: flex-start;
@@ -91,7 +91,7 @@ ion-content {
     flex-wrap: wrap;
     margin: 5px 70px 5px 5px;
   }
-  .message_item_client_self {
+  .message_item_self {
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
@@ -107,7 +107,7 @@ ion-content {
     font-weight: 600;
   }
   
-  .message_content_client {
+  .message_content {
     background-color: rgb(79, 135, 255);
     display: flex;
     padding: 10px;
@@ -126,7 +126,7 @@ ion-content {
     text-align: start;
   }
   
-  .message_content_client_self {
+  .message_content_self {
     background-color: rgb(15, 77, 211);
     display: flex;
     padding: 10px;
@@ -210,5 +210,7 @@ ion-content {
     margin-top: 1rem;
   }
 
-
-
+  .message-avatar{
+    display: flex;
+    height: 1rem;
+  }

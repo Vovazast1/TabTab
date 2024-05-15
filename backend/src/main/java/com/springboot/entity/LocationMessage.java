@@ -21,7 +21,7 @@ public class LocationMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long locationMessageID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "UserID", nullable = false)
     private User user;
 
