@@ -1,5 +1,13 @@
-ion-content {
-  --background: #78CB80;
+.image-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/img/chat-background.png');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
 }
 
 .title {
@@ -8,12 +16,13 @@ ion-content {
   margin-top: 1rem;
   justify-content: center;
 
-  ion-button[color="serengeti"] {
-    --background: transparent !important;
-    --box-shadow: 0;
-    align-items: center;
-    position: fixed;
-    left: 0;
+  .move-back{
+    --background: none !important;
+      --box-shadow: 0;
+      color: #000000;
+      align-items: center;
+      position: fixed;
+      left: 0;
   }
 
   ion-text[color="newblack"] {
