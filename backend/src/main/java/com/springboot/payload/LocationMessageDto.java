@@ -1,6 +1,9 @@
 package com.springboot.payload;
 
 import lombok.*;
+
+import java.util.Date;
+
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Data
@@ -9,9 +12,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @Getter
 @Setter
 @Builder
-public class LocationMessageDto{
+public class LocationMessageDto {
     public MessageType messageType;
     public String message;
     public long locationId;
     public long userId;
+    public Date timestamp;
 }

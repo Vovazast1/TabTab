@@ -61,7 +61,7 @@ public class SocketModule {
     private ConnectListener onConnected() {
         return (client) -> {
             long locationId = getLocationIdFromClient(client);
-            Location location = locationRepository.findByLocationId(locationId);
+            Location location = locationRepository.findLocationByLocationId(locationId);
             long userId = getUserIdFromClient(client);
             User user = userRepository.findByUserId(userId);
 
@@ -119,6 +119,7 @@ public class SocketModule {
         locationMessageDto.userId = locationMessage.getUser().getUserId();
         locationMessageDto.locationId = locationMessage.getLocation().getLocationId();
         locationMessageDto.message = locationMessage.getMessage();
+        locationMessageDto.timestamp = locationMessage.getTimestamp();
         return locationMessageDto;
     }
 

@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SocketService } from '../components/SocketService';
 import { ApiService } from '../providers/ApiService';
 import { TimeService } from '../components/TimeService';
-import { Location, storageKeys } from '../data';
-import { ActivatedRoute } from '@angular/router';
+import { ActivityType, Intelligence, Location, Sport, storageKeys, User } from '../data';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ActivityService } from '../components/activity.service';
+import * as L from 'leaflet';
+import { forkJoin, mergeMap, of, take, timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-chat-page',
@@ -11,15 +14,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./chat.page.scss']
 })
 export class ChatPage implements OnInit {
-  userId!: number;
-  username: string = '';
+  public user!: User;
   messageInput: string = '';
   messageList: any[] = [];
   private _messagesEndRef?: ElementRef;
-  locationId?: number;
-  locationName?: string;
-  locations: Location[] = [];
-  public l: String = '';
+  location!: Location;
+  currentActivity: ActivityType | null = null;
+  map!: L.Map;
 
   @ViewChild('messagesEndRef', { static: false })
   set messagesEndRef(value: ElementRef | undefined) {
@@ -31,20 +32,37 @@ export class ChatPage implements OnInit {
     private socketService: SocketService,
     private apiService: ApiService,
     private timeService: TimeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit() {
-    this.userId = parseInt(localStorage.getItem(storageKeys.userId) || '0');
+    const userId = Number(localStorage.getItem(storageKeys.userId) || '0');
     this.route.params.subscribe(params => {
-      this.locationId = params['locationId'];
-      this.locationName = params['locationName'];
-
-      if (this.userId && this.locationId) {
-        this.socketService.connect(this.locationId, this.userId, message => this.messageList.push(message));
-        this.connectSocket();
-        this.fetchMessages();
-      }
+      const locationId = params['locationId'];
+      this.activityService.currentActivity$
+        .pipe(
+          mergeMap(activity => {
+            this.currentActivity = activity;
+            if (userId && locationId && this.currentActivity) {
+              this.socketService.connect(locationId, userId, message => this.messageList.push(message));
+              this.connectSocket();
+              return forkJoin([
+                this.apiService.getLocationById(locationId),
+                this.apiService.getUser(userId),
+                this.apiService.getMessages(locationId)
+              ]);
+            }
+            return of([]);
+          })
+        )
+        .subscribe(([location, user, messages]) => {
+          this.location = location;
+          this.user = user;
+          this.messageList = messages;
+          this.scrollToBottom();
+        });
     });
   }
 
@@ -52,19 +70,6 @@ export class ChatPage implements OnInit {
     this.socketService.getSocketResponse().subscribe(response => {
       this.addMessageToList(response);
     });
-  }
-
-  fetchMessages() {
-    this.locationId &&
-      this.apiService.getMessages(this.locationId).subscribe(
-        responseData => {
-          this.messageList = responseData;
-          this.scrollToBottom();
-        },
-        error => {
-          console.error('Error fetching messages:', error);
-        }
-      );
   }
 
   addMessageToList(message: any): void {
@@ -80,8 +85,8 @@ export class ChatPage implements OnInit {
 
       this.addMessageToList({
         message: this.messageInput,
-        userId: this.userId,
-        createdDateTime: time,
+        userId: this.user.userId,
+        timestamp: time,
         messageType: 'CLIENT'
       });
       this.messageInput = '';
@@ -94,8 +99,10 @@ export class ChatPage implements OnInit {
     }
   }
 
-  setLocationImage(locationId: number) {
-    const location = this.locations.find(location => location.locationId === locationId);
-    this.l = location?.image ?? '';
+  goToLocations() {
+    if (this.map) {
+      this.map.remove();
+    }
+    this.router.navigate(['pages/locations', this.currentActivity]);
   }
 }

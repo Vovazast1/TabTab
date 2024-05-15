@@ -110,6 +110,7 @@ export class LocationsPage implements OnInit {
             .addTo(this.map)
             .on('click', () => {
               this.selectedLocationId = location.locationId;
+              this.selectedLocationName = location.locationName;
               this.imageUrl = this.setLocationImage(this.selectedLocationId);
               this.findAddress(location.locationName);
               this.ngZone.run(() => this.modal!.present());
@@ -164,7 +165,7 @@ export class LocationsPage implements OnInit {
   }
 
   goToChat() {
-    this.router.navigate(['pages/chat', this.selectedLocationId, this.selectedLocationName]);
+    this.router.navigate(['pages/chat', this.selectedLocationId]);
     this.modal?.dismiss();
   }
 

@@ -39,6 +39,10 @@ export class ApiService {
     return this.http.get<Location[]>(this.API + `/location?activity=${activity}`);
   }
 
+  getLocationById(id: number): Observable<Location> {
+    return this.http.get<Location>(this.API + `/location/${id}`);
+  }
+
   getFavorites(userId: number): Observable<Favorite[]> {
     return this.http.get<Favorite[]>(this.API + `/favorite?userId=${userId}`);
   }

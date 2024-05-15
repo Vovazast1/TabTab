@@ -36,6 +36,7 @@ public class MessageController {
         locationMessageDto.userId = locationMessage.getUser().getUserId();
         locationMessageDto.locationId = locationMessage.getLocation().getLocationId();
         locationMessageDto.message = locationMessage.getMessage();
+        locationMessageDto.timestamp = locationMessage.getTimestamp();
         return locationMessageDto;
     }
 }

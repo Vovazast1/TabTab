@@ -25,23 +25,19 @@ public class SocketService {
     @Autowired
     private LocationService locationService;
 
-
-    public void sendSocketMessage(SocketIOClient senderClient, LocationMessageDto message, long locationId){
-        for(
-                SocketIOClient client : senderClient.getNamespace().getRoomOperations(String.valueOf(locationId)).getClients()
-        ){
-            if(!client.getSessionId().equals(senderClient.getSessionId())){
+    public void sendSocketMessage(SocketIOClient senderClient, LocationMessageDto message, long locationId) {
+        for (SocketIOClient client : senderClient.getNamespace().getRoomOperations(String.valueOf(locationId))
+                .getClients()) {
+            if (!client.getSessionId().equals(senderClient.getSessionId())) {
                 client.sendEvent("read_message", message);
             }
         }
     }
 
-    public void saveMessage(SocketIOClient senderClient, LocationMessageDto message){
+    public void saveMessage(SocketIOClient senderClient, LocationMessageDto message) {
 
         User user = userService.getUserById(message.getUserId());
         Location location = locationService.getLocationById(message.getLocationId());
-
-
 
         LocationMessage storedMessage = locationMessageService.saveMessage(LocationMessage.builder()
                 .messageType(MessageType.CLIENT)
@@ -51,10 +47,10 @@ public class SocketService {
                 .build());
         LocationMessageDto storedMessageDto = locationToDto(storedMessage);
 
-        sendSocketMessage(senderClient,storedMessageDto, message.getLocationId());
+        sendSocketMessage(senderClient, storedMessageDto, message.getLocationId());
     }
 
-    public void saveInfoMessage(SocketIOClient senderClient, String message, long locationId, long userId){
+    public void saveInfoMessage(SocketIOClient senderClient, String message, long locationId, long userId) {
         User user = userService.getUserById(userId);
 
         Location location = locationService.getLocationById(locationId);
@@ -67,7 +63,7 @@ public class SocketService {
                 .build());
 
         LocationMessageDto storedMessageDto = locationToDto(storedMessage);
-        sendSocketMessage(senderClient,storedMessageDto,locationId);
+        sendSocketMessage(senderClient, storedMessageDto, locationId);
     }
 
     private LocationMessageDto locationToDto(LocationMessage locationMessage) {
@@ -76,6 +72,7 @@ public class SocketService {
         locationMessageDto.userId = locationMessage.getUser().getUserId();
         locationMessageDto.locationId = locationMessage.getLocation().getLocationId();
         locationMessageDto.message = locationMessage.getMessage();
+        locationMessageDto.timestamp = locationMessage.getTimestamp();
         return locationMessageDto;
     }
 

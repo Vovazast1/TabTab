@@ -3,6 +3,7 @@ export default interface LocationMessageDto {
   message: string;
   locationId: number;
   userId: number;
+  timestamp: Date;
 }
 
 export enum MessageType {
