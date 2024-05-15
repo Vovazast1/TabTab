@@ -61,8 +61,8 @@ export class LocationsPage implements OnInit {
   };
 
   private selectedLocationId: number | null = null;
-  private selectedLocationName: string | null = null;
-  private selectedLocation: Location | null = null;
+  public selectedLocationName: string | null = null;
+  public selectedLocation: Location | null = null;
   
   constructor(
     private ngZone: NgZone,
