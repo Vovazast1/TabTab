@@ -13,16 +13,20 @@
     <div class="message_component message_list">
       <div *ngFor="let message of messageList; let idx = index" class="message_item{{ message.userId === user.userId ? '_self' : '' }}">
         <div>
+          <div class="avatar-user-name">
+          <img *ngIf="message.avatar" class="message-avatar" src="assets/avatar/Avatar{{message.avatar}}.png">
+          <div class="message_message_username">{{ message.username  }}</div>
+          </div>
         <ion-item class="message-item" lines="none">
 <!--          <span *ngIf="message.messageType.toLowerCase() !== 'server' && message.userId !== user.userId" class="message_item_username">{{ message.userId }}</span>-->
         <div class="message_message{{ message.userId === user.userId ? '_self' : '' }}">
-          <img *ngIf="message.avatar" class="message-avatar" src="assets/avatar/Avatar{{message.avatar}}.png">
-          <div class="message_message_username">{{ message.username  }}</div>
           <span class="message_message_value">{{ message.message  }}</span>
         </div>
-        </ion-item>
-        <span class="message-time">{{ message.timestamp | date: 'HH:mm' }}</span>
+        <div class="message-time">
+        <span >{{ message.timestamp | date: 'HH:mm' }}</span>
       </div>
+        </ion-item>
+        </div>
       </div>
       <div #messagesEndRef></div>
     </div>
