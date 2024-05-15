@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivityType, Favorite, Location, DTOResponse, User } from '../data';
+import { ActivityType, Favorite, Location, DTOResponse, Message, User } from '../data';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  public API = 'http://localhost:8080/api/v1';
+  public API = 'http://localhost:5100/api/v1';
+  public authAPI = `${this.API}/auth`;
+  public locationAPI = `${this.API}/locations`;
+  public messageAPI = `${this.API}/messages`;
 
   constructor(private http: HttpClient) {}
 
@@ -34,6 +37,10 @@ export class ApiService {
 
   getLocationsByActivity(activity: ActivityType): Observable<Location[]> {
     return this.http.get<Location[]>(this.API + `/location?activity=${activity}`);
+  }
+
+  getLocationById(id: number): Observable<Location> {
+    return this.http.get<Location>(this.API + `/location/${id}`);
   }
 
   getFavorites(userId: number): Observable<Favorite[]> {
@@ -77,5 +84,13 @@ export class ApiService {
 
   changePassword(userId: number, password: string) {
     return this.http.post(this.API + `/user/${userId}/changePassword?password=${password}`, {});
+  }
+
+  getLocations(): Observable<Location[]> {
+    return this.http.get<Location[]>(this.locationAPI);
+  }
+
+  getMessages(locationId: number) {
+    return this.http.get<Message[]>(this.messageAPI + `?locationId=${locationId}`);
   }
 }

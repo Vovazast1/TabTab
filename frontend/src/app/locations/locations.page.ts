@@ -61,7 +61,9 @@ export class LocationsPage implements OnInit {
   };
 
   private selectedLocationId: number | null = null;
-  public selectedLocation: Location | null = null;
+  private selectedLocationName: string | null = null;
+  private selectedLocation: Location | null = null;
+  
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
@@ -158,7 +160,8 @@ export class LocationsPage implements OnInit {
   }
 
   goToChat() {
-    this.router.navigate(['pages/chat']);
+    this.router.navigate(['pages/chat', this.selectedLocationId]);
+    this.modal?.dismiss();
   }
 
   addToFavorite() {
@@ -225,6 +228,7 @@ export class LocationsPage implements OnInit {
 
   handleMarkerClick(location: Location) {
     this.selectedLocation = location;
+    this.selectedLocationName = location.locationName;
     this.selectedLocationId = location.locationId;
     this.imageUrl = this.setLocationImage(this.selectedLocationId);
     this.ngZone.run(() => this.modal!.present());

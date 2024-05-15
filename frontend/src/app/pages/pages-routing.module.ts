@@ -41,7 +41,7 @@ const routes: Routes = [
         loadChildren: () => import('../favorite/favorite.module').then(m => m.FavoritePageModule)
       },
       {
-        path: 'chat',
+        path: 'chat/:locationId',
         loadChildren: () => import('../chat/chat.module').then(m => m.ChatPageModule)
       },
       {
