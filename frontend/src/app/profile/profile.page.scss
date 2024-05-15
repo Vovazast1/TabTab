@@ -84,8 +84,10 @@ ion-text[color="dark"]{
   margin-bottom: 1rem;
 }
 
-ion-button[color="telegram"]{
+.email{
   --border-radius: 3rem;
+  --box-shadow: none !important;
+  margin-left: -1rem;
 }
 
 
