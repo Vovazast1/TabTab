@@ -46,7 +46,6 @@ export class LocationsPage implements OnInit {
   public imageUrl: String = '';
   public markers: ExtendedMarker[] = [];
   public filteredMarkers: ExtendedMarker[] = [];
-  public address: string = '';
 
   private iconMap = {
     [Sport.Football]: 'assets/icon/football-icon.png',
@@ -108,12 +107,7 @@ export class LocationsPage implements OnInit {
           const icon = L.icon({ iconUrl });
           const marker = L.marker([location.latitude, location.longitude], { icon })
             .addTo(this.map)
-            .on('click', () => {
-              this.selectedLocationId = location.locationId;
-              this.imageUrl = this.setLocationImage(this.selectedLocationId);
-              this.findAddress(location.locationName);
-              this.ngZone.run(() => this.modal!.present());
-            });
+            .on('click', () => this.handleMarkerClick(location));
 
           this.markers.push({ nativeMarker: marker, location });
         });
@@ -192,10 +186,6 @@ export class LocationsPage implements OnInit {
     return this.favorites.some(favorite => favorite.locationId === locationId);
   }
 
-  findAddress(locationName: string) {
-    this.address = locationName;
-  }
-
   getLocationTypes() {
     const types = this.locations.map(location => location.type);
     const filteredTypes = types.filter(type => types.includes(type));
@@ -213,7 +203,7 @@ export class LocationsPage implements OnInit {
             icon: marker.nativeMarker.getIcon()
           })
             .addTo(this.map)
-            .on('click', () => this.handleMarkerClick(marker)))
+            .on('click', () => this.handleMarkerClick(marker.location)))
       );
       return;
     }
@@ -224,7 +214,7 @@ export class LocationsPage implements OnInit {
         icon: filteredMarker.nativeMarker.getIcon()
       })
         .addTo(this.map)
-        .on('click', () => this.handleMarkerClick(filteredMarker));
+        .on('click', () => this.handleMarkerClick(filteredMarker.location));
 
       const marker = this.markers.find(mark => mark.location.locationId === filteredMarker.location.locationId);
       if (marker) {
@@ -233,8 +223,9 @@ export class LocationsPage implements OnInit {
     });
   }
 
-  handleMarkerClick(marker: ExtendedMarker) {
-    this.selectedLocationId = marker.location.locationId;
+  handleMarkerClick(location: Location) {
+    this.selectedLocation = location;
+    this.selectedLocationId = location.locationId;
     this.imageUrl = this.setLocationImage(this.selectedLocationId);
     this.ngZone.run(() => this.modal!.present());
   }
