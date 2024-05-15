@@ -2,8 +2,10 @@ import { Component, NgZone, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType, Location, storageKeys, Intelligence, Sport } from '../data';
+import { ActivityType, Location, storageKeys, Intelligence, Sport, Favorite } from '../data';
 import { IonModal } from '@ionic/angular';
+import { ActivityService } from '../components/activity.service';
+import { getUserId } from '../utils';
 
 interface ExtendedMarker {
   nativeMarker: L.Marker;
@@ -20,7 +22,8 @@ export class LocationsPage implements OnInit {
   public modal?: IonModal;
   map!: L.Map;
   locations: Location[] = [];
-  currentActivity?: ActivityType;
+  favorites: Favorite[] = [];
+  currentActivity: ActivityType | null = null;
 
   public locationsIntelligenceButtons = [
     { src: 'assets/icon/park-icon.png', label: 'Park' },
@@ -40,9 +43,10 @@ export class LocationsPage implements OnInit {
   public sportImg = [{ src: 'assets/icon/intelligence.png' }];
   public intelligenceImg = [{ src: 'assets/icon/sport.png' }];
 
-  public l: String = '';
+  public imageUrl: String = '';
   public markers: ExtendedMarker[] = [];
   public filteredMarkers: ExtendedMarker[] = [];
+  public address: string = '';
 
   private iconMap = {
     [Sport.Football]: 'assets/icon/football-icon.png',
@@ -62,6 +66,7 @@ export class LocationsPage implements OnInit {
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
+    private activityService: ActivityService,
     private apiService: ApiService,
     private router: Router
   ) {}
@@ -69,7 +74,20 @@ export class LocationsPage implements OnInit {
   ngOnInit() {
     this.initializeMap();
 
-    this.goToLocations();
+    this.loadFavorites();
+
+    this.activityService.currentActivity$.subscribe(activity => {
+      this.currentActivity = activity;
+      if (activity) {
+        this.loadLocations(activity);
+      }
+    });
+    this.route.params.subscribe(params => {
+      const initialActivity = params['activity'];
+      if (initialActivity) {
+        this.activityService.setCurrentActivity(initialActivity);
+      }
+    });
 
     this.map.whenReady(() => {
       setTimeout(() => {
@@ -80,31 +98,41 @@ export class LocationsPage implements OnInit {
     });
   }
 
-  goToLocations() {
-    this.route.params.subscribe(params => {
-      this.currentActivity = params['activity'];
-      this.apiService.getLocationsByActivity(this.currentActivity!).subscribe({
-        next: locations => {
-          this.locations = locations;
+  loadLocations(activity: ActivityType) {
+    this.apiService.getLocationsByActivity(activity).subscribe({
+      next: locations => {
+        this.locations = locations;
 
-          locations.forEach(location => {
-            const iconUrl = this.iconMap[location.type] ?? 'assets/icon/favicon.png';
-            const icon = L.icon({ iconUrl });
-            const marker = L.marker([location.latitude, location.longitude], { icon })
-              .addTo(this.map)
-              .on('click', () => {
-                this.selectedLocationId = location.locationId;
-                this.selectedLocationName = location.locationName;
-                this.setLocationImage(this.selectedLocationId);
-                this.ngZone.run(() => this.modal!.present());
-              });
+        locations.forEach(location => {
+          const iconUrl = this.iconMap[location.type] ?? 'assets/icon/favicon.png';
+          const icon = L.icon({ iconUrl });
+          const marker = L.marker([location.latitude, location.longitude], { icon })
+            .addTo(this.map)
+            .on('click', () => {
+              this.selectedLocationId = location.locationId;
+              this.imageUrl = this.setLocationImage(this.selectedLocationId);
+              this.findAddress(location.locationName);
+              this.ngZone.run(() => this.modal!.present());
+            });
 
-            this.markers.push({ nativeMarker: marker, location });
-          });
-        },
-        error: error => console.log(error)
-      });
+          this.markers.push({ nativeMarker: marker, location });
+        });
+      },
+      error: error => console.log(error)
     });
+  }
+
+  loadFavorites() {
+    this.apiService.getFavorites(getUserId()).subscribe({
+      next: favorites => {
+        this.favorites = favorites;
+      }
+    });
+  }
+
+  getFavorites() {
+    console.log(this.favorites);
+    return this.favorites;
   }
 
   initializeMap() {
@@ -117,9 +145,12 @@ export class LocationsPage implements OnInit {
   async toggleLocationsType() {
     const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
 
+    this.activityService.setCurrentActivity(newActivity);
+
     if (this.map) {
       this.map.remove();
     }
+
     await this.router.navigate(['pages/locations', newActivity]);
     window.location.reload();
   }
@@ -139,8 +170,9 @@ export class LocationsPage implements OnInit {
 
   addToFavorite() {
     if (this.selectedLocationId !== null) {
-      const userId = Number(localStorage.getItem(storageKeys.userId));
+      const userId = getUserId();
       this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe();
+      this.getFavoriteStatus(this.selectedLocationId);
     }
   }
 
@@ -154,7 +186,15 @@ export class LocationsPage implements OnInit {
 
   setLocationImage(locationId: number) {
     const location = this.locations.find(location => location.locationId === locationId);
-    this.l = location?.image ?? '';
+    return location?.image ?? '';
+  }
+
+  getFavoriteStatus(locationId: number) {
+    return this.favorites.some(favorite => favorite.locationId === locationId);
+  }
+
+  findAddress(locationName: string) {
+    this.address = locationName;
   }
 
   getLocationTypes() {
@@ -196,7 +236,7 @@ export class LocationsPage implements OnInit {
 
   handleMarkerClick(marker: ExtendedMarker) {
     this.selectedLocationId = marker.location.locationId;
-    this.setLocationImage(this.selectedLocationId);
+    this.imageUrl = this.setLocationImage(this.selectedLocationId);
     this.ngZone.run(() => this.modal!.present());
   }
 }

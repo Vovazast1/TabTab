@@ -1,15 +1,48 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <div class="title">
     <ion-button color="serengeti" (click)="goToLocations()">
       <ion-icon name="chevron-back-outline" size="large"></ion-icon>
     </ion-button>
     <ion-text color="newblack"> Profile </ion-text>
   </div>
-  <ion-img src="assets/img/user-photo.png"></ion-img>
-  <ion-text color="newblack" style="font-size: 1.5rem; margin-bottom: 1rem">Username</ion-text>
+
+  <ion-card class="photo">
+    <ion-button class="user-photo" id="open-modal">
+      <ion-img [src] ="userAvatar"> </ion-img>
+    </ion-button>
+  </ion-card>
+
+
+
+  <ion-modal #modal trigger="open-modal">
+    <ng-template>
+
+      <ion-buttons>
+        <ion-button color="dark" (click)="modal.dismiss()"
+          ><ion-icon name="close-outline" size="large"></ion-icon
+        ></ion-button>
+      </ion-buttons>
+
+      <ion-content class="avatars">
+        <ion-list>
+          <ion-card class="card-avatar" *ngFor="let avatar of getAvatars()">
+            <ion-button class="avatar" (click)="changeAvatar(avatar.id)">
+              <ion-img [src]="avatar.src"></ion-img>
+            </ion-button>
+          </ion-card>
+        </ion-list>
+        <ion-infinite-scroll>
+        </ion-infinite-scroll>
+      </ion-content>
+
+    </ng-template>
+  </ion-modal>
+
+
+
+  <ion-text color="dark"> {{ username }} </ion-text>
 
   <form [formGroup]="form">
-
     <ion-card color="serengeti">
       <ion-item color="success">
         <ion-icon name="pencil-outline"></ion-icon>
@@ -22,21 +55,6 @@
           type="text"
         ></ion-input>
         <ion-button color="serengeti" (click)="changeUsername()">
-          <ion-icon name="checkmark-circle-outline" size="large" shape="round"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-item color="success">
-        <ion-icon name="pencil-outline"></ion-icon>
-        <ion-input
-          formControlName="avatar"
-          text-align="center"
-          placeholder="Enter your new avatar"
-          label="Edit avatar"
-          label-placement="floating"
-          type="text"
-        ></ion-input>
-        <ion-button color="serengeti" (click)="changeAvatar()">
           <ion-icon name="checkmark-circle-outline" size="large" shape="round"></ion-icon>
         </ion-button>
       </ion-item>
@@ -76,10 +94,9 @@
         <ion-text> Click to go to telegram bot </ion-text>
       </ion-button>
 
-      <ion-button color="danger" shape="round">
+      <ion-button color="danger" shape="round" (click)="deleteAccount()">
         <ion-text color="newblack">Delete account</ion-text>
       </ion-button>
     </ion-card>
-
   </form>
 </ion-content>

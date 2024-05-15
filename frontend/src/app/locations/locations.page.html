@@ -1,14 +1,8 @@
 <ion-content>
   <div id="map"></div>
-  <div class="top-button-container">
-    <ng-container *ngFor="let button of getLocationButtons()">
-      <ion-button size="small" shape="round" color="success">
-        <ion-img [src]="button.src"></ion-img>{{button.label}}
-      </ion-button>
-    </ng-container>
-  </div>
-  <ion-button color="success" size="small" shape="round">
-    <ion-select placeholder="Filter" (ionChange)="handleChange($event)" [multiple]="true">
+  <!-- <ion-button size="small" (click)="goToFavoriteChat()">Chat</ion-button> -->
+  <ion-button color="success" size="small" shape="round" class="alert-button-group">
+    <ion-select placeholder="Filter" (ionChange)="handleChange($event)" [multiple]="true" class="custom-select">
       <ion-select-option *ngFor="let type of getLocationTypes()">{{ type }}</ion-select-option>
     </ion-select>
   </ion-button>
@@ -45,26 +39,26 @@
         ></ion-button>
       </ion-buttons>
 
-      <ion-toolbar color="success">
+      <ion-card color="success">
         <span class="image-wrapper">
-          <img *ngIf="l" [src]="l" alt="Image" />
+          <img *ngIf="imageUrl" [src]="imageUrl" alt="Image" />
         </span>
+        
         <div class="container">
-
-          <ion-button color="#FFF6EB" (click)="addToFavorite()">
-            <ion-text color="black">
-              <ion-icon name="bookmark-outline" size="large"></ion-icon> Add to favorite
-            </ion-text>
-          </ion-button>
-
+          <ion-text color="dark">Address: {{ address }}</ion-text>
+          <ng-container>
+            <ion-button color="#FFF6EB"  (click)="addToFavorite()">
+              <ion-text color="black">
+                <ion-icon name="bookmark-outline" size="large"></ion-icon> Add to favorite
+              </ion-text>
+            </ion-button>
+          </ng-container>
           <ion-button color="#FFF6EB" (click)="goToChat()">
-            <ion-text color="black">
-              <ion-icon name="chatbox-outline" size="large"></ion-icon> Open chat
-            </ion-text>
+            <ion-text color="black"> <ion-icon name="chatbox-outline" size="large"></ion-icon> Open chat </ion-text>
           </ion-button>
-
         </div>
-      </ion-toolbar>
+      </ion-card>
     </ng-template>
   </ion-modal>
 </ion-content>
+

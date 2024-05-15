@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivityType, Favorite, Location, DTOResponse, Message } from '../data';
+import { ActivityType, Favorite, Location, DTOResponse, Message, User } from '../data';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -40,7 +40,7 @@ export class ApiService {
   }
 
   getFavorites(userId: number): Observable<Favorite[]> {
-    return this.http.get<Favorite[]>(this.API + `/favorite/${userId}`);
+    return this.http.get<Favorite[]>(this.API + `/favorite?userId=${userId}`);
   }
 
   addToFavorite(userId: number, locationId: number) {
@@ -50,8 +50,24 @@ export class ApiService {
     });
   }
 
+  deleteFavorite(favoriteId: number) {
+    return this.http.delete(this.API + `/favorite/${favoriteId}`);
+  }
+
+  deleteFavorites(userId: number) {
+    return this.http.delete(this.API + `/favorite?userId=${userId}`);
+  }
+
   getVerificationByUserId(userId: number): Observable<boolean> {
     return this.http.get<boolean>(this.API + `/user/${userId}/verification`);
+  }
+
+  getUser(userId: number): Observable<User> {
+    return this.http.get<User>(this.API + `/user/${userId}`);
+  }
+
+  deleteUser(userId: number) {
+    return this.http.delete(this.API + `/user/${userId}`);
   }
 
   changeAvatar(userId: number, avatar: number) {

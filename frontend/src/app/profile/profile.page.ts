@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActivityType, storageKeys } from '../data';
+import { ActivityType, User, storageKeys } from '../data';
 import * as L from 'leaflet';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../providers/ApiService';
 import { ToastService } from '../providers/ToastService';
 import { ProfilePageForm } from './profile.page.form';
-import { getFormString, getFormNumber } from '../utils';
+import { getFormString, getUserId } from '../utils';
 import Avatar from '../data/Avatar';
+import { ActivityService } from '../components/activity.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,47 +17,57 @@ import Avatar from '../data/Avatar';
 })
 export class ProfilePage implements OnInit {
   form?: FormGroup;
-
-  currentActivity?: ActivityType;
+  currentActivity: ActivityType | null = null;
   map!: L.Map;
-  public l: string = '';
+  user: User | null = null;
+  userAvatar: string = '';
+  username: string | undefined = '';
 
-  private Avatars = {
-    [Avatar.Avatar1]: 'assets/avatar/Avatar1.png',
-    [Avatar.Avatar2]: 'assets/avatar/Avatar2.png',
-    [Avatar.Avatar3]: 'assets/avatar/Avatar3.png',
-    [Avatar.Avatar4]: 'assets/avatar/Avatar4.png',
-    [Avatar.Avatar5]: 'assets/avatar/Avatar5.png'
-  };
+  private avatars = [
+    { id: Avatar.Avatar1, src: 'assets/avatar/Avatar1.png' },
+    { id: Avatar.Avatar2, src: 'assets/avatar/Avatar2.png' },
+    { id: Avatar.Avatar3, src: 'assets/avatar/Avatar3.png' },
+    { id: Avatar.Avatar4, src: 'assets/avatar/Avatar4.png' },
+    { id: Avatar.Avatar5, src: 'assets/avatar/Avatar5.png' }
+  ];
 
   constructor(
     private router: Router,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
+    private activityService: ActivityService,
     private toastService: ToastService
   ) {}
 
   ngOnInit() {
     this.form = new ProfilePageForm(this.formBuilder).createForm();
+
+    this.apiService.getUser(getUserId()).subscribe({
+      next: user => {
+        this.user = user;
+        this.userAvatar = this.getAvatarSrc(this.user.avatar);
+        this.username = this.getUsername();
+      }
+    });
+
+    this.activityService.currentActivity$.subscribe(activity => {
+      this.currentActivity = activity;
+    });
   }
 
-  ngOnDestroy() {
+  goToLocations() {
     if (this.map) {
       this.map.remove();
     }
+    this.router.navigate(['pages/locations', this.currentActivity]);
   }
 
-  async goToLocations() {
-    const newActivity = this.currentActivity === ActivityType.Sport ? ActivityType.Intelligence : ActivityType.Sport;
-    await this.router.navigate(['pages/locations', newActivity]);
-  }
-
-  changeAvatar() {
-    const avatar = getFormNumber(this.form, 'avatar');
-
-    const userId = Number(localStorage.getItem(storageKeys.userId));
-    this.apiService.changeAvatar(userId, avatar).subscribe({
-      next: () => this.toastService.showToast('Avatar successfully changed!'),
+  changeAvatar(avatar: Avatar) {
+    this.apiService.changeAvatar(getUserId(), avatar).subscribe({
+      next: () => {
+        this.toastService.showToast('Avatar successfully changed!');
+        this.userAvatar = this.getAvatarSrc(avatar);
+      },
       error: () => this.toastService.showToast('Avatar matches the previous!')
     });
   }
@@ -64,10 +75,13 @@ export class ProfilePage implements OnInit {
   changeUsername() {
     const username = getFormString(this.form, 'username');
 
-    const userId = Number(localStorage.getItem(storageKeys.userId));
-    this.apiService.changeUsername(userId, username).subscribe({
-      next: () => this.toastService.showToast('Username changed!'),
-      error: () => this.toastService.showToast('Username matches the previous!')
+    this.apiService.changeUsername(getUserId(), username).subscribe({
+      next: () => {
+        this.toastService.showToast('Username changed!');
+        this.username = username;
+        localStorage.setItem(storageKeys.sub, username);
+      },
+      error: () => this.toastService.showToast('Username matches the previous or already taken!')
     });
   }
 
@@ -80,14 +94,33 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    const thisUserId = Number(localStorage.getItem(storageKeys.userId));
-    this.apiService.changePassword(thisUserId, password).subscribe({
+    this.apiService.changePassword(getUserId(), password).subscribe({
       next: () => this.toastService.showToast('Password changed!'),
       error: () => this.toastService.showToast('Password matches the previous!')
     });
   }
 
+  deleteAccount() {
+    this.deleteFavorites(getUserId());
+    this.apiService.deleteUser(getUserId()).subscribe({
+      next: () => this.router.navigate(['pages/login']),
+      error: () => this.toastService.showToast('CANNOT DELETE!')
+    });
+  }
+
+  deleteFavorites(userId: number) {
+    this.apiService.deleteFavorites(userId).subscribe();
+  }
+
   getUsername() {
-    return localStorage.getItem(storageKeys.sub);
+    return this.user?.username;
+  }
+
+  getAvatarSrc(avatar: Avatar) {
+    return this.avatars.find(a => a.id === avatar)?.src ?? '';
+  }
+
+  getAvatars() {
+    return this.avatars;
   }
 }

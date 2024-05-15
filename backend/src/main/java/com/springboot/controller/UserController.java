@@ -30,23 +30,23 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("{username}")
-    public User getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
-    }
-
     @GetMapping("{id}")
     public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteUserById(@PathVariable long id) {
-        userService.deleteUserById(id);
+    @DeleteMapping("{userId}")
+    public void deleteUserByUserId(@PathVariable long userId) {
+        userService.deleteUserById(userId);
     }
 
     @PostMapping("{id}/changeUsername")
     public ResponseEntity<?> changeUsername(@PathVariable long id, @RequestParam String username) {
+
+        if (userService.getUsernameStatus(username)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         User user = userService.getUserById(id);
 
         if (user.getUsername().equals(username))
@@ -72,6 +72,11 @@ public class UserController {
     @GetMapping("{id}/verification")
     public Boolean getVerification(@PathVariable long id) {
         return userService.getVerificationById(id);
+    }
+
+    @GetMapping("{id}/avatar")
+    public Long getAvatar(@PathVariable long id) {
+        return userService.getAvatarById(id);
     }
 
     @PostMapping("{id}/changeAvatar")

@@ -74,25 +74,78 @@ ion-button[color="success"]{
   justify-content: center;
   --border-radius: 2rem;
   padding: 1rem;
-  margin-top: -1rem;
   height: 5rem;
 }
 
-ion-text[color="newblack"]{
+ion-text[color="dark"]{
   display: flex;
   justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 ion-button[color="telegram"]{
   --border-radius: 3rem;
 }
 
-ion-img{
-  margin-top: 1rem;
-  height: 15%;
-}
 
 .confirm {
   padding-left: 3rem;
   margin-bottom: 0.5rem;
+}
+
+
+.photo{
+  background: #78CB80;
+  box-shadow: none !important;
+  display: flex;
+  justify-content: center;
+}
+
+.user-photo{
+  --border-radius: 3rem;
+  --background: #78CB80;
+  --box-shadow: 0;
+}
+
+ion-modal {
+  --background: #FFF6EB;
+  --height: 50%;
+  --border-radius: 20px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  padding: 5%;
+}
+
+ion-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+
+ ion-buttons {
+   display: flex;
+   justify-content: flex-end;
+ }
+
+ .avatars {
+  display: flex;
+  flex-direction: column;
+  --background: #FFF6EB;
+  box-shadow: none !important;
+  position: fixed;
+ }
+
+ .avatar {
+  display: flex;
+  --background: #FFF6EB;
+  --box-shadow: none !important;
+  --border-radius: 3em;
+ }
+
+ ion-list{
+  background-color: #FFF6EB;
+ }
+
+.card-avatar{
+  background-color: #FFF6EB; 
+  box-shadow: none !important;
 }

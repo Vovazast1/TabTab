@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavoriteDto {
-    private long favoriteId;
-    private long userId;
+public class LocationDto {
     private long locationId;
+    private String locationName;
     private String image;
-    private String address;
 }

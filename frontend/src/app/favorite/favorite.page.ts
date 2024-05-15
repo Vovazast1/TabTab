@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../providers/ApiService';
-import { Favorite, storageKeys } from '../data';
+import { ActivityType, Favorite, storageKeys } from '../data';
+import { ActivityService } from '../components/activity.service';
+import * as L from 'leaflet';
+import { Router } from '@angular/router';
+import { getUserId } from '../utils';
 
 @Component({
   selector: 'app-favorite',
@@ -9,22 +13,38 @@ import { Favorite, storageKeys } from '../data';
 })
 export class FavoritePage implements OnInit {
   favorites: Favorite[] = [];
+  map!: L.Map;
+  currentActivity: ActivityType | null = null;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private activityService: ActivityService
+  ) {}
 
   ngOnInit() {
-    const userId = Number(localStorage.getItem(storageKeys.userId));
-    this.apiService.getFavorites(userId).subscribe({
+    this.activityService.currentActivity$.subscribe(activity => {
+      this.currentActivity = activity;
+    });
+    this.loadFavorites();
+  }
+
+  loadFavorites() {
+    this.apiService.getFavorites(getUserId()).subscribe({
       next: favorites => {
         this.favorites = favorites;
-
-        favorites.forEach(favorite => {
-          console.log('GOT A FAVORITE!');
-          console.log(favorite.favoriteId);
-          console.log(favorite.userId);
-          console.log(favorite.locationId);
-        });
       }
     });
+  }
+
+  deleteFavorite(favoriteId: number) {
+    this.apiService.deleteFavorite(favoriteId).subscribe();
+  }
+
+  goToLocations() {
+    if (this.map) {
+      this.map.remove();
+    }
+    this.router.navigate(['pages/locations', this.currentActivity]);
   }
 }

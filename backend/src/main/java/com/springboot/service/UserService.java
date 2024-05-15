@@ -1,9 +1,7 @@
 package com.springboot.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.springboot.entity.Favorite;
 import com.springboot.entity.User;
 import com.springboot.repository.UserRepository;
 
@@ -24,10 +22,6 @@ public class UserService {
         return userRepos.save(user);
     }
 
-    public User getUserByUsername(String username) {
-        return userRepos.findByUsername(username);
-    }
-
     public User getUserById(long id) {
         return userRepos.findByUserId(id);
     }
@@ -38,7 +32,12 @@ public class UserService {
     }
 
     public Boolean getVerificationById(long id) {
-        User user = userRepos.findByUserId(id);
-        return user.getIsVerified();
+        return userRepos.findByUserId(id).getIsVerified();
     }
+
+    public Long getAvatarById(long id) {
+        return userRepos.findByUserId(id).getAvatar();
+    }
+
+    public Boolean getUsernameStatus(String username) { return userRepos.existsByUsername(username); }
 }
