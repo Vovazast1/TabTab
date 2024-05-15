@@ -4,13 +4,6 @@
 /** Ionic CSS Variables **/
 :root {
 
-    /** telegram **/
-    --ion-color-telegram: #0088cc;
-      --ion-color-telegram-rgb: 0, 136, 204;
-      --ion-color-telegram-contrast: #000000;
-      --ion-color-telegram-contrast-rgb: 0, 0, 0;
-      --ion-color-telegram-shade: #0078b4;
-      --ion-color-telegram-tint: #1a94d1;
     /** gray85 **/
     --ion-color-gray85: #d9d9d9;
       --ion-color-gray85-rgb: 217, 217, 217;
@@ -113,14 +106,7 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
-.ion-color-telegram {
-  --ion-color-base: var(--ion-color-telegram);
-  --ion-color-base-rgb: var(--ion-color-telegram-rgb);
-  --ion-color-contrast: var(--ion-color-telegram-contrast);
-  --ion-color-contrast-rgb: var(--ion-color-telegram-contrast-rgb);
-  --ion-color-shade: var(--ion-color-telegram-shade);
-  --ion-color-tint: var(--ion-color-telegram-tint);
-}
+
 .ion-color-gray85 {
   --ion-color-base: var(--ion-color-gray85);
   --ion-color-base-rgb: var(--ion-color-gray85-rgb);
@@ -163,13 +149,6 @@
   */
 
   body {
---ion-color-telegram: #0088cc;
-  --ion-color-telegram-rgb: 0, 136, 204;
-  --ion-color-telegram-contrast: #000000;
-  --ion-color-telegram-contrast-rgb: 0, 0, 0;
-  --ion-color-telegram-shade: #0078b4;
-  --ion-color-telegram-tint: #1a94d1;
-
   --ion-color-gray85: #d9d9d9;
     --ion-color-gray85-rgb: 217, 217, 217;
     --ion-color-gray85-contrast: #000000;
