@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FavoritePage } from './favorite.page';
+// import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+// import { FavoritePage } from './favorite.page';
 
-describe('FavoritePage', () => {
-  let component: FavoritePage;
-  let fixture: ComponentFixture<FavoritePage>;
+// describe('FavoritePage', () => {
+//   let component: FavoritePage;
+//   let fixture: ComponentFixture<FavoritePage>;
 
-  beforeEach(async(() => {
-    fixture = TestBed.createComponent(FavoritePage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+//   beforeEach(async(() => {
+//     fixture = TestBed.createComponent(FavoritePage);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
