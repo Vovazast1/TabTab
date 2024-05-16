@@ -1,11 +1,12 @@
-import { Component, NgZone, OnInit, Type, ViewChild } from '@angular/core';
+import { Component, inject, NgZone, OnInit, Type, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../providers/ApiService';
-import { ActivityType, Location, storageKeys, Intelligence, Sport, Favorite } from '../data';
+import { ActivityType, Location, Intelligence, Sport, Favorite, storageKeys } from '../data';
 import { IonModal } from '@ionic/angular';
 import { ActivityService } from '../components/activity.service';
 import { getUserId } from '../utils';
+import { FavoriteService } from '../favorite/favorite.service';
 
 interface ExtendedMarker {
   nativeMarker: L.Marker;
@@ -22,23 +23,7 @@ export class LocationsPage implements OnInit {
   public modal?: IonModal;
   map!: L.Map;
   locations: Location[] = [];
-  favorites: Favorite[] = [];
   currentActivity: ActivityType | null = null;
-
-  public locationsIntelligenceButtons = [
-    { src: 'assets/icon/park-icon.png', label: 'Park' },
-    { src: 'assets/icon/chess-icon.png', label: 'Chess' },
-    { src: 'assets/icon/library-icon.png', label: 'Library' },
-    { src: 'assets/icon/museum-icon.png', label: 'Museum' },
-    { src: 'assets/icon/music-icon.png', label: 'Music' }
-  ];
-  public locationsSportButtons = [
-    { src: 'assets/icon/football-icon.png', label: 'Football' },
-    { src: 'assets/icon/basketball-icon.png', label: 'Basketball' },
-    { src: 'assets/icon/volleyball-icon.png', label: 'Volleyball' },
-    { src: 'assets/icon/gym-icon.png', label: 'Gym' },
-    { src: 'assets/icon/tennis-icon.png', label: 'Tennis' }
-  ];
 
   public sportImg = [{ src: 'assets/icon/intelligence.png' }];
   public intelligenceImg = [{ src: 'assets/icon/sport.png' }];
@@ -60,10 +45,14 @@ export class LocationsPage implements OnInit {
     [Intelligence.Music]: 'assets/icon/music-icon.png'
   };
 
-  private selectedLocationId: number | null = null;
+  public selectedLocationId: number | null = null;
   public selectedLocationName: string | null = null;
   public selectedLocation: Location | null = null;
-  
+
+  public isLoading = false;
+
+  public readonly favoriteService = inject(FavoriteService);
+
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
@@ -120,15 +109,8 @@ export class LocationsPage implements OnInit {
 
   loadFavorites() {
     this.apiService.getFavorites(getUserId()).subscribe({
-      next: favorites => {
-        this.favorites = favorites;
-      }
+      next: favorites => this.favoriteService.updateFavorites(favorites)
     });
-  }
-
-  getFavorites() {
-    console.log(this.favorites);
-    return this.favorites;
   }
 
   initializeMap() {
@@ -165,15 +147,38 @@ export class LocationsPage implements OnInit {
   }
 
   addToFavorite() {
-    if (this.selectedLocationId !== null) {
+    if (this.selectedLocationId !== null && !this.isLoading) {
       const userId = getUserId();
-      this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe();
-      this.getFavoriteStatus(this.selectedLocationId);
+      this.isLoading = true;
+      const selectedFavorite = this.favoriteService.getByLocationId(this.selectedLocationId);
+
+      if (selectedFavorite) {
+        this.apiService.deleteFavorite(selectedFavorite.favoriteId).subscribe({
+          next: () => {
+            this.favoriteService.deleteFavorites(selectedFavorite.favoriteId);
+            this.isLoading = false;
+          }
+        });
+      } else {
+        this.apiService.addToFavorite(userId, this.selectedLocationId).subscribe({
+          next: favoriteId => {
+            const favorite: Favorite = {
+              userId,
+              favoriteId,
+              locationId: this.selectedLocationId || 0,
+              address: this.selectedLocation?.locationName || '',
+              image: this.selectedLocation?.image || ''
+            };
+            this.favoriteService.addFavorite(favorite);
+            this.isLoading = false;
+          }
+        });
+      }
     }
   }
 
-  public getLocationButtons() {
-    return this.currentActivity === ActivityType.Sport ? this.locationsSportButtons : this.locationsIntelligenceButtons;
+  public isLocationFavorite(): boolean {
+    return !!this.favoriteService.getByLocationId(this.selectedLocationId);
   }
 
   public getImgSrc() {
@@ -183,10 +188,6 @@ export class LocationsPage implements OnInit {
   setLocationImage(locationId: number) {
     const location = this.locations.find(location => location.locationId === locationId);
     return location?.image ?? '';
-  }
-
-  getFavoriteStatus(locationId: number) {
-    return this.favorites.some(favorite => favorite.locationId === locationId);
   }
 
   getLocationTypes() {
