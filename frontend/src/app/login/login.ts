@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginPageForm } from './login.form';
 import { ApiService } from '../providers/ApiService';
 import { DTOResponse, storageKeys } from '../data';
 import { ToastService } from '../providers/ToastService';
 import { VerificationPage } from '../verification/verification';
-import { getFormDate, getFormString } from '../utils';
+import { getFormString } from '../utils';
 
 @Component({
   selector: 'app-login',
