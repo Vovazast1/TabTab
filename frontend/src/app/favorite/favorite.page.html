@@ -11,7 +11,8 @@
     <ng-container>
       <ion-card *ngFor="let favorite of favorites" class="element">
         <span class="image-wrapper">
-          <img [src]="favorite.image" alt="Image" />
+
+          <ion-button class="go-to-chat" (click)="goToChat(favorite.locationId)"><img [src]="favorite.image" alt="Image" /></ion-button>
         </span>
         <ion-text color="dark">{{ favorite.address }}</ion-text>
         <ion-button color="success" (click)="deleteFavorite(favorite.favoriteId)">

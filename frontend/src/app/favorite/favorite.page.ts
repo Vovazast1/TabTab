@@ -47,4 +47,8 @@ export class FavoritePage implements OnInit {
     }
     this.router.navigate(['pages/locations', this.currentActivity]);
   }
+
+   goToChat(locationId: number) {
+    this.router.navigate(['pages/chat', locationId]);
+  }
 }
