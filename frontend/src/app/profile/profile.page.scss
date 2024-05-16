@@ -84,12 +84,15 @@ ion-text[color="dark"]{
   margin-bottom: 1rem;
 }
 
-.email{
+.email {
   --border-radius: 3rem;
   --box-shadow: none !important;
   margin-left: -1rem;
 }
 
+.email-text {
+  margin-left: -1rem;
+}
 
 .confirm {
   padding-left: 3rem;

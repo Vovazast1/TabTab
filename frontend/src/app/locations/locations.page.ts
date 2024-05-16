@@ -105,7 +105,7 @@ export class LocationsPage implements OnInit {
         this.locations = locations;
 
         locations.forEach(location => {
-          const iconUrl = this.iconMap[location.type] ?? 'assets/icon/favicon.png';
+          const iconUrl = this.iconMap[location.type] ?? 'assets/icon/default-icon.png';
           const icon = L.icon({ iconUrl });
           const marker = L.marker([location.latitude, location.longitude], { icon })
             .addTo(this.map)
