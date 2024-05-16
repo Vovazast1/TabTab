@@ -9,7 +9,7 @@
 
   <div class="button-container">
     <ng-container>
-      <ion-card *ngFor="let favorite of favorites" class="element">
+      <ion-card *ngFor="let favorite of favoritesService.getFavorites$() | async" class="element">
         <span class="image-wrapper">
 
           <ion-button class="go-to-chat" (click)="goToChat(favorite.locationId)"><img [src]="favorite.image" alt="Image" /></ion-button>

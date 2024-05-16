@@ -31,20 +31,13 @@ public class FavoriteController {
                 favorite.getUser().getUserId(),
                 favorite.getLocation().getLocationId(),
                 favorite.getLocation().getImage(),
-                favorite.getLocation().getLocationName()
-        );
+                favorite.getLocation().getLocationName());
     }
 
     @PostMapping
-    public void addFavorite(@RequestBody FavoriteDto favoriteDTO) {
-        Long favoriteId = favoriteService.getFavoriteId(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
-
-        if (favoriteId != null) {
-            this.favoriteService.deleteFavorite(favoriteId);
-            return;
-        }
-
-        this.favoriteService.addFavorite(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
+    public Long addFavorite(@RequestBody FavoriteDto favoriteDTO) {
+        favoriteService.addFavorite(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
+        return favoriteService.getFavoriteId(favoriteDTO.getUserId(), favoriteDTO.getLocationId());
     }
 
     @DeleteMapping("{favoriteId}")
@@ -55,7 +48,7 @@ public class FavoriteController {
     @DeleteMapping
     public void deleteFavorites(@RequestParam Long userId) {
         List<Favorite> favorites = favoriteService.getFavorites(userId);
-        for (Favorite favorite: favorites) {
+        for (Favorite favorite : favorites) {
             favoriteService.deleteFavorite(favorite.getFavoriteId());
         }
     }
