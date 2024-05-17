@@ -6,9 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 @SpringBootApplication
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setOut(new PrintStream(new FileOutputStream("output.txt")));
 		SpringApplication.run(Main.class, args);
 	}
 

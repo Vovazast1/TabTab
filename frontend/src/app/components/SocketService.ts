@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, timestamp } from 'rxjs'; // Import Subject
-import io from 'socket.io-client'; // Import only io
+import { Observable, Subject, timestamp } from 'rxjs';
+import io from 'socket.io-client';
 import { SOCKET_BASE_URL } from '../data';
 import LocationMessage, { MessageType } from '../data/LocationMessage';
 
@@ -10,33 +10,23 @@ import LocationMessage, { MessageType } from '../data/LocationMessage';
 })
 export class SocketService {
   private socket: any;
-  private socketResponseSubject: Subject<any> = new Subject<any>(); // Create a Subject
+  private socketResponseSubject: Subject<any> = new Subject<any>();
   private isConnected: boolean = false;
   private locationId?: number;
   private userId?: number;
   private timestamp: any;
 
-  constructor(private http: HttpClient) {}
-
-  public connect(locatioId: number, userId: number, onReceive: (message: LocationMessage) => void): void {
-    this.locationId = locatioId;
+  public connect(locationId: number, userId: number): void {
+    this.locationId = locationId;
     this.userId = userId;
     this.timestamp = timestamp;
     this.socket = io(SOCKET_BASE_URL, {
       reconnection: false,
-      query: { userId: userId, locatioId: locatioId }
+      query: { userId: userId, locationId: locationId }
     });
     this.socket.on('connect', () => (this.isConnected = true));
-    this.socket.on('read_message', (res: any) => {
-      console.log(res);
-      onReceive(res);
-      this.socketResponseSubject.next({
-        locationId: res.locationId,
-        message: res.message,
-        userId: res.userId,
-        messageType: res.messageType,
-        timestamp: res.timestamp
-      });
+    this.socket.on('read_message', (message: LocationMessage) => {
+      this.socketResponseSubject.next(message);
     });
   }
 
@@ -50,7 +40,6 @@ export class SocketService {
     if (!this.locationId || !this.userId) {
       return;
     }
-    console.log(message);
     this.socket.emit('send_message', message);
   }
 
