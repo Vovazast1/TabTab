@@ -38,11 +38,14 @@ export class LocationsPage implements OnInit {
     [Sport.Basketball]: 'assets/icon/basketball-icon.png',
     [Sport.Tennis]: 'assets/icon/tennis-icon.png',
     [Sport.Gym]: 'assets/icon/gym-icon.png',
+    [Sport.Olimpic]: 'assets/icon/olimpic-icon.png',
+    [Sport.Default]: 'assets/icon/default-icon.png',
     [Intelligence.Park]: 'assets/icon/park-icon.png',
     [Intelligence.Chess]: 'assets/icon/chess-icon.png',
     [Intelligence.Library]: 'assets/icon/library-icon.png',
     [Intelligence.Museum]: 'assets/icon/museum-icon.png',
-    [Intelligence.Music]: 'assets/icon/music-icon.png'
+    [Intelligence.Music]: 'assets/icon/music-icon.png',
+    [Intelligence.Puzzle]: 'assets/icon/puzzle-icon.png'
   };
 
   public selectedLocationId: number | null = null;
