@@ -3,7 +3,9 @@ export enum Sport {
   Volleyball = 'Volleyball',
   Basketball = 'Basketball',
   Tennis = 'Tennis',
-  Gym = 'Gym'
+  Gym = 'Gym',
+  Olimpic = 'Olimpic',
+  Default = 'Default'
 }
 
 export enum Intelligence {
@@ -11,5 +13,6 @@ export enum Intelligence {
   Chess = 'Chess',
   Library = 'Library',
   Museum = 'Museum',
-  Music = 'Music'
+  Music = 'Music',
+  Puzzle = 'Puzzle'
 }
