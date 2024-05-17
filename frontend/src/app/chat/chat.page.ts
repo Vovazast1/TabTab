@@ -47,7 +47,7 @@ export class ChatPage implements OnInit {
           mergeMap(activity => {
             this.currentActivity = activity;
             if (userId && locationId && this.currentActivity) {
-              this.socketService.connect(locationId, userId, message => this.messageList.push(message));
+              this.socketService.connect(locationId, userId);
               this.connectSocket();
               return forkJoin([
                 this.apiService.getLocationById(locationId),

@@ -5,7 +5,7 @@ import { ActivityType, Favorite, Location, DTOResponse, Message, User } from '..
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  public API = 'http://localhost:5100/api/v1';
+  public API = 'http://taba-taba-api.eu-north-1.elasticbeanstalk.com/api/v1';
   public authAPI = `${this.API}/auth`;
   public locationAPI = `${this.API}/locations`;
   public messageAPI = `${this.API}/messages`;
@@ -48,7 +48,7 @@ export class ApiService {
   }
 
   addToFavorite(userId: number, locationId: number) {
-    return this.http.post(this.API + '/favorite', {
+    return this.http.post<number>(this.API + '/favorite', {
       userId,
       locationId
     });
