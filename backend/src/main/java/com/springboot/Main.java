@@ -13,7 +13,6 @@ import java.io.PrintStream;
 @SpringBootApplication
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
-		System.setOut(new PrintStream(new FileOutputStream("output.txt")));
 		SpringApplication.run(Main.class, args);
 	}
 
@@ -22,7 +21,17 @@ public class Main {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE");
+				registry.addMapping("/api/**")
+						.allowedOrigins("*")
+						.allowedMethods("GET", "POST", "PUT", "DELETE");
+
+				registry.addMapping("/swagger-ui/**")
+						.allowedOrigins("*")
+						.allowedMethods("GET", "POST", "PUT", "DELETE");
+
+				registry.addMapping("/v3/api-docs/**")
+						.allowedOrigins("*")
+						.allowedMethods("GET");
 			}
 		};
 	}
